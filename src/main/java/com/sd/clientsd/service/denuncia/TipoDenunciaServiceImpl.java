@@ -4,14 +4,16 @@ import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaDTO;
 import com.sd.clientsd.beans.denuncia.TipoDenunciaB;
 import com.sd.clientsd.rest.denuncia.TipoDenunciaResourceImpl;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+@Service("tipoDenunciaService")
 public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, TipoDenunciaDTO> implements ITipoDenunciaService {
-    //resoruces
+    @Autowired
     private TipoDenunciaResourceImpl tipoDenunciaResource;
 
     @Override
