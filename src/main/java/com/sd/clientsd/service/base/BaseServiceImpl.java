@@ -1,9 +1,14 @@
 package com.sd.clientsd.service.base;
 
-public abstract class BaseServiceImpl {
-    //public abstract class BaseServiceImpl<BEAN extends BaseBean, DTO extends BaseDTO> implements IBaseService<BEAN,DTO>
+import com.protectionapp.sd2021.dto.base.BaseDTO;
+import com.sd.clientsd.beans.base.BaseBean;
 
-    //public BaseServiceImpl(){}
-    //protected abstract DTO convertToDTO(BEAN bean);
-    //protected abstract BEAN convertToBean(DTO dto);
+/* Los servicios procesan DTOs recibidos del API (atraves de nuestros BaseResource) para
+* poder ser mostrados en la UI (la capa de controllers y vistas de grails)
+* Los domains creados por Grails son lo mismo que nuestros Beans programados? */
+public abstract class BaseServiceImpl <BEAN extends BaseBean, DTO extends BaseDTO> implements IBaseService<BEAN,DTO>{
+
+    public BaseServiceImpl(){}
+    protected abstract DTO convertToDTO(BEAN bean);
+    protected abstract BEAN convertToBean(DTO dto);
 }

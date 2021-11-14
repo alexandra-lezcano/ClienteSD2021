@@ -1,8 +1,13 @@
 package com.sd.clientsd.service.base;
 
-public interface IBaseService {
+import com.protectionapp.sd2021.dto.base.BaseDTO;
+import com.sd.clientsd.beans.base.BaseBean;
 
-    // public BEAN save(BEAN bean);
-    // public List<BEAN> getAll(Integer page);
-    // public BEAN getById(Integer id);
+import java.util.List;
+
+/* Beans son objetos que creamos nosotros */
+public interface IBaseService <BEAN extends BaseBean, DTO extends BaseDTO>{
+    public BEAN save(BEAN bean);
+    public List<BEAN> getAll(Integer page);
+    public BEAN getById(Integer id);
 }
