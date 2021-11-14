@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 /*
 * Punto de entrada de comunicacion con nuestra API, los resource son los encargados
 * de hacer llamadas a cada uno de nuestros endpoints. Tiene los mismos metodos de
-* IBaseService !
+* IBaseService en el API
 * */
 public interface IBaseResource <DTO extends BaseDTO>{
 
