@@ -8,12 +8,10 @@ import org.springframework.data.domain.Pageable;
 * de hacer llamadas a cada uno de nuestros endpoints. Tiene los mismos metodos de
 * IBaseService !
 * */
-public interface IBaseResource <DTO extends BaseDTO, R extends BaseResult>{
+public interface IBaseResource <DTO extends BaseDTO>{
 
     public DTO save(DTO dto);
     public DTO getById(Integer id);
     public DTO update(DTO dto, Integer id);
     public DTO delete(Integer id);
-    public R getAll(Pageable pageable);
-
 }

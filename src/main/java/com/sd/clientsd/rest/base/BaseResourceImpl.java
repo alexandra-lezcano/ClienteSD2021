@@ -6,7 +6,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import org.springframework.data.domain.Pageable;
 
-public abstract class BaseResourceImpl <DTO extends BaseDTO, R extends BaseResult> implements IBaseResource<DTO, R>{
+public abstract class BaseResourceImpl <DTO extends BaseDTO> implements IBaseResource<DTO>{
 
     private final String resourcePath;
     private final Class<DTO> dtoClass;
@@ -54,12 +54,5 @@ public abstract class BaseResourceImpl <DTO extends BaseDTO, R extends BaseResul
     public DTO delete(Integer id) {
         // ej: getJerseyClient().resource(getBaseUrl()+pathToResource+"/"+id).delete(UserDTO.class);
         return getWebResource().path("/"+id).delete(this.dtoClass);
-    }
-
-    /* todo implementar getAll y otros metodos para busqueda y filtrado*/
-    @Override
-    public R getAll(Pageable pageable) {
-        // return getWebResource().path("/page"+id).get(this.dtoClass);??
-        return null;
     }
 }
