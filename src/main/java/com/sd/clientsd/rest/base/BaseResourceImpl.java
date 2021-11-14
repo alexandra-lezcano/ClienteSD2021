@@ -1,10 +1,8 @@
 package com.sd.clientsd.rest.base;
 
 import com.protectionapp.sd2021.dto.base.BaseDTO;
-import com.protectionapp.sd2021.dto.base.BaseResult;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
-import org.springframework.data.domain.Pageable;
 
 public abstract class BaseResourceImpl <DTO extends BaseDTO> implements IBaseResource<DTO>{
 
