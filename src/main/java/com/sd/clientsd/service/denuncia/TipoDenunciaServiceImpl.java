@@ -62,6 +62,15 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
         return beansList;
     }
 
+    public List<TipoDenunciaB> getAll() {
+        final TipoDenunciaResult tipoDenunciaResult = tipoDenunciaResource.getAll();
+        final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenunciasList() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenunciasList();
+        final List<TipoDenunciaB> beansList = new ArrayList<TipoDenunciaB>();
+
+        dtosList.forEach(tipoDenunciaDTO -> beansList.add(convertToBean(tipoDenunciaDTO)));
+        return beansList;
+    }
+
     @Override
     public TipoDenunciaB getById(Integer id) {
         return null;

@@ -21,7 +21,10 @@ class TipoDenunciaController {
 
     def index(Integer max) {
        // params.max = Math.min(max ?: 10, 100)
-        redirect(action: 'list', params:params)
+       // redirect(action: 'list', params:params)
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+        def tipoDenunicas = tipoDenunciaService.getAll()
+        [tipoDenunciaInstanceList: tipoDenunicas, tipoDenunciasTotal: tipoDenunicas.size()]
     }
 
     /*si params['id'] es null entonces page=1 sino page=el id de nuestro bean
