@@ -20,4 +20,8 @@ public class TipoDenunciaResourceImpl extends BaseResourceImpl<TipoDenunciaDTO> 
     public TipoDenunciaResult getAll(Integer pageNum) {
         return getWebResource().path("/page"+pageNum).get(TipoDenunciaResult.class);
     }
+
+    public TipoDenunciaResult getAll() {
+        return getWebResource().get(TipoDenunciaResult.class);
+    }
 }
