@@ -1,12 +1,14 @@
 package com.sd.clientsd.service.denuncia;
 
 import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaDTO;
+import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.sd.clientsd.beans.denuncia.TipoDenunciaB;
 import com.sd.clientsd.rest.denuncia.TipoDenunciaResourceImpl;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,8 +53,13 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
     }
 
     @Override
-    public List<TipoDenunciaB> getAll(Integer page) {
-        return null;
+    public List<TipoDenunciaB> getAll(Integer pageNum) {
+        final TipoDenunciaResult tipoDenunciaResult = tipoDenunciaResource.getAll(pageNum);
+        final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenunciasList() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenunciasList();
+        final List<TipoDenunciaB> beansList = new ArrayList<TipoDenunciaB>();
+
+        dtosList.forEach(tipoDenunciaDTO -> beansList.add(convertToBean(tipoDenunciaDTO)));
+        return beansList;
     }
 
     @Override
