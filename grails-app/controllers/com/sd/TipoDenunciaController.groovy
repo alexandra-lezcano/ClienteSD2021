@@ -20,8 +20,18 @@ class TipoDenunciaController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond tipoDenunciaService.list(params), model:[tipoDenunciaCount: tipoDenunciaService.count()]
+       // params.max = Math.min(max ?: 10, 100)
+        redirect(action: 'list', params:params)
+    }
+
+    /*si params['id'] es null entonces page=1 sino page=el id de nuestro bean
+    * crea una lista de tipoDenunciasB que es obtenida por nuestro servicio a
+    * traves del metodo getAll(Integer page)
+    * retorna a la vista: [lista de beans obtenidos, el tamanho de la lista]*/
+    def list(Integer max){
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+        def tipoDenunicas = tipoDenunciaService.getAll(page)
+        [tipoDenunciaInstance: tipoDenunicas, tipoDenunciasTotal: tipoDenunicas.size()]
     }
 
     def show(Long id) {

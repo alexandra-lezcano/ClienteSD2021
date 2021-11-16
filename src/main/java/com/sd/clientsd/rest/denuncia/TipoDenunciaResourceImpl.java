@@ -1,6 +1,7 @@
 package com.sd.clientsd.rest.denuncia;
 
 import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaDTO;
+import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.sd.clientsd.rest.base.BaseResourceImpl;
 import org.springframework.stereotype.Repository;
 
@@ -15,9 +16,8 @@ public class TipoDenunciaResourceImpl extends BaseResourceImpl<TipoDenunciaDTO> 
     }
 
      /* todo implementar getAll y otros metodos para busqueda y filtrado
-    @Override
-    public TipoDenunciaResult getAll(Pageable pageable) {
-        // return getWebResource().path("/page"+id).get(this.dtoClass);??
-        return null;
-    }*/
+    //@Override*/
+    public TipoDenunciaResult getAll(Integer pageNum) {
+        return getWebResource().path("/page"+pageNum).get(TipoDenunciaResult.class);
+    }
 }

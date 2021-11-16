@@ -1,7 +1,7 @@
 package com.sd
 
 import grails.gorm.services.Service
-
+// https://www.baeldung.com/grails-mvc-application#2-service-layer
 @Service(TipoDenuncia)
 interface TipoDenunciaService {
 
