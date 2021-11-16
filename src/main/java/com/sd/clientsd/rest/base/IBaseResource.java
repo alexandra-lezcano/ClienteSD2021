@@ -1,7 +1,5 @@
 package com.sd.clientsd.rest.base;
 import com.protectionapp.sd2021.dto.base.BaseDTO;
-import com.protectionapp.sd2021.dto.base.BaseResult;
-import org.springframework.data.domain.Pageable;
 
 /*
 * Punto de entrada de comunicacion con nuestra API, los resource son los encargados
