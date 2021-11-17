@@ -1,3 +1,5 @@
+<%@ page import="com.sd.TipoDenuncia" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,14 +17,8 @@
         </div>
         <div id="list-tipoDenuncia" class="content scaffold-list" role="main">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <f:table collection="${tipoDenunciaInstanceList}" />
+            <f:table collection="${tipoDenunciaInstanceList}" properties="titulo, descripcion" />
 
-            <div class="pagination">
-                <g:paginate total="${tipoDenunciasTotal ?: 0}" />
-            </div>
         </div>
     </body>
 </html>
