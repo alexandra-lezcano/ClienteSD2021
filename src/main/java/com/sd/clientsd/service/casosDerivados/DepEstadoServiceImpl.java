@@ -3,9 +3,13 @@ package com.sd.clientsd.service.casosDerivados;
 import com.protectionapp.sd2021.dto.casosDerivados.DepEstadoDTO;
 
 import com.protectionapp.sd2021.dto.casosDerivados.DepEstadoResult;
+import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaDTO;
+import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.sd.clientsd.beans.CasosDerivados.DepEstadoB;
+import com.sd.clientsd.beans.denuncia.TipoDenunciaB;
 import com.sd.clientsd.rest.CasosDerivados.IDepEstadoResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,9 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service("DepEstadoService")
-public class IDepEstadoServiceImpl extends BaseServiceImpl<DepEstadoB, DepEstadoDTO> implements IDepEstadoService {
-
+@Service("depEstadoService")
+public class DepEstadoServiceImpl extends BaseServiceImpl<DepEstadoB, DepEstadoDTO> implements IDepEstadoService {
+    @Autowired
     private IDepEstadoResource depEstadoResource;
     @Override
     protected DepEstadoDTO convertToDTO(DepEstadoB bean) {
@@ -64,7 +68,12 @@ public class IDepEstadoServiceImpl extends BaseServiceImpl<DepEstadoB, DepEstado
     }
     @Override
     public List<DepEstadoB> getAll(Integer page) {
-        return null;
+        final DepEstadoResult DepEstadoResult = depEstadoResource.getByPage(page);
+        final List<DepEstadoDTO> dtosList = null == DepEstadoResult.getDepEstado()? new ArrayList<DepEstadoDTO>() : DepEstadoResult.getDepEstado();
+        final List<DepEstadoB> beansList = new ArrayList<DepEstadoB>();
+
+        dtosList.forEach(DepEstadoDTO -> beansList.add(convertToBean(DepEstadoDTO)));
+        return beansList;
     }
 
     @Override
