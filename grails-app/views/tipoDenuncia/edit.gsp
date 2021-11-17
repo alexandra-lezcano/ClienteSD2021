@@ -1,3 +1,5 @@
+<%@ page import="com.sd.TipoDenuncia" %>
+
 <!DOCTYPE html>
 <html>
     <head>
