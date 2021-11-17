@@ -3,7 +3,7 @@ package com.sd.clientsd.service.denuncia;
 import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaDTO;
 import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.sd.clientsd.beans.denuncia.TipoDenunciaB;
-import com.sd.clientsd.rest.denuncia.TipoDenunciaResourceImpl;
+import com.sd.clientsd.rest.denuncia.ITipoDenunciaResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.Map;
 @Service("tipoDenunciaService")
 public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, TipoDenunciaDTO> implements ITipoDenunciaService {
     @Autowired
-    private TipoDenunciaResourceImpl tipoDenunciaResource;
+    private ITipoDenunciaResource tipoDenunciaResource;
 
     @Override
     protected TipoDenunciaDTO convertToDTO(TipoDenunciaB bean) {
@@ -54,7 +54,7 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
 
     @Override
     public List<TipoDenunciaB> getAll(Integer pageNum) {
-        final TipoDenunciaResult tipoDenunciaResult = tipoDenunciaResource.getAll(pageNum);
+        final TipoDenunciaResult tipoDenunciaResult = tipoDenunciaResource.getByPage(pageNum);
         final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenunciasList() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenunciasList();
         final List<TipoDenunciaB> beansList = new ArrayList<TipoDenunciaB>();
 
@@ -62,7 +62,7 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
         return beansList;
     }
 
-    public List<TipoDenunciaB> getAll() {
+    public List<TipoDenunciaB> getAllNotPaged() {
         final TipoDenunciaResult tipoDenunciaResult = tipoDenunciaResource.getAll();
         final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenunciasList() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenunciasList();
         final List<TipoDenunciaB> beansList = new ArrayList<TipoDenunciaB>();
@@ -73,6 +73,7 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
 
     @Override
     public TipoDenunciaB getById(Integer id) {
-        return null;
+        final TipoDenunciaDTO tipoDenunciaDTO = tipoDenunciaResource.getById(id);
+        return convertToBean(tipoDenunciaDTO);
     }
 }
