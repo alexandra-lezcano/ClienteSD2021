@@ -21,7 +21,10 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
     @Override
     protected TipoDenunciaDTO convertToDTO(TipoDenunciaB bean) {
         final TipoDenunciaDTO dto = new TipoDenunciaDTO();
-        dto.setId(bean.getId());
+        if(bean.getId()!=0){
+            dto.setId(bean.getId());
+        }
+
         dto.setTitulo(bean.getTitulo());
         dto.setDescripcion(bean.getDescripcion());
         return dto;
@@ -63,7 +66,8 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
     }
 
     public List<TipoDenunciaB> getAllNotPaged() {
-        final TipoDenunciaResult tipoDenunciaResult = tipoDenunciaResource.getAll();
+        final TipoDenunciaResult tipoDenunciaResult = new TipoDenunciaResult();
+                //tipoDenunciaResource.getAll();
         final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenunciasList() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenunciasList();
         final List<TipoDenunciaB> beansList = new ArrayList<TipoDenunciaB>();
 

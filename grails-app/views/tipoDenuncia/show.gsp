@@ -18,7 +18,15 @@
         </div>
         <div id="show-tipoDenuncia" class="content scaffold-show" role="main">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
-            <f:display bean="tipoDenunciaInstance" />
+
+            <ul>
+                <li>
+                    <f:display bean="tipoDenunciaInstance" property="titulo"/>
+                </li>
+                <li>
+                    <f:display bean="tipoDenunciaInstance" property="descripcion"/>
+                </li>
+            </ul>
             <g:form resource="${tipoDenunciaInstance}" method="DELETE">
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" resource="${tipoDenunciaInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>

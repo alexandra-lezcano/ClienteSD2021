@@ -24,15 +24,14 @@ class TipoDenunciaController {
        // params.max = Math.min(max ?: 10, 100)
        // redirect(action: 'list', params:params)
       //  def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
-        def page = 1
-        def tipoDenunicas = tipoDenunciaService.getAll(page)
+       // def page = 1
+        def tipoDenunicas = tipoDenunciaService.getAllNotPaged()
         [tipoDenunciaInstanceList: tipoDenunicas, tipoDenunciasTotal: tipoDenunicas.size()]
     }
 
 
     def show(Integer id) {
-        def idtest = 1
-        TipoDenunciaB tipoDenunciaB = tipoDenunciaService.getById(idtest)
+        TipoDenunciaB tipoDenunciaB = tipoDenunciaService.getById(id)
         [tipoDenunciaInstance: tipoDenunciaB]
     }
 
