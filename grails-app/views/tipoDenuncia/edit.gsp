@@ -18,23 +18,29 @@
         </div>
         <div id="edit-tipoDenuncia" class="content scaffold-edit" role="main">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.tipoDenuncia}">
+            <g:hasErrors bean="${tipoDenunciaInstance}">
             <ul class="errors" role="alert">
-                <g:eachError bean="${this.tipoDenuncia}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                <g:eachError bean="${tipoDenunciaInstance}" var="error">
+                <li ><g:message error="${error}"/></li>
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.tipoDenuncia}" method="PUT">
-                <g:hiddenField name="version" value="${this.tipoDenuncia?.version}" />
+            <g:form resource="${tipoDenunciaInstance}" method="PUT">
+                <g:hiddenField name="id" value="${tipoDenunciaInstance?.id}" />
                 <fieldset class="form">
-                    <f:all bean="tipoDenuncia"/>
+                    <div class="fieldcontain ${hasErrors(bean: tipoDenunciaInstance, field: 'titulo','error')}">
+                        <label for="titulo"> Titulo:
+                            <g:textField name="titulo" value="${tipoDenunciaInstance?.titulo}"/>
+                        </label>
+                    </div>
+                    <div class="fieldcontain ${hasErrors(bean: tipoDenunciaInstance, field: 'descripcion','error')}">
+                        <label for="descripcion"> Descripcion:
+                            <g:textField name="descripcion" value="${tipoDenunciaInstance?.descripcion}"/>
+                        </label>
+                    </div>
                 </fieldset>
                 <fieldset class="buttons">
-                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                    <g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
                 </fieldset>
             </g:form>
         </div>

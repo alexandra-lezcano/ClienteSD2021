@@ -17,7 +17,7 @@
         </div>
         <div id="list-tipoDenuncia" class="content scaffold-list" role="main">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-            <f:table collection="${tipoDenunciaInstanceList}" properties="titulo, descripcion" />
+            <f:table collection="${tipoDenunciaInstanceList}" properties="['titulo', 'descripcion']" />
 
         </div>
     </body>

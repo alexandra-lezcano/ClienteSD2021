@@ -18,10 +18,18 @@
         </div>
         <div id="show-tipoDenuncia" class="content scaffold-show" role="main">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
-            <f:display bean="tipoDenunciaInstance" />
+
+            <ul>
+                <li>
+                    <f:display bean="tipoDenunciaInstance" property="titulo"/>
+                </li>
+                <li>
+                    <f:display bean="tipoDenunciaInstance" property="descripcion"/>
+                </li>
+            </ul>
             <g:form resource="${tipoDenunciaInstance}" method="DELETE">
                 <fieldset class="buttons">
-                    <g:link class="edit" action="edit" resource="${tipoDenunciaInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                    <g:link class="edit" action="edit" id="${tipoDenunciaInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                 </fieldset>
             </g:form>

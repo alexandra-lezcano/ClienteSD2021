@@ -2,6 +2,7 @@ package com.sd.clientsd.beans.denuncia;
 
 import com.sd.clientsd.beans.base.BaseBean;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class TipoDenunciaB extends BaseBean {
@@ -16,11 +17,13 @@ public class TipoDenunciaB extends BaseBean {
     /* Inicializar los parametros del Bean */
     @Override
     protected void create(Map<String, String> params) {
-        if(!params.get("id").isEmpty() && params.get("id") !=null){
+        if(params.containsKey("id") && params.get("id")!=null){
             setId(Integer.valueOf(params.get("id")));
+        }else{
+            setId(0);
         }
         setTitulo(params.get("titulo"));
-        setDescripcion(params.get("desripcion"));
+        setDescripcion(params.get("descripcion"));
     }
 
     public String getTitulo() {

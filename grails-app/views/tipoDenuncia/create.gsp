@@ -26,22 +26,18 @@
             </ul>
             </g:hasErrors>
             <g:form action="save">
-                <div class="fieldcontain ${hasErrors(bean: tipoDenunciaInstace, field: 'titulo','error')}">
-                    <fieldset class="form">
+                <fieldset class="form">
+                <div class="fieldcontain ${hasErrors(bean: tipoDenunciaInstance, field: 'titulo','error')}">
                         <label for="titulo">
                             <g:textField name="titulo" value="${tipoDenunciaInstance?.titulo}"/>
                         </label>
-                    </fieldset>
                 </div>
-                <div class="fieldcontain ${hasErrors(bean: tipoDenunciaInstace, field: 'descripcion','error')}">
-                    <fieldset class="form">
-                        <label for="titulo">
-                            <g:textField name="titulo" value="${tipoDenunciaInstance?.descripcion}"/>
+                <div class="fieldcontain ${hasErrors(bean: tipoDenunciaInstance, field: 'descripcion','error')}">
+                        <label for="descripcion">
+                            <g:textField name="descripcion" value="${tipoDenunciaInstance?.descripcion}"/>
                         </label>
-                    </fieldset>
                 </div>
-
-
+                </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
                 </fieldset>
