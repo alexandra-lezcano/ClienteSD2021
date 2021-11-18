@@ -2,6 +2,7 @@ package com.sd.clientsd.beans.denuncia;
 
 import com.sd.clientsd.beans.base.BaseBean;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class TipoDenunciaB extends BaseBean {

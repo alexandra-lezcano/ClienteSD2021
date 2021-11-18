@@ -80,4 +80,17 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
         final TipoDenunciaDTO tipoDenunciaDTO = tipoDenunciaResource.getById(id);
         return convertToBean(tipoDenunciaDTO);
     }
+
+    @Override
+    public TipoDenunciaB update(TipoDenunciaB bean, Integer id) {
+        final TipoDenunciaDTO dto = convertToDTO(bean);
+        final TipoDenunciaDTO updated = tipoDenunciaResource.update(dto, id);
+        return convertToBean(updated);
+    }
+
+    @Override
+    public TipoDenunciaB delete(Integer id) {
+        final TipoDenunciaDTO deleted = tipoDenunciaResource.delete(id);
+        return convertToBean(deleted);
+    }
 }
