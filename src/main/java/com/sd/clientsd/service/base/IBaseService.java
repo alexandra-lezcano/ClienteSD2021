@@ -10,4 +10,6 @@ public interface IBaseService <BEAN extends BaseBean, DTO extends BaseDTO>{
     public BEAN save(BEAN bean);
     public List<BEAN> getAll(Integer page);
     public BEAN getById(Integer id);
+    public BEAN update(BEAN bean, Integer id);
+    public BEAN delete(Integer id);
 }
