@@ -20,6 +20,13 @@ public class TipoDenunciaResourceImpl extends BaseResourceImpl<TipoDenunciaDTO> 
 
     @Override
     public TipoDenunciaResult getByPage(Integer pageNum) {
-        return getWebResource().path("/page/"+pageNum).get(TipoDenunciaResult.class);
+       TipoDenunciaResult tResult = new TipoDenunciaResult();
+
+        if(getWebResource()!=null){
+            Class<TipoDenunciaResult> tResultClass = TipoDenunciaResult.class;
+            String path = "/page/"+pageNum;
+            tResult = getWebResource().path(path).get(tResultClass);
+        }
+        return tResult;
     }
 }
