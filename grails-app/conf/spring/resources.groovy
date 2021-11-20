@@ -6,6 +6,7 @@ import com.sd.clientsd.rest.CasosDerivados.DepEstadoResourceImpl
 import com.sd.clientsd.rest.denuncia.TipoDenunciaResourceImpl
 import com.sd.clientsd.rest.denuncia.TipoSujetoResourceImpl
 import com.sd.clientsd.rest.location.INeighborhoodResource
+import com.sd.clientsd.rest.location.NeighborhoodResourceImpl
 import com.sd.clientsd.service.denuncia.ISujetoService
 import com.sd.clientsd.service.denuncia.SujetoServiceImpl
 import com.sd.clientsd.rest.location.CityResourceImpl

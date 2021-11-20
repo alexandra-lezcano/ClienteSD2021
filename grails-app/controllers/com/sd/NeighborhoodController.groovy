@@ -16,14 +16,14 @@ class NeighborhoodController {
     }
 
     def show(Long id) {
-        respond neighborhoodService.get(id)
+        respond neighborhoodService.getById(id);
     }
 
     def create() {
         [neighborhoodInstance: new Neighborhood(params)]
     }
 
-    def save(Neighborhood neighborhood) {
+    def save() {
         def neighborhoodN = new NeighborhoodB(params)
         def neighborhoodInstance = neighborhoodService.save(neighborhoodN)
 
@@ -51,7 +51,7 @@ class NeighborhoodController {
         [neighborhoodInstance: neighborhoodInstance]
     }
 
-    def update(Neighborhood neighborhood) {
+    def update() {
         def neighborhoodB = new NeighborhoodB(params)
         def neighborhoodBUpdated = neighborhoodService.update(neighborhoodB, neighborhoodB.getId())
         redirect(action: "index", id: neighborhoodBUpdated.getId())
