@@ -6,38 +6,35 @@ import java.util.Map;
 
 public class CityB extends BaseBean {
     private static final long serialVersionUID = 1L;
-    private String nombre;
-    private String descripcion;
+    private String name;
+    private String description;
 
-    public CityB(Map<String, String> params) {
-        super(params);
-    }
+    public CityB(Map<String, String> params){super(params);}
 
     @Override
-    protected void create(Map<String, String> params) {
-        if(params.containsKey("id") && params.get("id")!=null){
+    protected void create(Map<String, String> params){
+        if (params.containsKey("id")&& params.get("id")!=null){
             setId(Integer.valueOf(params.get("id")));
-        }else{
+        } else {
             setId(0);
         }
-        setNombre(params.get("name"));
-        setDescripcion(params.get("description"));
-    }
-    public String getNombre() {
-        return nombre;
+        setName(params.get("name"));
+        setDescription(params.get("description"));
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescription() {
+        return description;
     }
 
-
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
