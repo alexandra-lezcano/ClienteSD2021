@@ -16,7 +16,7 @@ class TipoDenunciaController {
     //services
     ITipoDenunciaService tipoDenunciaService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
 
     def index() {
         redirect(action: 'list', params:params)
@@ -113,6 +113,20 @@ class TipoDenunciaController {
     }
 
     def delete(Long id) {
+        def tipoDenunciaInstance = tipoDenunciaService.delete(id.toInteger())
+        System.out.println("Se borro "+tipoDenunciaInstance.id+" "+tipoDenunciaInstance.titulo)
+        // como hago para mostrar la tabla en la paginacion que ya estaba?
+
+        if(tipoDenunciaInstance == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
+            return
+        }
+
+        flash.message = message(code: 'default.deleted.message',  args: [message(code: 'tipoDenuncia.label', default: 'TipoDenuncia'), id])
+
+        redirect(action: 'list')
+
 
     }
 
