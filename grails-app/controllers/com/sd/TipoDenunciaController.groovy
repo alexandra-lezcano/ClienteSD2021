@@ -18,16 +18,20 @@ class TipoDenunciaController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-       // params.max = Math.min(max ?: 10, 100)
-       // redirect(action: 'list', params:params)
-      //  def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
-       // def page = 1
-        def tipoDenunicas = tipoDenunciaService.getAllNotPaged()
+    def index() {
+        redirect(action: 'list', params:params)
+    }
+
+    // todo arreglar la paginacion!
+    def list(Integer max) {
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def tipoDenunicas = tipoDenunciaService.getAll(page)
+
         [tipoDenunciaInstanceList: tipoDenunicas, tipoDenunciasTotal: tipoDenunicas.size()]
     }
 
-
+    // EL SHOW NO ES NECESARIO SEGUN ALDO
     def show(Integer id) {
         TipoDenunciaB tipoDenunciaB = tipoDenunciaService.getById(id)
         [tipoDenunciaInstance: tipoDenunciaB]
@@ -50,7 +54,7 @@ class TipoDenunciaController {
     * 3- invocar al metodo "save" detro del controlador
     *   */
     def create() {
-        // envia un map al create view
+        // envia un map a create.gsp
         [tipoDenunciaInstance: new TipoDenuncia(params)]
     }
 
@@ -63,6 +67,7 @@ class TipoDenunciaController {
             return
         }
 
+        // Muestra un mensajito por defecto
         withFormat{
             html{
                 flash.message = message(code: 'default.created.message', args: [message(code: 'tipoDenuncia.label', default: 'TipoDenuncia'), tipoDenunciaInstance.getId()])
@@ -72,11 +77,10 @@ class TipoDenunciaController {
     }
 
     /* URL: /tipoDenuncia/edit/1
-    *  VIEW: <g:form resource="${tipoDenunciaInstance}" method="PUT">
-    *  CONTROLLER:  [tipoDenunciaInstance: tipoDenunciaInstance]
-    *
-    * Hipotesis: edit confirma si el objeto existe, luego delega la
-    * tarea de actualizar el objeto al metodo update */
+    *  Cuando estoy en la lista y hago click en "edit" la accion automaticamente contruye un url
+    *  con el id a ser editado.
+    *  Llamo al servicio para obtener el id y devuelvo a la vista los campos que quiero editar
+    *  usando  [tipoDenunciaInstance: tipoDenunciaInstance]  */
     def edit(Long id) {
         def tipoDenunciaInstance = tipoDenunciaService.getById(id.toInteger())
 
@@ -85,20 +89,28 @@ class TipoDenunciaController {
             redirect(action: "create")
             return
         }
+        // <g:form bean="${tipoDenunciaInstance}" method="PUT">
+        // aca obtuve el objeto desde mi API
+        // con esto lo muestro en el form de editar
         [tipoDenunciaInstance: tipoDenunciaInstance]
     }
 
+    // <g:actionSubmit class="save" value="${message(code: 'default.button.update.label', default: 'update')}" />
+    // este boton hace que se llame a la accion update en la parte [default: update]
     def update() {
-       // def tipoDenunciaB = tipoDenunciaService.getById(id.toInteger())
+        // estos parametros son los que obtuve por getById(id) desde el metodo edit
         def tipoDenunciaB = new TipoDenunciaB(params)
-        def tipoDenunciaBUpdated = tipoDenunciaService.update(tipoDenunciaB, tipoDenunciaB.getId())
-        redirect(action: "show", id: tipoDenunciaBUpdated.getId())
-    }
 
-    // que hace g:link
-    // como paso el bean a update?
-    // porque solo funciona editar sobre un objeto recien creado? ( parece que
-    // acceder directamente desde el url no anda, solo haciendo click en botones)
+        if(tipoDenunciaB == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
+            return
+        }
+
+        def tipoDenunciaBUpdated = tipoDenunciaService.update(tipoDenunciaB, tipoDenunciaB.getId())
+        // todo mostrar un pop up diciendo que se actualizo el bean usar flash message
+        redirect(action: 'list')
+    }
 
     def delete(Long id) {
 
