@@ -10,6 +10,7 @@ import com.sd.clientsd.service.denuncia.SujetoServiceImpl
 import com.sd.clientsd.rest.location.CityResourceImpl
 import com.sd.clientsd.service.casosDerivados.DepEstadoServiceImpl
 import com.sd.clientsd.service.denuncia.TipoDenunciaServiceImpl
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import com.sd.clientsd.service.denuncia.TipoSujetoServiceImpl
 import com.sd.clientsd.service.location.CityServiceImpl
 
@@ -29,4 +30,9 @@ beans = {
     tipoDenunciaService(TipoDenunciaServiceImpl)
     tipoSujetoService(TipoSujetoServiceImpl)
     sujetoService(SujetoServiceImpl)
+  
+    localeResolver(SessionLocaleResolver) {
+        defaultLocale= new java.util.Locale('es');
+    }
+
 }

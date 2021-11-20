@@ -86,7 +86,7 @@ return bean;
     public List<DepEstadoB> getAllNotPaged() {
         final DepEstadoResult result = new DepEstadoResult();
 
-        final List<DepEstadoDTO> dtosList = null == result.getDepEstado() ? new ArrayList<DepEstadoDTO>() : result.getDepEstado();
+        final List<DepEstadoDTO> dtosList = null == result.getDepEstados() ? new ArrayList<DepEstadoDTO>() : result.getDepEstados();
         final List<DepEstadoB> beansList = new ArrayList<DepEstadoB>();
 
         dtosList.forEach(depEstadoDTO -> beansList.add(convertToBean(depEstadoDTO)));

@@ -2,9 +2,12 @@ package com.sd.clientsd.service.location;
 
 import com.protectionapp.sd2021.dto.casosDerivados.DepEstadoDTO;
 import com.protectionapp.sd2021.dto.casosDerivados.DepEstadoResult;
+import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaDTO;
+import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.protectionapp.sd2021.dto.localization.CityDTO;
 import com.protectionapp.sd2021.dto.localization.CityResult;
 import com.sd.clientsd.beans.CasosDerivados.DepEstadoB;
+import com.sd.clientsd.beans.denuncia.TipoDenunciaB;
 import com.sd.clientsd.beans.location.CityB;
 import com.sd.clientsd.rest.CasosDerivados.IDepEstadoResource;
 import com.sd.clientsd.rest.location.ICityResource;
@@ -57,7 +60,18 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
     @Override
     public List<CityB> getAll(Integer page) {
-        return null;
+        CityResult cityResult = cityResource.getByPage(page);
+        List<CityDTO> dtosList = new ArrayList<CityDTO>();
+
+        if(cityResult.getCitys()!=null) dtosList = cityResult.getCitys();
+      //  System.out.println(cityResult.getCities().get(1).getName());
+        final List<CityB> beansList = new ArrayList<CityB>();
+
+        dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
+        return beansList;
+
+
+
     }
 
     @Override
@@ -85,7 +99,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     public List<CityB> getAllNotPaged() {
         final CityResult result = new CityResult();
 
-        final List<CityDTO> dtosList = null == result.getCities() ? new ArrayList<CityDTO>() : result.getCities();
+        final List<CityDTO> dtosList = null == result.getCitys() ? new ArrayList<CityDTO>() : result.getCitys();
         final List<CityB> beansList = new ArrayList<CityB>();
 
         dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));

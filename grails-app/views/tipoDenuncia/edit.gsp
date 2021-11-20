@@ -25,7 +25,7 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${tipoDenunciaInstance}" method="PUT">
+            <g:form bean="${tipoDenunciaInstance}" method="PUT">
                 <g:hiddenField name="id" value="${tipoDenunciaInstance?.id}" />
                 <fieldset class="form">
                     <div class="fieldcontain ${hasErrors(bean: tipoDenunciaInstance, field: 'titulo','error')}">
@@ -40,7 +40,14 @@
                     </div>
                 </fieldset>
                 <fieldset class="buttons">
-                    <g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+
+                    <g:actionSubmit class="save" value="update" />
+                    <g:actionSubmit class="delete"
+                                    value="${message(code: 'default.button.delete.label', default: 'delete')}"
+                                    id="${tipoDenunciaInstance?.id}"
+                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
+                    />
+
                 </fieldset>
             </g:form>
         </div>
