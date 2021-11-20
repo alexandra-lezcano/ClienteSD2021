@@ -96,9 +96,7 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
 
     @Override
     public TipoDenunciaB delete(Integer id) {
-        System.out.println("Hasta aca llegue...id: "+id);
         final TipoDenunciaDTO deleted = tipoDenunciaResource.delete(id);
-        System.out.println("Se borro algo?..."+ deleted.getId());
         return convertToBean(deleted);
     }
 }

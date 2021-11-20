@@ -33,8 +33,8 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
             dto.setId(bean.getId());
         }
 
-        dto.setName(bean.getNombre());
-        dto.setDescription(bean.getDescripcion());
+        dto.setName(bean.getName());
+        dto.setDescription(bean.getDescription());
         return dto;
     }
 
