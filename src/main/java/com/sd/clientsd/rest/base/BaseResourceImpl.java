@@ -1,6 +1,7 @@
 package com.sd.clientsd.rest.base;
 
 import com.protectionapp.sd2021.dto.base.BaseDTO;
+import com.sd.clientsd.utils.config.Configurations;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
@@ -9,7 +10,8 @@ public abstract class BaseResourceImpl <DTO extends BaseDTO> implements IBaseRes
     private final String resourcePath;
     private final Class<DTO> dtoClass;
     private final WebResource webResource;
-    private static final String BASE_URL = "http://localhost:8080";
+    //private static final String BASE_URL = "http://localhost:8080";
+    private static final String BASE_URL = Configurations.getBaseUrl();
 
 
     public BaseResourceImpl(Class<DTO> dtoClass, String resourcePath) {
