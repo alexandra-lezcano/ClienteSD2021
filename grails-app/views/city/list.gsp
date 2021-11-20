@@ -1,9 +1,9 @@
 
-<%@ page import="com.sd.TipoDenuncia" %>
+<%@ page import="com.sd.City" %>
 <html>
 <head>
     <meta name="layout" content="main" />
-    <g:set var="entityName" value="${message(code: 'tipoDenuncia.label', default: 'TipoDenuncia')}" />
+    <g:set var="entityName" value="${message(code: 'city.label', default: 'City')}" />
     <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 <body>
@@ -16,38 +16,38 @@
     </ul>
 </div>
 
-<div id="list-tipoDenuncia" class="content scaffold-list" role="main">
+<div id="list-city" class="content scaffold-list" role="main">
 
     <h1><g:message code="default.list.label" args="[entityName]" /></h1>
 
     <table>
         <thead>
         <tr>
-            <g:sortableColumn property="titulo"
-                              title="${message(code: 'tipoDenuncia.label', default: 'Titulo')}" />
+            <g:sortableColumn property="name"
+                              title="${message(code: 'city.label', default: 'Name')}" />
 
 
             <th>Descripcion</th>
         </tr>
         </thead>
         <tbody>
-        <g:each in="${tipoDenunciaInstanceList}" status="i" var="tipoDenunciaInstance">
+        <g:each in="${cityInstanceList}" status="i" var="cityInstance">
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
                 <td>
-                    <g:link class="edit" action="edit" id="${tipoDenunciaInstance?.id}">
-                        ${fieldValue(bean: tipoDenunciaInstance, field: "titulo")}</g:link>
+                    <g:link class="edit" action="edit" id="${cityInstance?.id}">
+                        ${fieldValue(bean: cityInstance, field: "name")}</g:link>
                 </td>
 
                 <td>
-                    ${fieldValue(bean: tipoDenunciaInstance, field: "descripcion")}
+                    ${fieldValue(bean: cityInstance, field: "descripcion")}
                 </td>
             </tr>
         </g:each>
         </tbody>
     </table>
     <div class="pagination">
-        <g:paginate total="${tipoDenunciasTotal}" />
+        <g:paginate total="${citiesTotal}" />
     </div>
 </div>
 </body>

@@ -21,7 +21,7 @@ public class CityResourceImpl extends BaseResourceImpl<CityDTO> implements ICity
 
     @Override
     public CityResult getByPage(Integer pageNum) {
-        return getWebResource().path("/page/"+pageNum).get(CityResult.class);
+        return getWebResource().path("page/"+pageNum).get(CityResult.class);
 
     }
 }
