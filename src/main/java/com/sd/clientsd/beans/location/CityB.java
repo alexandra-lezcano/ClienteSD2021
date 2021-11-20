@@ -1,14 +1,15 @@
-package com.sd.clientsd.beans.CasosDerivados;
+package com.sd.clientsd.beans.location;
 
 import com.sd.clientsd.beans.base.BaseBean;
 
 import java.util.Map;
 
-public class DepEstadoB extends BaseBean {
+public class CityB extends BaseBean {
     private static final long serialVersionUID = 1L;
-String nombre;
-String descripcion;
-    public DepEstadoB(Map<String, String> params) {
+    private String nombre;
+    private String descripcion;
+
+    public CityB(Map<String, String> params) {
         super(params);
     }
 
@@ -22,7 +23,6 @@ String descripcion;
         setNombre(params.get("name"));
         setDescripcion(params.get("description"));
     }
-
     public String getNombre() {
         return nombre;
     }
@@ -38,4 +38,6 @@ String descripcion;
     public String getDescripcion() {
         return descripcion;
     }
+
+
 }

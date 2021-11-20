@@ -5,7 +5,7 @@ import grails.testing.web.controllers.ControllerUnitTest
 import grails.validation.ValidationException
 import spock.lang.*
 
-class CiudadControllerSpec extends Specification implements ControllerUnitTest<CiudadController>, DomainUnitTest<Ciudad> {
+class DepEstadoControllerSpec extends Specification implements ControllerUnitTest<DepEstadoController>, DomainUnitTest<DepEstado> {
 
     def populateValidParams(params) {
         assert params != null
@@ -17,7 +17,7 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
 
     void "Test the index action returns the correct model"() {
         given:
-        controller.ciudadService = Mock(CiudadService) {
+        controller.depEstadoService = Mock(DepEstadoService) {
             1 * list(_) >> []
             1 * count() >> 0
         }
@@ -26,8 +26,8 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
         controller.index()
 
         then:"The model is correct"
-        !model.ciudadList
-        model.ciudadCount == 0
+        !model.depEstadoList
+        model.depEstadoCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -35,7 +35,7 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
         controller.create()
 
         then:"The model is correctly created"
-        model.ciudad!= null
+        model.depEstado!= null
     }
 
     void "Test the save action with a null instance"() {
@@ -45,14 +45,14 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
         controller.save(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/ciudad/index'
+        response.redirectedUrl == '/depEstado/index'
         flash.message != null
     }
 
     void "Test the save action correctly persists"() {
         given:
-        controller.ciudadService = Mock(CiudadService) {
-            1 * save(_ as Ciudad)
+        controller.depEstadoService = Mock(DepEstadoService) {
+            1 * save(_ as DepEstado)
         }
 
         when:"The save action is executed with a valid instance"
@@ -60,38 +60,38 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
         populateValidParams(params)
-        def ciudad = new Ciudad(params)
-        ciudad.id = 1
+        def depEstado = new DepEstado(params)
+        depEstado.id = 1
 
-        controller.save(ciudad)
+        controller.save(depEstado)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/ciudad/show/1'
+        response.redirectedUrl == '/depEstado/show/1'
         controller.flash.message != null
     }
 
     void "Test the save action with an invalid instance"() {
         given:
-        controller.ciudadService = Mock(CiudadService) {
-            1 * save(_ as Ciudad) >> { Ciudad ciudad ->
-                throw new ValidationException("Invalid instance", ciudad.errors)
+        controller.depEstadoService = Mock(DepEstadoService) {
+            1 * save(_ as DepEstado) >> { DepEstado depEstado ->
+                throw new ValidationException("Invalid instance", depEstado.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
-        def ciudad = new Ciudad()
-        controller.save(ciudad)
+        def depEstado = new DepEstado()
+        controller.save(depEstado)
 
         then:"The create view is rendered again with the correct model"
-        model.ciudad != null
+        model.depEstado != null
         view == 'create'
     }
 
     void "Test the show action with a null id"() {
         given:
-        controller.ciudadService = Mock(CiudadService) {
+        controller.depEstadoService = Mock(DepEstadoService) {
             1 * get(null) >> null
         }
 
@@ -104,20 +104,20 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
 
     void "Test the show action with a valid id"() {
         given:
-        controller.ciudadService = Mock(CiudadService) {
-            1 * get(2) >> new Ciudad()
+        controller.depEstadoService = Mock(DepEstadoService) {
+            1 * get(2) >> new DepEstado()
         }
 
         when:"A domain instance is passed to the show action"
         controller.show(2)
 
         then:"A model is populated containing the domain instance"
-        model.ciudad instanceof Ciudad
+        model.depEstado instanceof DepEstado
     }
 
     void "Test the edit action with a null id"() {
         given:
-        controller.ciudadService = Mock(CiudadService) {
+        controller.depEstadoService = Mock(DepEstadoService) {
             1 * get(null) >> null
         }
 
@@ -130,15 +130,15 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
 
     void "Test the edit action with a valid id"() {
         given:
-        controller.ciudadService = Mock(CiudadService) {
-            1 * get(2) >> new Ciudad()
+        controller.depEstadoService = Mock(DepEstadoService) {
+            1 * get(2) >> new DepEstado()
         }
 
         when:"A domain instance is passed to the show action"
         controller.edit(2)
 
         then:"A model is populated containing the domain instance"
-        model.ciudad instanceof Ciudad
+        model.depEstado instanceof DepEstado
     }
 
 
@@ -149,14 +149,14 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
         controller.update(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/ciudad/index'
+        response.redirectedUrl == '/depEstado/index'
         flash.message != null
     }
 
     void "Test the update action correctly persists"() {
         given:
-        controller.ciudadService = Mock(CiudadService) {
-            1 * save(_ as Ciudad)
+        controller.depEstadoService = Mock(DepEstadoService) {
+            1 * save(_ as DepEstado)
         }
 
         when:"The save action is executed with a valid instance"
@@ -164,31 +164,31 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
         populateValidParams(params)
-        def ciudad = new Ciudad(params)
-        ciudad.id = 1
+        def depEstado = new DepEstado(params)
+        depEstado.id = 1
 
-        controller.update(ciudad)
+        controller.update(depEstado)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/ciudad/show/1'
+        response.redirectedUrl == '/depEstado/show/1'
         controller.flash.message != null
     }
 
     void "Test the update action with an invalid instance"() {
         given:
-        controller.ciudadService = Mock(CiudadService) {
-            1 * save(_ as Ciudad) >> { Ciudad ciudad ->
-                throw new ValidationException("Invalid instance", ciudad.errors)
+        controller.depEstadoService = Mock(DepEstadoService) {
+            1 * save(_ as DepEstado) >> { DepEstado depEstado ->
+                throw new ValidationException("Invalid instance", depEstado.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
-        controller.update(new Ciudad())
+        controller.update(new DepEstado())
 
         then:"The edit view is rendered again with the correct model"
-        model.ciudad != null
+        model.depEstado != null
         view == 'edit'
     }
 
@@ -199,13 +199,13 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
         controller.delete(null)
 
         then:"A 404 is returned"
-        response.redirectedUrl == '/ciudad/index'
+        response.redirectedUrl == '/depEstado/index'
         flash.message != null
     }
 
     void "Test the delete action with an instance"() {
         given:
-        controller.ciudadService = Mock(CiudadService) {
+        controller.depEstadoService = Mock(DepEstadoService) {
             1 * delete(2)
         }
 
@@ -215,7 +215,7 @@ class CiudadControllerSpec extends Specification implements ControllerUnitTest<C
         controller.delete(2)
 
         then:"The user is redirected to index"
-        response.redirectedUrl == '/ciudad/index'
+        response.redirectedUrl == '/depEstado/index'
         flash.message != null
     }
 }
