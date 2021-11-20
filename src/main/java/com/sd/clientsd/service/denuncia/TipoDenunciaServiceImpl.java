@@ -58,7 +58,7 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
     @Override
     public List<TipoDenunciaB> getAll(Integer pageNum) {
         final TipoDenunciaResult tipoDenunciaResult = tipoDenunciaResource.getByPage(pageNum);
-        final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenunciasList() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenunciasList();
+        final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenuncias() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenuncias();
         final List<TipoDenunciaB> beansList = new ArrayList<TipoDenunciaB>();
 
         dtosList.forEach(tipoDenunciaDTO -> beansList.add(convertToBean(tipoDenunciaDTO)));
@@ -68,7 +68,7 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
     public List<TipoDenunciaB> getAllNotPaged() {
         final TipoDenunciaResult tipoDenunciaResult = new TipoDenunciaResult();
                 //tipoDenunciaResource.getAll();
-        final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenunciasList() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenunciasList();
+        final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenuncias() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenuncias();
         final List<TipoDenunciaB> beansList = new ArrayList<TipoDenunciaB>();
 
         dtosList.forEach(tipoDenunciaDTO -> beansList.add(convertToBean(tipoDenunciaDTO)));

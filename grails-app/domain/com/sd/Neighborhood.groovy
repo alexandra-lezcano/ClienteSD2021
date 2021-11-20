@@ -1,5 +1,7 @@
 package com.sd
 
+import com.sd.clientsd.beans.location.CityB
+
 class Neighborhood {
 
     String description

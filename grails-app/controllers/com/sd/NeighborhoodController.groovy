@@ -1,9 +1,7 @@
 package com.sd
 
-import com.sd.clientsd.beans.denuncia.TipoDenunciaB
 import com.sd.clientsd.beans.location.NeighborhoodB
 import com.sd.clientsd.service.location.INeighborhoodService
-import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
 class NeighborhoodController {
