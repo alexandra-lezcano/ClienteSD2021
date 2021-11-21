@@ -52,7 +52,6 @@
                         </g:link>
                     </td>
                 </tr>
-
         </g:each>
         </tbody>
     </table>
@@ -61,6 +60,3 @@
     </div>
 </div>
 </body>
-
-
-

@@ -10,6 +10,7 @@ public abstract class BaseResourceImpl <DTO extends BaseDTO> implements IBaseRes
     private final String resourcePath;
     private final Class<DTO> dtoClass;
     private final WebResource webResource;
+
     //private static final String BASE_URL = "http://localhost:8080";
     private static final String BASE_URL = Configurations.getBaseUrl();
 
