@@ -30,7 +30,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         dto.setAddress(bean.getAddress());
         dto.setEmail(bean.getEmail());
         dto.setPhone(bean.getPhone());
-        dto.setCityId(bean.getCityId());
+//        dto.setCityId(bean.getCityId());
 
         return dto;
     }
@@ -46,7 +46,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         params.put("address", dto.getAddress());
         params.put("email", dto.getEmail());
         params.put("phone", String.valueOf(dto.getPhone()));
-        params.put("cityId", String.valueOf(dto.getCityId()));
+     //  params.put("cityId", String.valueOf(dto.getCityId()));
 
         final UserB bean = new UserB(params);
         return bean;

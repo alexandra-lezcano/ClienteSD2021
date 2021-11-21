@@ -38,7 +38,7 @@ public class UserB extends BaseBean  {
         setAddress(params.get("address"));
         setEmail(params.get("email"));
         setPhone(Integer.valueOf(params.get("phone")));
-        setCityId(Integer.valueOf(params.get("cityId")));
+       // setCityId(Integer.valueOf(params.get("cityId")));
         //setNeighborhoodIds(params.get(""));
         //setDenunciasIds(params.get(""));
     }
@@ -97,37 +97,5 @@ public class UserB extends BaseBean  {
 
     public void setPhone(Integer phone) {
         this.phone = phone;
-    }
-
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    public Set<Integer> getNeighborhoodIds() {
-        return neighborhoodIds;
-    }
-
-    public void setNeighborhoodIds(Set<Integer> neighborhoodIds) {
-        this.neighborhoodIds = neighborhoodIds;
-    }
-
-    public Set<Integer> getDenunciasIds() {
-        return denunciasIds;
-    }
-
-    public void setDenunciasIds(Set<Integer> denunciasIds) {
-        this.denunciasIds = denunciasIds;
     }
 }

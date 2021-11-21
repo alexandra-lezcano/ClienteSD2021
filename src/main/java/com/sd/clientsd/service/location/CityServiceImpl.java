@@ -33,8 +33,8 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
             dto.setId(bean.getId());
         }
 
-        dto.setName(bean.getNombre());
-        dto.setDescription(bean.getDescripcion());
+        dto.setName(bean.getName());
+        dto.setDescription(bean.getDescription());
         return dto;
     }
 
@@ -63,7 +63,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
         CityResult cityResult = cityResource.getByPage(page);
         List<CityDTO> dtosList = new ArrayList<CityDTO>();
 
-        if(cityResult.getCitys()!=null) dtosList = cityResult.getCitys();
+        if(cityResult.getCities()!=null) dtosList = cityResult.getCities();
       //  System.out.println(cityResult.getCities().get(1).getName());
         final List<CityB> beansList = new ArrayList<CityB>();
 
@@ -99,7 +99,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     public List<CityB> getAllNotPaged() {
         final CityResult result = new CityResult();
 
-        final List<CityDTO> dtosList = null == result.getCitys() ? new ArrayList<CityDTO>() : result.getCitys();
+        final List<CityDTO> dtosList = null == result.getCities() ? new ArrayList<CityDTO>() : result.getCities();
         final List<CityB> beansList = new ArrayList<CityB>();
 
         dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
