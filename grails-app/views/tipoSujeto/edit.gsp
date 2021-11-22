@@ -1,3 +1,5 @@
+<%@ page import="com.sd.TipoSujeto" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,23 +18,31 @@
         </div>
         <div id="edit-tipoSujeto" class="content scaffold-edit" role="main">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.tipoSujeto}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.tipoSujeto}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
+            <g:hasErrors bean="${tipoSujetoInstance}">
+                <ul class="errors" role="alert">
+                    <g:eachError bean="${tipoSujetoInstance}" var="error">
+                        <li ><g:message error="${error}"/></li>
+                    </g:eachError>
+                </ul>
             </g:hasErrors>
-            <g:form resource="${this.tipoSujeto}" method="PUT">
-                <g:hiddenField name="version" value="${this.tipoSujeto?.version}" />
+            <g:form bean="${tipoSujetoInstance}" method="PUT">
+                <g:hiddenField name="id" value="${tipoSujetoInstance?.id}" />
                 <fieldset class="form">
-                    <f:all bean="tipoSujeto"/>
+                    <div class="fieldcontain ${hasErrors(bean: tipoSujetoInstance, field: 'titulo','error')}">
+                        <label for="titulo"> Titulo:
+                        <g:textField name="titulo" value="${tipoSujetoInstance?.titulo}"/>
+                        </label>
+                    </div>
                 </fieldset>
                 <fieldset class="buttons">
-                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+
+                    <g:actionSubmit class="save" value="update" />
+                    <g:actionSubmit class="delete"
+                                    value="${message(code: 'default.button.delete.label', default: 'delete')}"
+                                    id="${tipoSujetoInstance?.id}"
+                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
+                    />
+
                 </fieldset>
             </g:form>
         </div>

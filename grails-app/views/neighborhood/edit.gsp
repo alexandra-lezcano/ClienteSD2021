@@ -1,3 +1,5 @@
+<%@ page import="com.sd.Neighborhood" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,23 +18,39 @@
         </div>
         <div id="edit-neighborhood" class="content scaffold-edit" role="main">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.neighborhood}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.neighborhood}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
+            <g:hasErrors bean="${neighborhoodInstance}">
+                <ul class="errors" role="alert">
+                    <g:eachError bean="${neighborhoodInstance}" var="error">
+                        <li ><g:message error="${error}"/></li>
+                    </g:eachError>
+                </ul>
             </g:hasErrors>
-            <g:form resource="${this.neighborhood}" method="PUT">
-                <g:hiddenField name="version" value="${this.neighborhood?.version}" />
+            <g:form bean="${neighborhoodInstance}" method="PUT">
+                <g:hiddenField name="id" value="${neighborhoodInstance?.id}" />
                 <fieldset class="form">
-                    <f:all bean="neighborhood"/>
+                    <div class="fieldcontain ${hasErrors(bean: neighborhoodInstance, field: 'name','error')}">
+                        <label for="name"> Nombre:
+                        <g:textField name="name" value="${neighborhoodInstance?.name}"/>
+                        </label>
+                    </div>
+                    <div class="fieldcontain ${hasErrors(bean: neighborhoodInstance, field: 'description','error')}">
+                        <label for="description"> Descripcion:
+                        <g:textField name="description" value="${neighborhoodInstance?.description}"/>
+                        </label>
+                    </div>
+                    <div class="fieldcontain ${hasErrors(bean: neighborhoodInstance, field: 'city_id','error')}">
+                        <label for="description"> Ciudad:
+                        <g:select id="city" name="city_id" from="${cities}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id?.id}" class="many-to-one"/>
+                        </label>
+                    </div>
                 </fieldset>
-                <fieldset class="buttons">
-                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                <fieldset class="buttons">f
+                    <g:actionSubmit class="save" value="update" />
+                    <g:actionSubmit class="delete"
+                                    value="${message(code: 'default.button.delete.label', default: 'delete')}"
+                                    id="${neighborhoodInstance?.id}"
+                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
+                    />
                 </fieldset>
             </g:form>
         </div>

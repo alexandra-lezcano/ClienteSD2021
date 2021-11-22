@@ -2,7 +2,6 @@ package com.sd
 
 import com.sd.clientsd.beans.denuncia.TipoSujetoB
 import com.sd.clientsd.service.denuncia.ITipoSujetoService
-import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
 class TipoSujetoController {
@@ -12,45 +11,47 @@ class TipoSujetoController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        //params.max = Math.min(max ?: 10, 100)
-        //respond tipoSujetoService.list(params), model:[tipoSujetoCount: tipoSujetoService.count()]
+        redirect(action: 'list', params:params)
+    }
 
-        //todo ver esto!!
-        def tipoSujetos = tipoSujetoService.getAllNotPage();
+    def list(Integer max) {
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def tipoSujetos = tipoSujetoService.getAll(page)
+
         [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size()]
     }
 
     def show(Long id) {
-        //respond tipoSujetoService.get(id)
         TipoSujetoB tipoSujetoB = tipoSujetoService.getById(id)
-        [tipoSujetoInstanceList: tipoSujetoB]
+        [tipoSujetoInstance: tipoSujetoB]
     }
 
     def create() {
-        //respond new TipoSujeto(params)
         [tipoSujetoInstance: new TipoSujeto(params)]
     }
 
     def save() {
         def tipoSujeto = new TipoSujetoB(params)
         def tipoSujetoInstance = tipoSujetoService.save(tipoSujeto)
+
         if(!tipoSujetoInstance.getId()){
-            render(view: "create", model: [tipoDenunciaInstance: tipoSujetoInstance])
+            render(view: "create", model: [tipoSujetoInstance: tipoSujetoInstance])
             return
         }
 
         withFormat{
             html{
-                flash.message = message(code: 'default.created.message', args:[message(code: 'tipoSujeto.label', default: 'tipoSujeto'), tipoSujetoInstance.getId()])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'tipoSujeto.label', default: 'TipoSujeto'), tipoSujetoInstance.getId()])
             }
         }
-        redirect(action: 'index', id: tipoSujetoInstance.getId())
+        redirect(action: "list", id: tipoSujetoInstance.getId())
     }
 
     def edit(Long id) {
-        //respond tipoSujetoService.get(id)
         def tipoSujetoInstance = tipoSujetoService.getById(id.toInteger())
-        if(tipoDenunciaInstance == null){
+
+        if(tipoSujetoInstance == null){
             render status: NOT_FOUND
             redirect(action: "create")
             return
@@ -59,26 +60,29 @@ class TipoSujetoController {
     }
 
     def update() {
-        def tipoSujetoB = new TipoSujeto(params)
+        def tipoSujetoB = new TipoSujetoB(params)
+        if(tipoSujetoB == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
+            return
+        }
         def tipoSujetoBUpdated = tipoSujetoService.update(tipoSujetoB, tipoSujetoB.getId())
-        redirect(action: 'show', id: tipoSujetoBUpdated.getId())
+        redirect(action: 'list')
     }
 
     def delete(Long id) {
-        if (id == null) {
-            notFound()
+        def tipoSujetoInstance = tipoSujetoService.delete(id.toInteger())
+        System.out.println("Se borro "+tipoSujetoInstance.id+" "+tipoSujetoInstance.titulo)
+
+        if(tipoSujetoInstance == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
             return
         }
 
-        tipoSujetoService.delete(id)
+        flash.message = message(code: 'default.deleted.message',  args: [message(code: 'tipoSujeto.label', default: 'TipoSujeto'), id])
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'tipoSujeto.label', default: 'TipoSujeto'), id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        redirect(action: 'list')
     }
 
     protected void notFound() {
