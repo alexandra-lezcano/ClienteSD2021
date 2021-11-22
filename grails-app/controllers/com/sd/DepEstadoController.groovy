@@ -12,14 +12,18 @@ class DepEstadoController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-       // params.max = Math.min(max ?: 10, 100)
-        //respond depEstadoService.list(params), model:[depEstadoCount: depEstadoService.count()]
 
-        def depEstado=depEstadoService.getAllNotPaged()
-                [depEstadoInstanceList:depEstado,depEstadoTotal: depEstado.size()]
-
+        redirect(action: 'list', params:params)
 
     }
+    def list(Integer max) {
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def depEstado =  depEstadoService.getAll(page)
+
+        [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size()]
+    }
+
 
     def show(Long id) {
         DepEstadoB depEstadoB = depEstadoService.getById(id);
@@ -89,46 +93,37 @@ class DepEstadoController {
     def update(DepEstado depEstado) {
 
         def depEstadoB = new DepEstadoB(params)
-        def depEstadoBup= depEstadoService.update(depEstadoB,depEstadoB.getId())
-        redirect(action: "show", id: depEstadoBup.getId())
 
-        /*
-        if (depEstado == null) {
-            notFound()
+
+        if(depEstadoB == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
             return
         }
 
-        try {
-            depEstadoService.save(depEstado)
-        } catch (ValidationException e) {
-            respond depEstado.errors, view:'edit'
-            return
-        }
+        def depEstadoBUpdated = depEstadoService.update(depEstadoB, depEstadoB.getId())
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'depEstado.label', default: 'DepEstado'), depEstado.id])
-                redirect depEstado
-            }
-            '*'{ respond depEstado, [status: OK] }
-        }*/
+        redirect(action: 'list')
+
+
     }
 
     def delete(Long id) {
-        if (id == null) {
-            notFound()
+        def depEstadoInstance = depEstadoService.delete(id.toInteger())
+        System.out.println("Se borro "+depEstadoInstance.id+" "+depEstadoInstance.titulo)
+
+        if(depEstadoInstance == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
             return
         }
 
-        depEstadoService.delete(id)
+        flash.message = message(code: 'default.deleted.message',  args: [message(code: 'depEstado.label', default: 'DepEstado'), id])
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'depEstado.label', default: 'DepEstado'), id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        redirect(action: 'list')
+
+
+
     }
 
     protected void notFound() {
