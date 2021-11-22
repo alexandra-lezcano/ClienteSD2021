@@ -9,7 +9,7 @@ class DepEstadoController {
 
     IDepEstadoService depEstadoService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
 
     def index(Integer max) {
 
@@ -110,7 +110,7 @@ class DepEstadoController {
 
     def delete(Long id) {
         def depEstadoInstance = depEstadoService.delete(id.toInteger())
-        System.out.println("Se borro "+depEstadoInstance.id+" "+depEstadoInstance.titulo)
+
 
         if(depEstadoInstance == null){
             render status: NOT_FOUND
