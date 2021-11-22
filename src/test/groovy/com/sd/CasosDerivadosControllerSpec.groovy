@@ -17,7 +17,7 @@ class CasosDerivadosControllerSpec extends Specification implements ControllerUn
 
     void "Test the index action returns the correct model"() {
         given:
-        controller.casosDerivadosService = Mock(CasosDerivadosService) {
+        controller.casoDerivadoService = Mock(CasosDerivadosService) {
             1 * list(_) >> []
             1 * count() >> 0
         }
@@ -51,7 +51,7 @@ class CasosDerivadosControllerSpec extends Specification implements ControllerUn
 
     void "Test the save action correctly persists"() {
         given:
-        controller.casosDerivadosService = Mock(CasosDerivadosService) {
+        controller.casoDerivadoService = Mock(CasosDerivadosService) {
             1 * save(_ as CasosDerivados)
         }
 
@@ -72,7 +72,7 @@ class CasosDerivadosControllerSpec extends Specification implements ControllerUn
 
     void "Test the save action with an invalid instance"() {
         given:
-        controller.casosDerivadosService = Mock(CasosDerivadosService) {
+        controller.casoDerivadoService = Mock(CasosDerivadosService) {
             1 * save(_ as CasosDerivados) >> { CasosDerivados casosDerivados ->
                 throw new ValidationException("Invalid instance", casosDerivados.errors)
             }
@@ -91,7 +91,7 @@ class CasosDerivadosControllerSpec extends Specification implements ControllerUn
 
     void "Test the show action with a null id"() {
         given:
-        controller.casosDerivadosService = Mock(CasosDerivadosService) {
+        controller.casoDerivadoService = Mock(CasosDerivadosService) {
             1 * get(null) >> null
         }
 
@@ -104,7 +104,7 @@ class CasosDerivadosControllerSpec extends Specification implements ControllerUn
 
     void "Test the show action with a valid id"() {
         given:
-        controller.casosDerivadosService = Mock(CasosDerivadosService) {
+        controller.casoDerivadoService = Mock(CasosDerivadosService) {
             1 * get(2) >> new CasosDerivados()
         }
 
@@ -117,7 +117,7 @@ class CasosDerivadosControllerSpec extends Specification implements ControllerUn
 
     void "Test the edit action with a null id"() {
         given:
-        controller.casosDerivadosService = Mock(CasosDerivadosService) {
+        controller.casoDerivadoService = Mock(CasosDerivadosService) {
             1 * get(null) >> null
         }
 
@@ -130,7 +130,7 @@ class CasosDerivadosControllerSpec extends Specification implements ControllerUn
 
     void "Test the edit action with a valid id"() {
         given:
-        controller.casosDerivadosService = Mock(CasosDerivadosService) {
+        controller.casoDerivadoService = Mock(CasosDerivadosService) {
             1 * get(2) >> new CasosDerivados()
         }
 
@@ -155,7 +155,7 @@ class CasosDerivadosControllerSpec extends Specification implements ControllerUn
 
     void "Test the update action correctly persists"() {
         given:
-        controller.casosDerivadosService = Mock(CasosDerivadosService) {
+        controller.casoDerivadoService = Mock(CasosDerivadosService) {
             1 * save(_ as CasosDerivados)
         }
 
@@ -176,7 +176,7 @@ class CasosDerivadosControllerSpec extends Specification implements ControllerUn
 
     void "Test the update action with an invalid instance"() {
         given:
-        controller.casosDerivadosService = Mock(CasosDerivadosService) {
+        controller.casoDerivadoService = Mock(CasosDerivadosService) {
             1 * save(_ as CasosDerivados) >> { CasosDerivados casosDerivados ->
                 throw new ValidationException("Invalid instance", casosDerivados.errors)
             }
@@ -205,7 +205,7 @@ class CasosDerivadosControllerSpec extends Specification implements ControllerUn
 
     void "Test the delete action with an instance"() {
         given:
-        controller.casosDerivadosService = Mock(CasosDerivadosService) {
+        controller.casoDerivadoService = Mock(CasosDerivadosService) {
             1 * delete(2)
         }
 
