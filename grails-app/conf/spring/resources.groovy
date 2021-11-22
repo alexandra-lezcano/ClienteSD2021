@@ -1,11 +1,11 @@
 import com.sd.SujetoService
+import com.sd.clientsd.rest.CasosDerivados.CasosDerivadosResourceImpl
 import com.sd.clientsd.rest.denuncia.SujetoResourceImpl
-import com.protectionapp.sd2021.dto.casosDerivados.DepEstadoResult
-import com.sd.DepEstadoService
+
 import com.sd.clientsd.rest.CasosDerivados.DepEstadoResourceImpl
 import com.sd.clientsd.rest.denuncia.TipoDenunciaResourceImpl
 import com.sd.clientsd.rest.denuncia.TipoSujetoResourceImpl
-import com.sd.clientsd.service.denuncia.ISujetoService
+import com.sd.clientsd.service.casosDerivados.CasosDerivadosServiceImpl
 import com.sd.clientsd.service.denuncia.SujetoServiceImpl
 import com.sd.clientsd.rest.location.CityResourceImpl
 import com.sd.clientsd.service.casosDerivados.DepEstadoServiceImpl
@@ -23,10 +23,12 @@ beans = {
     cityResource(CityResourceImpl)
     tipoSujetoResource(TipoSujetoResourceImpl)
     sujetoResource(SujetoResourceImpl)
+    casosDerivadosResource(CasosDerivadosResourceImpl)
 
     //services
     cityService(CityServiceImpl)
     depEstadoService(DepEstadoServiceImpl)
+    casoDerivadoService(CasosDerivadosServiceImpl)
     tipoDenunciaService(TipoDenunciaServiceImpl)
     tipoSujetoService(TipoSujetoServiceImpl)
     sujetoService(SujetoServiceImpl)
