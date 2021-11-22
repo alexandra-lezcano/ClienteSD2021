@@ -1,3 +1,5 @@
+<%@ page import="com.sd.TipoSujeto" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,14 +17,7 @@
         </div>
         <div id="list-tipoSujeto" class="content scaffold-list" role="main">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <f:table collection="${tipoSujetoList}" />
-
-            <div class="pagination">
-                <g:paginate total="${tipoSujetoCount ?: 0}" />
-            </div>
+            <f:table collection="${tipoSujetoInstanceList}" properties="['titulo']" />
         </div>
     </body>
 </html>

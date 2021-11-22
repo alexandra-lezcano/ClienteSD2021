@@ -1,3 +1,5 @@
+<%@ page import="com.sd.City" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,23 +18,35 @@
         </div>
         <div id="edit-city" class="content scaffold-edit" role="main">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.city}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.city}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
+            <g:hasErrors bean="${cityInstance}">
+                <ul class="errors" role="alert">
+                    <g:eachError bean="${cityInstance}" var="error">
+                        <li ><g:message error="${error}"/></li>
+                    </g:eachError>
+                </ul>
             </g:hasErrors>
-            <g:form resource="${this.city}" method="PUT">
-                <g:hiddenField name="version" value="${this.city?.version}" />
+            <g:form bean="${cityInstance}" method="PUT">
+                <g:hiddenField name="id" value="${cityInstance?.id}" />
                 <fieldset class="form">
-                    <f:all bean="city"/>
+                    <div class="fieldcontain ${hasErrors(bean: cityInstance, field: 'name','error')}">
+                        <label for="name"> Nombre:
+                        <g:textField name="name" value="${cityInstance?.name}"/>
+                        </label>
+                    </div>
+                    <div class="fieldcontain ${hasErrors(bean: cityInstance, field: 'descripcion','error')}">
+                        <label for="description"> Descripcion:
+                        <g:textField name="description" value="${cityInstance?.description}"/>
+                        </label>
+                    </div>
                 </fieldset>
                 <fieldset class="buttons">
-                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+
+                    <g:actionSubmit class="save" value="update" />
+                    <g:actionSubmit class="delete"
+                                    value="${message(code: 'default.button.delete.label', default: 'delete')}"
+                                    id="${cityInstance?.id}"
+                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
+                    />
                 </fieldset>
             </g:form>
         </div>

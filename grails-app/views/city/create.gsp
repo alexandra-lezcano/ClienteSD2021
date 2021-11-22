@@ -1,3 +1,5 @@
+<%@ page import="com.sd.City" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,19 +17,26 @@
         </div>
         <div id="create-city" class="content scaffold-create" role="main">
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.city}">
+
+            <g:hasErrors bean="${cityInstance}">
             <ul class="errors" role="alert">
-                <g:eachError bean="${this.city}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                <g:eachError bean="${cityInstance}" var="error">
+                    <li><g:message error="${error}"/></li>
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.city}" method="POST">
+            <g:form action="save">
                 <fieldset class="form">
-                    <f:all bean="city"/>
+                    <div class="fieldcontain ${hasErrors(bean: cityInstance, field: 'name','error')}">
+                        <label for="nombre">
+                            Nombre<g:textField name="nombre" value="${cityInstance?.name}"/>
+                        </label>
+                    </div>
+                    <div class="fieldcontain ${hasErrors(bean: cityInstance, field: 'descripcion','error')}">
+                        <label for="descripcion">
+                            Descripcion<g:textField name="descripcion" value="${cityInstance?.description}"/>
+                        </label>
+                    </div>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
