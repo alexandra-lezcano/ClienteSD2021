@@ -1,7 +1,10 @@
 package com.sd.clientsd.service.denuncia;
 
+import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaDTO;
+import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.protectionapp.sd2021.dto.denuncia.TipoSujetoDTO;
 import com.protectionapp.sd2021.dto.denuncia.TipoSujetoResult;
+import com.sd.clientsd.beans.denuncia.TipoDenunciaB;
 import com.sd.clientsd.beans.denuncia.TipoSujetoB;
 import com.sd.clientsd.rest.denuncia.ITipoSujetoResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
@@ -49,9 +52,15 @@ public class TipoSujetoServiceImpl extends BaseServiceImpl<TipoSujetoB, TipoSuje
 
     @Override
     public List<TipoSujetoB> getAll(Integer page) {
-        final TipoSujetoResult tipoSujetoResult = tipoSujetoResource.getByPage(page);
-        final List<TipoSujetoDTO> dtosList = null == tipoSujetoResult.getTipoSujetos() ? new ArrayList<TipoSujetoDTO>() : tipoSujetoResult.getTipoSujetos() ;
-        final List<TipoSujetoB> beansList = new ArrayList<>();
+        TipoSujetoResult tipoSujetoResult = tipoSujetoResource.getByPage(page);
+        List<TipoSujetoDTO> dtosList = new ArrayList<TipoSujetoDTO>();
+
+        if(tipoSujetoResult.getTipoSujetos()!=null) dtosList = tipoSujetoResult.getTipoSujetos();
+
+        System.out.println(tipoSujetoResult.getTipoSujetos().get(1).getNombre());
+
+        final List<TipoSujetoB> beansList = new ArrayList<TipoSujetoB>();
+
         dtosList.forEach(tipoSujetoDTO -> beansList.add(convertToBean(tipoSujetoDTO)));
         return beansList;
     }

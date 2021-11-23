@@ -53,12 +53,8 @@
     <section class="row colset-2-its">
         <h1>Protection App 2021</h1>
 
-        <p>
-            Reporte su denuncia de manera rapida y segura. Lorem ipsum.
-        </p>
-
         <div id="controllers" role="navigation">
-            <h2>Available Controllers:</h2>
+            <h2>Reporte su denuncia de manera rapida y segura.:</h2>
             <ul>
                 <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
                     <li class="controller">

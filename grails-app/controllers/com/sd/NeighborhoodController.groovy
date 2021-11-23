@@ -13,21 +13,29 @@ class NeighborhoodController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        def neighborhoods = neighborhoodService.getAllNotPaged();
-        [neighborhoodList: neighborhoods, neighborhoodTotal: neighborhoods.size()]
+        redirect(action: 'list', params:params)
+    }
+
+    def list(Integer max) {
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def neighborhoods = neighborhoodService.getAll(page)
+
+        [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size()]
     }
 
     def show(Long id) {
-        respond neighborhoodService.get(id)
+        NeighborhoodB neighborhoodB = neighborhoodService.getById(id)
+        [neighborhoodInstance: neighborhoodB]
     }
 
     def create() {
-        [neighborhoodInstance: new Neighborhood(params)]
+        [tipoDenunciaInstance: new TipoDenuncia(params)]
     }
 
-    def save(Neighborhood neighborhood) {
-        def neighborhoodN = new NeighborhoodB(params)
-        def neighborhoodInstance = neighborhoodService.save(neighborhoodN)
+    def save() {
+        def neighborhood = new NeighborhoodB(params)
+        def neighborhoodInstance = neighborhoodService.save(neighborhood)
 
         if(!neighborhoodInstance.getId()){
             render(view: "create", model: [neighborhoodInstance: neighborhoodInstance])
@@ -36,10 +44,10 @@ class NeighborhoodController {
 
         withFormat{
             html{
-                flash.message = message(code: 'default.created.message', args: [message(code: 'tipoDenuncia.label', default: 'TipoDenuncia'), tipoDenunciaInstance.getId()])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'neighborhood.label', default: 'Neighborhood'), neighborhoodInstance.getId()])
             }
         }
-        redirect(action: "index", id: neighborhoodInstance.getId())
+        redirect(action: "show", id: neighborhoodInstance.getId())
     }
 
     def edit(Long id) {
@@ -55,25 +63,31 @@ class NeighborhoodController {
 
     def update(Neighborhood neighborhood) {
         def neighborhoodB = new NeighborhoodB(params)
-        def neighborhoodBUpdated = neighborhoodService.update(neighborhoodB, neighborhoodB.getId())
-        redirect(action: "index", id: neighborhoodBUpdated.getId())
-    }
 
-    def delete(Long id) {
-        if (id == null) {
-            notFound()
+        if(neighborhoodB == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
             return
         }
 
-        neighborhoodService.delete(id)
+        def neighborhoodBUpdated = neighborhoodService.update(neighborhoodB, neighborhoodB.getId())
+        redirect(action: 'list')
+    }
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'neighborhood.label', default: 'Neighborhood'), id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
+    def delete(Long id) {
+        def neighborhoodInstance = neighborhoodService.delete(id.toInteger())
+        System.out.println("Se borro "+neighborhoodInstance.id+" "+neighborhoodInstance.titulo)
+        // como hago para mostrar la tabla en la paginacion que ya estaba?
+
+        if(neighborhoodInstance == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
+            return
         }
+
+        flash.message = message(code: 'default.deleted.message',  args: [message(code: 'tipoDenuncia.label', default: 'TipoDenuncia'), id])
+
+        redirect(action: 'list')
     }
 
     protected void notFound() {

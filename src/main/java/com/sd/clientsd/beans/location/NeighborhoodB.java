@@ -11,6 +11,7 @@ public class NeighborhoodB extends BaseBean {
     private CityB city_id;
 
     public NeighborhoodB(Map<String, String> params){super(params);}
+
     @Override
     protected void create(Map<String, String> params) {
         if(params.containsKey("id") && params.get("id") != null){
@@ -20,8 +21,6 @@ public class NeighborhoodB extends BaseBean {
         }
         setDescription(params.get("description"));
         setName(params.get("name"));
-
-
     }
 
     public String getDescription() {

@@ -18,6 +18,8 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
 
     @Autowired
     private ISujetoresource sujetoResource;
+    @Autowired
+    private ITipoSujetoService tipoSujetoService;
 
     @Override
     protected SujetoDto convertToDTO(SujetoB bean) {
@@ -26,11 +28,10 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
             dto.setId(bean.getId());
         }
         dto.setNombre(bean.getNombre());
-        dto.setTipo_id(bean.getTipo());
+        dto.setTipo_id(bean.getTipo().getId());
         dto.setDireccion(bean.getDireccion());
         dto.setCi(bean.getCi());
         dto.setTelefono(bean.getTelefono());
-       // dto.setDenuncia_id(bean.getDenuncia());
         dto.setCorreo(bean.getCorreo());
         return dto;
     }
@@ -45,9 +46,9 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
         params.put("telefono",dto.getTelefono());
         params.put("correo", dto.getTelefono());
         params.put("tipo", dto.getTipo_id().toString());
-        //params.put("denuncia", dto.getDenuncia_id().toString());
 
         final SujetoB bean = new SujetoB(params);
+        bean.setTipo(tipoSujetoService.getById(dto.getTipo_id()));
         return bean;
     }
 
@@ -87,13 +88,4 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
         return convertToBean(deleted);
     }
 
-    @Override
-    public List<SujetoB> getAllNotPage() {
-        final SujetoResult sujetoResult = new SujetoResult();
-        final List<SujetoDto> dtosList = null == sujetoResult.getSujetos() ? new ArrayList<SujetoDto>() : sujetoResult.getSujetos();
-        final List<SujetoB> beansList = new ArrayList<SujetoB>();
-
-        dtosList.forEach(sujetoDTO -> beansList.add(convertToBean(sujetoDTO)));
-        return beansList;
-    }
 }

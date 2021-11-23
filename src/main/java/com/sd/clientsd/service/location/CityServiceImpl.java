@@ -70,8 +70,6 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
         dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
         return beansList;
 
-
-
     }
 
     @Override
@@ -90,7 +88,6 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
     @Override
     public CityB delete(Integer id) {
-
         final CityDTO c= cityResource.delete(id);
         return convertToBean(c);
 
