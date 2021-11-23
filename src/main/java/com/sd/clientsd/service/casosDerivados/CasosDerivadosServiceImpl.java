@@ -47,7 +47,7 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
         params.put("id",String.valueOf(dto.getId()));
      //   params.put("date",dateToStr);
         params.put("description", dto.getDescription());
-        params.put("trabajador_social_id", Integer.toString(dto.getUser_id()));
+    //    params.put("trabajador_social_id", Integer.toString(dto.getUser_id()));
 
         final CasoDerivadoB bean= new CasoDerivadoB(params);
         return bean;
@@ -71,7 +71,7 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
 
         if(casoDerivadoResult.getCasosDerivados()!=null) dtosList = casoDerivadoResult.getCasosDerivados();
 
-        System.out.println(casoDerivadoResult.getCasosDerivados().get(1).getDate());
+       // System.out.println(casoDerivadoResult.getCasosDerivados().get(1).getDate());
 
         final List<CasoDerivadoB> beansList = new ArrayList<CasoDerivadoB>();
 

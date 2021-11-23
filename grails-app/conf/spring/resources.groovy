@@ -38,7 +38,7 @@ beans = {
     tipoSujetoService(TipoSujetoServiceImpl)
     sujetoService(SujetoServiceImpl)
     neighborhoodService(NeighborhoodServiceImpl)
-  
+
     localeResolver(SessionLocaleResolver) {
         defaultLocale= new java.util.Locale('es');
     }

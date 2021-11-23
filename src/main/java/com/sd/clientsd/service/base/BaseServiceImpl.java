@@ -12,5 +12,5 @@ public abstract class BaseServiceImpl <BEAN extends BaseBean, DTO extends BaseDT
 
     public BaseServiceImpl(){}
     protected abstract DTO convertToDTO(BEAN bean);
-    protected abstract BEAN convertToBean(DTO dto) throws ParseException;
+    protected abstract BEAN convertToBean(DTO dto) ;
 }
