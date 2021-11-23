@@ -15,14 +15,7 @@
         </div>
         <div id="list-city" class="content scaffold-list" role="main">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <f:table collection="${cityList}" />
-
-            <div class="pagination">
-                <g:paginate total="${cityCount ?: 0}" />
-            </div>
+            <f:table collection="${cityInstanceList}" properties="['name', 'description']" />
         </div>
     </body>
 </html>

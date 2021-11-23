@@ -11,7 +11,7 @@ public class SujetoB extends BaseBean {
     private String telefono;
     private String correo;
     private String direccion;
-    private Integer tipo;
+    private TipoSujetoB tipo;
    // private Integer denuncia;
 
     public SujetoB(Map<String, String> params){super(params);}
@@ -24,12 +24,8 @@ public class SujetoB extends BaseBean {
         setCi(params.get("ci"));
         setCorreo(params.get("correo"));
         setDireccion(params.get("direccion"));
-        setTipo(Integer.valueOf(params.get("tipo")));
         setTelefono(params.get("telefono"));
-        //setDenuncia(Integer.valueOf(params.get("denuncia")));
     }
-
-    //public Integer getDenuncia(){return denuncia;}
 
     public String getNombre() {
         return nombre;
@@ -51,11 +47,9 @@ public class SujetoB extends BaseBean {
         return direccion;
     }
 
-    public Integer getTipo() {
+    public TipoSujetoB getTipo() {
         return tipo;
     }
-
-   // public void setDenuncia(Integer denuncia){this.denuncia = denuncia;}
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -77,7 +71,7 @@ public class SujetoB extends BaseBean {
         this.direccion = direccion;
     }
 
-    public void setTipo(Integer tipo) {
+    public void setTipo(TipoSujetoB tipo) {
         this.tipo = tipo;
     }
 }

@@ -1,90 +1,90 @@
 package com.sd
-
-import grails.validation.ValidationException
+import com.sd.clientsd.beans.location.CityB
+import com.sd.clientsd.service.location.ICityService
 import static org.springframework.http.HttpStatus.*
 
 class CityController {
 
-    CityService cityService
+    ICityService cityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond cityService.list(params), model:[cityCount: cityService.count()]
+        redirect(action: 'list', params:params)
     }
 
     def show(Long id) {
-        respond cityService.get(id)
+        CityB cityB = cityService.getById(id)
+        [cityInstance: cityB]
+    }
+
+    def list(Integer max) {
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def cities = cityService.getAll(page)
+
+        [cityInstanceList: cities, citiesTotal: cities.size()]
     }
 
     def create() {
-        respond new City(params)
+        [cityInstance: new City(params)]
     }
 
-    def save(City city) {
-        if (city == null) {
-            notFound()
+    def save() {
+        def city = new CityB(params)
+        def cityInstance = cityService.save(city)
+
+        if(!cityInstance.getId()){
+            render(view: "create", model: [cityInstance: cityInstance])
             return
         }
 
-        try {
-            cityService.save(city)
-        } catch (ValidationException e) {
-            respond city.errors, view:'create'
-            return
-        }
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'city.label', default: 'City'), city.id])
-                redirect city
+        // Muestra un mensajito por defecto
+        withFormat{
+            html{
+                flash.message = message(code: 'default.created.message', args: [message(code: 'city.label', default: 'City'), cityInstance.getId()])
             }
-            '*' { respond city, [status: CREATED] }
         }
+        redirect(action: "list")
     }
 
     def edit(Long id) {
-        respond cityService.get(id)
+        def cityInstance = cityService.getById(id.toInteger())
+
+        if(cityInstance == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
+            return
+        }
+        [cityInstance: cityInstance]
     }
 
     def update(City city) {
-        if (city == null) {
-            notFound()
+        def cityB = new CityB(params)
+
+        if(cityB == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
             return
         }
 
-        try {
-            cityService.save(city)
-        } catch (ValidationException e) {
-            respond city.errors, view:'edit'
-            return
-        }
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'city.label', default: 'City'), city.id])
-                redirect city
-            }
-            '*'{ respond city, [status: OK] }
-        }
+        def cityBUpdated = cityService.update(cityB, cityB.getId())
+        redirect(action: 'list')
     }
 
     def delete(Long id) {
-        if (id == null) {
-            notFound()
+        def cityInstance = cityService.delete(id.toInteger())
+        System.out.println("Se borro "+cityInstance.id+" "+cityInstance.titulo)
+
+        if(cityInstance == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
             return
         }
 
-        cityService.delete(id)
+        flash.message = message(code: 'default.deleted.message',  args: [message(code: 'ciy.label', default: 'City'), id])
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'city.label', default: 'City'), id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        redirect(action: 'list')
     }
 
     protected void notFound() {

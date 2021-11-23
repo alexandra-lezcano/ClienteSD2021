@@ -29,12 +29,12 @@
                 <fieldset class="form">
                 <div class="fieldcontain ${hasErrors(bean: tipoDenunciaInstance, field: 'titulo','error')}">
                         <label for="titulo">
-                            <g:textField name="titulo" value="${tipoDenunciaInstance?.titulo}"/>
+                            Titulo<g:textField name="titulo" value="${tipoDenunciaInstance?.titulo}"/>
                         </label>
                 </div>
                 <div class="fieldcontain ${hasErrors(bean: tipoDenunciaInstance, field: 'descripcion','error')}">
                         <label for="descripcion">
-                            <g:textField name="descripcion" value="${tipoDenunciaInstance?.descripcion}"/>
+                            Descripcion<g:textField name="descripcion" value="${tipoDenunciaInstance?.descripcion}"/>
                         </label>
                 </div>
                 </fieldset>

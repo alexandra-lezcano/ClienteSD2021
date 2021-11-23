@@ -1,13 +1,15 @@
+<%@ page import="com.sd.TipoSujeto" %>
 
-<%@ page import="com.sd.City" %>
 <html>
+
 <head>
     <meta name="layout" content="main" />
-    <g:set var="entityName" value="${message(code: 'city.label', default: 'City')}" />
+    <g:set var="entityName" value="${message(code: 'tipoSujeto.label', default: 'TipoSujeto')}" />
     <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
+
 <body>
-<a href="#list-tipoDenuncia" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+<a href="#list-tipoSujeto" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 
 <div class="nav" role="navigation">
     <ul>
@@ -16,36 +18,31 @@
     </ul>
 </div>
 
-<div id="list-city" class="content scaffold-list" role="main">
+<div id="list-tipoSujeto" class="content scaffold-list" role="main">
 
     <h1><g:message code="default.list.label" args="[entityName]" /></h1>
 
     <table>
         <thead>
         <tr>
-            <g:sortableColumn property="name"
-                              title="${message(code: 'city.label', default: 'Nombre')}" />
+            <g:sortableColumn property="titulo"
+                              title="${message(code: 'tipoSujeto.label', default: 'Titulo')}" />
 
-            <th>Descripcion</th>
             <th>Accion</th>
         </tr>
         </thead>
         <tbody>
-        <g:each in="${cityInstanceList}" status="i" var="cityInstance">
+        <g:each in="${tipoSujetoInstanceList}" status="i" var="tipoSujetoInstance">
+
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
                 <td>
-                    <g:link class="edit" action="edit" id="${cityInstance?.id}">
-                        ${fieldValue(bean: cityInstance, field: "name")}</g:link>
-                </td>
-
-                <td>
-                    ${fieldValue(bean: cityInstance, field: "description")}
+                    <g:link class="edit" action="edit" id="${tipoSujetoInstance?.id}">
+                        ${fieldValue(bean: tipoSujetoInstance, field: "titulo")}</g:link>
                 </td>
                 <td>
                     <g:link class="delete"
                             action="delete"
-                            id="${cityInstance?.id}"
+                            id="${tipoSujetoInstance?.id}"
                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');">
                         Borrar
                     </g:link>
@@ -55,10 +52,7 @@
         </tbody>
     </table>
     <div class="pagination">
-        <g:paginate total="${citiesTotal}" />
+        <g:paginate total="${tipoSujetosTotal}" />
     </div>
 </div>
 </body>
-
-
-
