@@ -9,10 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository(value = "tipoDenunciaResource")
 public class TipoDenunciaResourceImpl extends BaseResourceImpl<TipoDenunciaDTO> implements ITipoDenunciaResource{
     private static final String RESOURCE_PATH = Configurations.getTipoDenunciaResource();
-    // todo agregar esto a un archivo de configuracion!
-   /* public TipoDenunciaResourceImpl() {
-        super(TipoDenunciaDTO.class, "/tipoDenuncias");
-    }*/
 
     public TipoDenunciaResourceImpl() {
         super(TipoDenunciaDTO.class, RESOURCE_PATH);
