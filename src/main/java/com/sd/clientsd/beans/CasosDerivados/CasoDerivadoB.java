@@ -28,7 +28,7 @@ public class CasoDerivadoB extends BaseBean {
 
 
         setDescription(params.get("description"));
-        setTrabajador_social_id(Integer.valueOf(params.get("trabajador_social_id")));
+      //  setTrabajador_social_id(Integer.valueOf(params.get("trabajador_social_id")));
 
 
     }

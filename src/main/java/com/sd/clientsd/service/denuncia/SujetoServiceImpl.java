@@ -52,6 +52,8 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
         return bean;
     }
 
+
+
     @Override
     public SujetoB save(SujetoB bean) {
         final SujetoDto dto = convertToDTO(bean);

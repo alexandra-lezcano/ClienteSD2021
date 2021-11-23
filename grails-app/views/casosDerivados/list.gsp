@@ -42,7 +42,7 @@
                         ${fieldValue(bean: casosDerivadosInstance, field: "date")}</g:link>
                 </td>
                 <td>
-                    ${fieldValue(bean: casosDerivadosInstance, field: "descripcion")}
+                    ${fieldValue(bean: casosDerivadosInstance, field: "description")}
                 </td>
                 <td>
                     <g:link class="delete"
