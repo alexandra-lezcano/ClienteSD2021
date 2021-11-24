@@ -22,6 +22,7 @@ class NeighborhoodController {
 
         def neighborhoods = neighborhoodService.getAll(page)
 
+
         [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size()]
 
 
@@ -42,11 +43,21 @@ class NeighborhoodController {
     }
 
     def create() {
-        [tipoDenunciaInstance: new TipoDenuncia(params)]
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def cities = cityService.getAll(page)
+
+        [cityInstanceList: cities, citiesTotal: cities.size(),
+        cityInstance: new City(params),neighborhoodInstance: new Neighborhood (params)]
+
     }
 
     def save() {
         def neighborhood = new NeighborhoodB(params)
+
+
+      //  neighborhood.setCity_id(cityService.getById(neighborhoodInstance.city_id.id))
+
         def neighborhoodInstance = neighborhoodService.save(neighborhood)
 
         if(!neighborhoodInstance.getId()){
