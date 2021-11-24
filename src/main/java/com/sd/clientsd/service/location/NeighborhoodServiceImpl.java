@@ -42,6 +42,7 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
         params.put("name", dto.getName());
         final NeighborhoodB bean = new NeighborhoodB(params);
         bean.setCity_id(cityService.getById(dto.getCity_id()));
+
         return bean;
     }
 
@@ -49,6 +50,7 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     public NeighborhoodB save(NeighborhoodB bean) {
         final NeighborhoodDTO dto = convertToDTO(bean);
         final NeighborhoodDTO neighborhoodDTO  = neighborhoodResource.save(dto);
+
         final NeighborhoodB neighborhoodB = convertToBean(neighborhoodDTO);
         return neighborhoodB;
     }

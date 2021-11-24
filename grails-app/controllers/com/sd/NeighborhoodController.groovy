@@ -47,6 +47,7 @@ class NeighborhoodController {
 
     def save() {
         def neighborhood = new NeighborhoodB(params)
+
         def neighborhoodInstance = neighborhoodService.save(neighborhood)
 
         if(!neighborhoodInstance.getId()){

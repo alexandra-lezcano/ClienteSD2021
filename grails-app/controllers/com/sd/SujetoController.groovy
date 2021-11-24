@@ -1,88 +1,90 @@
 package com.sd
 
-import com.sd.clientsd.beans.denuncia.SujetoB
-import com.sd.clientsd.service.denuncia.ISujetoService
+import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
 class SujetoController {
 
-    ISujetoService sujetoService
+    SujetoService sujetoService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        redirect(action: 'list', params:params)
+        params.max = Math.min(max ?: 10, 100)
+        respond sujetoService.list(params), model:[sujetoCount: sujetoService.count()]
     }
 
     def show(Long id) {
-        SujetoB SujetoB = sujetoService.getById(id)
-        [sujetoInstance: sujetoB]
+        respond sujetoService.get(id)
     }
 
     def create() {
-        [sujetoInstance: new Sujeto(params)]
+        respond new Sujeto(params)
     }
 
-    def list(Integer max) {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
-
-        def sujetos = sujetoService.getAll(page)
-
-        [sujetoInstanceList: sujetos, sujetosTotal: sujetos.size()]
-    }
-
-    def save() {
-        def sujeto = new SujetoB(params)
-        def sujetoInstance = sujetoService.save(sujeto)
-        if(!sujetoInstance.getId()){
-            render(view: "create", model: [sujetoInstance: sujetoInstance])
+    def save(Sujeto sujeto) {
+        if (sujeto == null) {
+            notFound()
             return
         }
 
-        withFormat{
-            html{
-                flash.message = message(code: 'default.created.message', args: [message(code: 'sujeto.label', default: 'sujeto'), sujetoInstance.getId()])
-            }
+        try {
+            sujetoService.save(sujeto)
+        } catch (ValidationException e) {
+            respond sujeto.errors, view:'create'
+            return
         }
-        redirect(action: "index", id: sujeto.getId())
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'sujeto.label', default: 'Sujeto'), sujeto.id])
+                redirect sujeto
+            }
+            '*' { respond sujeto, [status: CREATED] }
+        }
     }
 
     def edit(Long id) {
-        def sujetoInstance = sujetoService.getById(id.toInteger())
-
-        if(sujetoInstance == null){
-            render status: NOT_FOUND
-            redirect(action: "create")
-            return
-        }
-        [sujetoInstance: sujetoInstance]
+        respond sujetoService.get(id)
     }
 
-    def update() {
-        def sujetoB = new SujetoB(params)
-
-        if(sujetoB == null){
-            render status: NOT_FOUND
-            redirect(action: "create")
+    def update(Sujeto sujeto) {
+        if (sujeto == null) {
+            notFound()
             return
         }
 
-        def sujetoBUpdated = sujetoService.update(sujetoB, sujetoB.getId())
-        redirect(action: 'list')
+        try {
+            sujetoService.save(sujeto)
+        } catch (ValidationException e) {
+            respond sujeto.errors, view:'edit'
+            return
+        }
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'sujeto.label', default: 'Sujeto'), sujeto.id])
+                redirect sujeto
+            }
+            '*'{ respond sujeto, [status: OK] }
+        }
     }
 
     def delete(Long id) {
-        def sujetoInstance = sujetoService.delete(id.toInteger())
-
-        if(sujetoInstance == null){
-            render status: NOT_FOUND
-            redirect(action: "create")
+        if (id == null) {
+            notFound()
             return
         }
 
-        flash.message = message(code: 'default.deleted.message',  args: [message(code: 'sujeto.label', default: 'Sujeto'), id])
+        sujetoService.delete(id)
 
-        redirect(action: 'list')
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'sujeto.label', default: 'Sujeto'), id])
+                redirect action:"index", method:"GET"
+            }
+            '*'{ render status: NO_CONTENT }
+        }
     }
 
     protected void notFound() {

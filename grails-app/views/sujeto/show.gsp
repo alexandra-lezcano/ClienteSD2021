@@ -16,30 +16,13 @@
         </div>
         <div id="show-sujeto" class="content scaffold-show" role="main">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
-
-            <ul>
-                <li>
-                    <f:display bean="tipoDenunciaInstance" property="nombre"/>
-                </li>
-                <li>
-                    <f:display bean="tipoDenunciaInstance" property="ci"/>
-                </li>
-                <li>
-                    <f:display bean="tipoDenunciaInstance" property="telefono"/>
-                </li>
-                <li>
-                    <f:display bean="tipoDenunciaInstance" property="correo"/>
-                </li>
-                <li>
-                    <f:display bean="tipoDenunciaInstance" property="direccion"/>
-                </li>
-                <li>
-                    <f:display bean="tipoDenunciaInstance" property="tipo.titulo"/>
-                </li>
-            </ul>
-            <g:form resource="${sujetoInstance}" method="DELETE">
+            <g:if test="${flash.message}">
+            <div class="message" role="status">${flash.message}</div>
+            </g:if>
+            <f:display bean="sujeto" />
+            <g:form resource="${this.sujeto}" method="DELETE">
                 <fieldset class="buttons">
-                    <g:link class="edit" action="edit" id="${sujetoInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                    <g:link class="edit" action="edit" resource="${this.sujeto}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                 </fieldset>
             </g:form>

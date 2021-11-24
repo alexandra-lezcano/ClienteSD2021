@@ -1139,3 +1139,38 @@ html, body, .st-container, .st-pusher, .st-content {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.error-page{
+    background-color: #C9E9FC;
+    display: table;
+    width: 100%;
+
+    /*Arreglar este*/
+    height: 640px;
+}
+
+.E404{
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bolder;
+    font-size: 8em;
+}
+
+.E404-text{
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 3em;
+    font-weight: Bold;
+}
+
+.logo{
+    width: 100%;
+}
+
+.sad{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 30%;
+}
+
+.separar{
+    margin-top: 40px;
+}

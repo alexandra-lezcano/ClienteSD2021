@@ -16,57 +16,23 @@
         </div>
         <div id="edit-sujeto" class="content scaffold-edit" role="main">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-            <g:hasErrors bean="${sujetoInstance}">
-                <ul class="errors" role="alert">
-                    <g:eachError bean="${sujetoInstance}" var="error">
-                        <li ><g:message error="${error}"/></li>
-                    </g:eachError>
-                </ul>
+            <g:if test="${flash.message}">
+            <div class="message" role="status">${flash.message}</div>
+            </g:if>
+            <g:hasErrors bean="${this.sujeto}">
+            <ul class="errors" role="alert">
+                <g:eachError bean="${this.sujeto}" var="error">
+                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                </g:eachError>
+            </ul>
             </g:hasErrors>
-            <g:form bean="${sujetoInstance}" method="PUT">
-                <g:hiddenField name="id" value="${sujetoInstance?.id}" />
+            <g:form resource="${this.sujeto}" method="PUT">
+                <g:hiddenField name="version" value="${this.sujeto?.version}" />
                 <fieldset class="form">
-                    <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'nombre','error')}">
-                        <label for="nombre">
-                            Nombre: <g:textField name="nombre" value="${sujetoInstance?.nombre}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'ci','error')}">
-                        <label for="ci">
-                            C.I.: <g:textField name="ci" value="${sujetoInstance?.ci}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'telefono','error')}">
-                        <label for="telefono">
-                            Telefono: <g:textField name="telefono" value="${sujetoInstance?.telefono}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'correo','error')}">
-                        <label for="correo">
-                            Correo: <g:textField name="correo" value="${sujetoInstance?.correo}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'direccion','error')}">
-                        <label for="direccion">
-                            Direccion: <g:textField name="direccion" value="${sujetoInstance?.direccion}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'tipo','error')}">
-                        <label for="tipo">
-                            <g:select id="tipo" name="tipo" from="${tipoSujetos}" optionKey="id" optionValue="titulo" required="" value="${sujetoInstance?.tipo?.id}"/>
-                        </label>
-                    </div>
-
+                    <f:all bean="sujeto"/>
                 </fieldset>
                 <fieldset class="buttons">
-
-                    <g:actionSubmit class="save" value="update" />
-                    <g:actionSubmit class="delete"
-                                    value="${message(code: 'default.button.delete.label', default: 'delete')}"
-                                    id="${sujetoInstance?.id}"
-                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
-                    />
-
+                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
                 </fieldset>
             </g:form>
         </div>
