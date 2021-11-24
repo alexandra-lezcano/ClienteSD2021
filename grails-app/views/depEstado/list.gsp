@@ -29,7 +29,7 @@
             <g:sortableColumn property="name"
                               title="${message(code: 'depEstado.label', default: 'Nombre')}" />
 
-            <th>Description</th>
+            <th>Descripcion</th>
             <th>Accion</th>
         </tr>
         </thead>
