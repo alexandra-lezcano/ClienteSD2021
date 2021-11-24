@@ -50,7 +50,7 @@ class UserController {
         // creo que no hace falta redireccionar a ningun lado :p
         withFormat{
             html{
-                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'depEstado'), depEstadoInstance.getId()])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'Usuario'), user.getId()])
             }
         }
     }
