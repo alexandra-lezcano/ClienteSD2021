@@ -29,7 +29,6 @@ pre {
 /* customizing bootstrap nav bar */
 .navbar {
     margin-bottom: 0px;
-    padding-right: 110px;
 }
 .navbar .container {
     margin: 10px;
@@ -44,7 +43,7 @@ pre {
 
 }
 .navbar-dark, .navbar-static-top {
-    background-color: #424649;
+    background-color: #67CDFD;
     border: 0px;
 }
 a.navbar-brand {
@@ -136,11 +135,11 @@ a.navbar-brand {
 }
 
 .svg #band {
-    background-image: url(../img/grails-cupsonly-logo-white.svg);
+    background-image: url(../images/grails-cupsonly-logo-white.svg);
 }
 
 .no-svg #band {
-    background-image: url(../img/groovy-logo-white.png);
+    background-image: url(../images/groovy-logo-white.png);
 }
 
 @media (max-width: 1010px) {
@@ -451,11 +450,8 @@ h8 {
 
 #footer {
     background: #f2f2f2;
-    text-align: center;
-    font-size: 14px;
-    padding: 20px 0 30px;
+    padding: 20px 0 20px;
     margin-top: 30px;
-    color: #AAA
 }
 
 #footer .col-right {
@@ -623,6 +619,16 @@ h8 {
     padding-right: 1%;
     padding-left: 1%;
 }
+
+.colset-2-its{
+    min-width: 100%;
+    min-height: 100%;
+    position: fixed;
+    background-image: url(../images/img/back.jpg);
+    background-position: center top;
+    background-size: 100% auto;
+}
+
 
 #content .colset-2-its .col2 {
     padding-left: 1%;
@@ -1075,4 +1081,61 @@ html, body, .st-container, .st-pusher, .st-content {
     .presentations .img.screenshot, .video .metadata {
         float: none;
     }
+}
+
+/*Custom*/
+.texto-titulo{
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 3em;
+    margin:0;
+}
+.texto-frase{
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    color: white;
+    font-size: 2em;
+    margin: 0;
+}
+.boton-denuncia{
+    max-height: 100px;
+    max-width: 100%;
+    padding: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.padding-5{
+    padding: 3%;
+    height: fit-content;
+}
+
+.fix-width{
+    min-width: 100%;
+    padding: 0;
+}
+
+.footer{
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2em;
+}
+.contenedor{
+    min-height: 100%;
+    min-width: 100%;
+    padding: 0;
+}
+
+.boton, .boton-adm{
+    margin-right: 10px;
+}
+
+.boton-adm{
+    min-width: 100%;
+}
+
+.botones{
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

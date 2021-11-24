@@ -2,6 +2,7 @@
 body,
 input, select, textarea {
     font-family: "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -22,6 +23,7 @@ html {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    width: 100%;
 }
 
 html.no-cssgradients {
@@ -36,13 +38,13 @@ body {
     background-color: #F5F5F5;
     color: #333333;
     overflow-x: hidden; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
-    -moz-box-shadow: 0 0 0.3em #424649;
-    -webkit-box-shadow: 0 0 0.3em #424649;
-    box-shadow: 0 0 0.3em #424649;
+    -moz-box-shadow: 0 0 0.3em #67CDFD;
+    -webkit-box-shadow: 0 0 0.3em #67CDFD;
+    box-shadow: 0 0 0.3em #67CDFD;
 }
 
 #grailsLogo {
-    background-color: #feb672;
+    background-color: #67CDFD;
 }
 
 a:hover, a:active {
@@ -97,14 +99,17 @@ img {
 }
 
 .footer {
-    background: #424649;
+    background: #67CDFD;
     color: #ffffff;
     clear: both;
+    position: fixed;
+    min-width: 100%;
+    bottom: 0;
     font-size: 1em;
     margin-top: 1.5em;
     padding: 1em;
     padding-bottom: 2em;
-    min-height: 1em;
+    min-height: 2em;
 }
 
 .footer a {
@@ -194,7 +199,7 @@ img {
 }
 
 .nav li.dropdown.show ul.dropdown-menu {
-    background-color: #424649;
+    background-color: #67CDFD;
 }
 
 /* CREATE/EDIT FORMS AND SHOW PAGES */

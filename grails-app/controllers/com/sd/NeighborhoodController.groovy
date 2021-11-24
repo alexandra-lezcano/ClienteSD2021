@@ -2,6 +2,7 @@ package com.sd
 
 import com.sd.clientsd.beans.denuncia.TipoDenunciaB
 import com.sd.clientsd.beans.location.NeighborhoodB
+import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.service.location.INeighborhoodService
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
@@ -9,6 +10,7 @@ import static org.springframework.http.HttpStatus.*
 class NeighborhoodController {
 
     INeighborhoodService neighborhoodService
+    ICityService cityService;
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -30,7 +32,11 @@ class NeighborhoodController {
     }
 
     def create() {
-        [tipoDenunciaInstance: new TipoDenuncia(params)]
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def cities = cityService.getAll(page)
+
+        [tipoDenunciaInstance: new TipoDenuncia(params), cityInstanceList: cities]
     }
 
     def save() {
