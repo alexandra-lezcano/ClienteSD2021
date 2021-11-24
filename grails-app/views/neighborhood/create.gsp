@@ -1,5 +1,5 @@
 <%@ page import="com.sd.Neighborhood" %>
-
+<%@ page import="com.sd.City" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,7 +18,7 @@
         <div id="create-neighborhood" class="content scaffold-create" role="main">
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
 
-            <g:hasErrors bean="${tipoDenunciaInstance}">
+            <g:hasErrors bean="${neighborhoodInstance}">
                 <ul class="errors" role="alert">
                     <g:eachError bean="${neighborhoodInstance}" var="error">
                         <li><g:message error="${error}"/></li>
@@ -38,7 +38,9 @@
                         </label>
                     </div>
                     <div class="fieldcontain ${hasErrors(bean: neighborhoodInstance, field: 'city_id','error')}">
-                        <g:select id="city" name="city_id" from="${cities}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id?.id}"/>
+                        <g:select id="city" name="city_id" from="${cityInstanceList}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id?.id}"/>
+
+
                     </div>
                 </fieldset>
                 <fieldset class="buttons">

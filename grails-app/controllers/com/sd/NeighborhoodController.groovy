@@ -1,5 +1,6 @@
 package com.sd
-
+import com.sd.clientsd.beans.location.CityB
+import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.beans.denuncia.TipoDenunciaB
 import com.sd.clientsd.beans.location.NeighborhoodB
 import com.sd.clientsd.service.location.INeighborhoodService
@@ -9,7 +10,7 @@ import static org.springframework.http.HttpStatus.*
 class NeighborhoodController {
 
     INeighborhoodService neighborhoodService
-
+    ICityService cityService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -21,8 +22,20 @@ class NeighborhoodController {
 
         def neighborhoods = neighborhoodService.getAll(page)
 
+
         [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size()]
+
+
     }
+
+    def listCities(Integer max) {
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def cities = cityService.getAll(page)
+
+        [cityInstanceList: cities, citiesTotal: cities.size()]
+    }
+
 
     def show(Long id) {
         NeighborhoodB neighborhoodB = neighborhoodService.getById(id)
@@ -30,11 +43,21 @@ class NeighborhoodController {
     }
 
     def create() {
-        [tipoDenunciaInstance: new TipoDenuncia(params)]
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def cities = cityService.getAll(page)
+
+        [cityInstanceList: cities, citiesTotal: cities.size(),
+        cityInstance: new City(params),neighborhoodInstance: new Neighborhood (params)]
+
     }
 
     def save() {
         def neighborhood = new NeighborhoodB(params)
+
+System.out.println("param"+params['city_id'])
+        neighborhood.setCity_id(cityService.getById(Integer.parseInt(params['city_id'])))
+
         def neighborhoodInstance = neighborhoodService.save(neighborhood)
 
         if(!neighborhoodInstance.getId()){
@@ -47,7 +70,7 @@ class NeighborhoodController {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'neighborhood.label', default: 'Neighborhood'), neighborhoodInstance.getId()])
             }
         }
-        redirect(action: "show", id: neighborhoodInstance.getId())
+        redirect(action: "list", id: neighborhoodInstance.getId())
     }
 
     def edit(Long id) {
