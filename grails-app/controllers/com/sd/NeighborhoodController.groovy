@@ -1,5 +1,6 @@
 package com.sd
-
+import com.sd.clientsd.beans.location.CityB
+import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.beans.denuncia.TipoDenunciaB
 import com.sd.clientsd.beans.location.NeighborhoodB
 import com.sd.clientsd.service.location.INeighborhoodService
@@ -9,7 +10,7 @@ import static org.springframework.http.HttpStatus.*
 class NeighborhoodController {
 
     INeighborhoodService neighborhoodService
-
+    ICityService cityService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -22,7 +23,18 @@ class NeighborhoodController {
         def neighborhoods = neighborhoodService.getAll(page)
 
         [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size()]
+
+
     }
+
+    def listCities(Integer max) {
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def cities = cityService.getAll(page)
+
+        [cityInstanceList: cities, citiesTotal: cities.size()]
+    }
+
 
     def show(Long id) {
         NeighborhoodB neighborhoodB = neighborhoodService.getById(id)
