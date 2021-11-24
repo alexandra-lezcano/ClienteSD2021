@@ -1,7 +1,6 @@
 package com.sd.clientsd.beans.base;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.Map;
 
 /*
@@ -24,5 +23,5 @@ public abstract class BaseBean implements Serializable {
         this.id = id;
     }
 
-    protected abstract void create(Map<String,String> params) ;
+    protected abstract void create(Map<String,String> params);
 }
