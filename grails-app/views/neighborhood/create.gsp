@@ -1,6 +1,5 @@
 <%@ page import="com.sd.Neighborhood" %>
 <%@ page import="com.sd.City" %>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,7 +38,9 @@
                         </label>
                     </div>
                     <div class="fieldcontain ${hasErrors(bean: neighborhoodInstance, field: 'city_id','error')}">
-                        Ciudad<g:select id="city" name="city_id" from="${cityInstanceList}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id}"/>
+                        <g:select id="city" name="city_id" from="${cityInstanceList}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id?.id}"/>
+
+
                     </div>
                 </fieldset>
                 <fieldset class="buttons">

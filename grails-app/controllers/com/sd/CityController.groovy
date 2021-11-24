@@ -7,7 +7,7 @@ class CityController {
 
     ICityService cityService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
 
     def index(Integer max) {
         redirect(action: 'list', params:params)
@@ -82,7 +82,7 @@ class CityController {
             return
         }
 
-        flash.message = message(code: 'default.deleted.message',  args: [message(code: 'ciy.label', default: 'City'), id])
+        flash.message = message(code: 'default.deleted.message',  args: [message(code: 'city.label', default: 'City'), id])
 
         redirect(action: 'list')
     }

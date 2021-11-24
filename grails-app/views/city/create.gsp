@@ -28,13 +28,13 @@
             <g:form action="save">
                 <fieldset class="form">
                     <div class="fieldcontain ${hasErrors(bean: cityInstance, field: 'name','error')}">
-                        <label for="nombre">
-                            Nombre<g:textField name="nombre" value="${cityInstance?.name}"/>
+                        <label for="name">
+                            Nombre<g:textField name="name" value="${cityInstance?.name}"/>
                         </label>
                     </div>
-                    <div class="fieldcontain ${hasErrors(bean: cityInstance, field: 'descripcion','error')}">
-                        <label for="descripcion">
-                            Descripcion<g:textField name="descripcion" value="${cityInstance?.description}"/>
+                    <div class="fieldcontain ${hasErrors(bean: cityInstance, field: 'description','error')}">
+                        <label for="description">
+                            Descripcion<g:textField name="description" value="${cityInstance?.description}"/>
                         </label>
                     </div>
                 </fieldset>

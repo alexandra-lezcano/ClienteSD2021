@@ -42,7 +42,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     protected CityB convertToBean(CityDTO dto) {
         final Map<String,String> params = new HashMap<>();
         params.put("id",String.valueOf(dto.getId()));
-        params.put("nombre",dto.getName());
+        params.put("name",dto.getName());
         params.put("description", dto.getDescription());
 
         final CityB bean= new CityB(params);
