@@ -11,3 +11,7 @@ out/
 .settings
 .classpath
 lib/protectionapp-2021.jar
+*.log
+src/integration-test/groovy/com/sd/UserServiceSpec.groovy
+src/test/groovy/com/sd/UserControllerSpec.groovy
+src/test/groovy/com/sd/UserSpec.groovy

@@ -5,8 +5,14 @@ import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.sd.clientsd.beans.denuncia.TipoDenunciaB;
 import com.sd.clientsd.rest.denuncia.ITipoDenunciaResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import com.sd.clientsd.utils.config.Configurations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +23,8 @@ import java.util.Map;
 public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, TipoDenunciaDTO> implements ITipoDenunciaService {
     @Autowired
     private ITipoDenunciaResource tipoDenunciaResource;
+
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
     @Override
     protected TipoDenunciaDTO convertToDTO(TipoDenunciaB bean) {
@@ -82,20 +90,26 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
     }
 
     @Override
+    @Cacheable(value=Configurations.CACHE_NAME, key = "'web_tipo_denuncia_'+#id")
     public TipoDenunciaB getById(Integer id) {
+        logger.info("getById test");
         final TipoDenunciaDTO tipoDenunciaDTO = tipoDenunciaResource.getById(id);
         return convertToBean(tipoDenunciaDTO);
     }
 
     @Override
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_tipo_denuncia_'+#id")
     public TipoDenunciaB update(TipoDenunciaB bean, Integer id) {
+        logger.info("update test");
         final TipoDenunciaDTO dto = convertToDTO(bean);
         final TipoDenunciaDTO updated = tipoDenunciaResource.update(dto, id);
         return convertToBean(updated);
     }
 
     @Override
+    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_tipo_denuncia_'+#id")
     public TipoDenunciaB delete(Integer id) {
+        logger.info("delete test");
         System.out.println("Hasta aca llegue...id: "+id);
         final TipoDenunciaDTO deleted = tipoDenunciaResource.delete(id);
         System.out.println("Se borro algo?..."+ deleted.getId());
