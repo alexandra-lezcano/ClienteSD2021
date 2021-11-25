@@ -1,6 +1,5 @@
 <%@ page import="com.sd.DepEstado" %>
 
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,14 +28,14 @@
 
                 <g:form action="save">
                 <fieldset class="form">
-                    <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'nombre','error')}">
-                        <label for="nombre"> Nombre:
-                        <g:textField name="nombre" value="${depEstadoInstance?.nombre}"/>
+                    <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'name','error')}">
+                        <label for="name"> Nombre:
+                        <g:textField name="name" value="${depEstadoInstance?.name}"/>
                         </label>
                     </div>
-                    <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'descripcion','error')}">
+                    <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'description','error')}">
                         <label for="description"> Descripcion:
-                        <g:textField name="description" value="${depEstadoInstance?.descripcion}"/>
+                        <g:textField name="description" value="${depEstadoInstance?.description}"/>
                         </label>
                     </div>
                     <button type="submit" class="separar btn btn-success col-md-6 col-sm-12 rellenar">Crear</button>
