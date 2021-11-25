@@ -1159,7 +1159,7 @@ html, body, .st-container, .st-pusher, .st-content {
 }
 
 .logo{
-    width: 100%;
+    max-width: 100px;
 }
 
 .sad{
@@ -1178,7 +1178,7 @@ html, body, .st-container, .st-pusher, .st-content {
 
 .sin-margin{
     margin-right: 0;
-    margin-left: 0;
+    margin-left: 2em;
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 0;
@@ -1193,7 +1193,48 @@ html, body, .st-container, .st-pusher, .st-content {
     margin-left: 2%;
 }
 
-
 .margen-sm {
     margin-top: 1%;
+}
+
+/*Sticky footer*/
+.wrap {
+    min-height: 100%;
+}
+.main {
+    overflow:auto;
+    padding-bottom: 50px;
+}  /* must be same height as the footer */
+.footer {
+    position: relative;
+    margin-top: -50px; /* negative value of footer height */
+    height: 50px;
+    clear:both;
+
+}
+
+#h1{
+    font-size: 3em;
+}
+
+.header-fix{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 95px;
+    z-index: 10;
+    -webkit-box-shadow: 0 7px 8px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 7px 8px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 7px 8px rgba(0, 0, 0, 0.12);
+}
+
+.contenido{
+    padding-top: 95px;
+}
+
+.titulo-logo{
+    font-family: "Roboto Black";
+    padding: 10px;
+    font-size: 2.5em;
 }

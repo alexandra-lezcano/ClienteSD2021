@@ -32,11 +32,13 @@ class SujetoController {
 
         def tipoSujetos = tipoSujetoService.getAll(page)
 
-        [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size(), sujetoInstance: new Sujeto(params)]
+        [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size(),
+         tipoSujetoInstance: new TipoSujeto(params), sujetoInstance: new Sujeto(params)]
     }
 
     def save() {
         def sujeto = new SujetoB(params)
+        sujeto.setTipo(tipoSujetoService.getById(Integer.parseInt(params['tipo'])))
         def sujetoInstance = sujetoService.save(sujeto)
 
         if(!sujetoInstance.getId()){
@@ -45,7 +47,7 @@ class SujetoController {
         }
         withFormat{
             html{
-                flash.message = message(code: 'default.created.message', args: [message(code: 'sujeto.label', default: 'Sujeto'), tipoDenunciaInstance.getId()])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'sujeto.label', default: 'Sujeto'), sujetoInstance.getId()])
             }
         }
         redirect(action: "index", id: sujetoInstance.getId())
