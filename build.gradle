@@ -35,7 +35,9 @@ configurations {
 }
 
 dependencies {
-   // developmentOnly("org.springframework.boot:spring-boot-devtools")
+    implementation 'org.jetbrains:annotations:20.1.0'
+
+    // developmentOnly("org.springframework.boot:spring-boot-devtools")
    // compile "org.springframework.boot:spring-boot-starter-logging"
     compile ('org.springframework.boot:spring-boot-autoconfigure'){
         exclude group: 'ch.qos.logback', module: 'logback-classic'

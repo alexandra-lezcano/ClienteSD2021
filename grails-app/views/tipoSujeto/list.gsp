@@ -39,6 +39,7 @@
                 <td>
                     <g:link class="delete"
                             action="delete"
+                            value="delete"
                             id="${tipoSujetoInstance?.id}"
                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');">
                         Borrar

@@ -127,7 +127,6 @@ class TipoDenunciaController {
 
         redirect(action: 'list')
 
-
     }
 
     protected void notFound() {

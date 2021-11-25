@@ -1,0 +1,6 @@
+depestado - error de redireccion
+casos derivados - error de redireccion
+barrio falta borrar
+tipo sujeto elegir, listar
+cambiar denuncias y caso der tiene que ser uno a muchos 
+falta borrar boton de guardar cambios

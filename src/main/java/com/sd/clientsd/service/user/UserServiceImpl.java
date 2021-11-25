@@ -69,13 +69,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 
     @Override
     public List<UserB> getAll(Integer page) {
+        logger.info("Test GETALL - ");
         final UserResult userResult = userResource.getByPage(page);
         List<UserDTO> userDTOS = new ArrayList<>();
         if(userResult.getUsers()!=null) userDTOS = userResult.getUsers();
 
         final List<UserB> beansList = new ArrayList<>();
         userDTOS.forEach(userDTO -> beansList.add(convertToBean(userDTO)));
-
+        logger.info("USUER LIST - 0 "+beansList.get(0).getName());
         return beansList;
     }
 

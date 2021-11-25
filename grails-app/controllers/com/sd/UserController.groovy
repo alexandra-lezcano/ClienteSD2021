@@ -8,16 +8,17 @@ class UserController {
 
     IUserService userService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
 
-    def index(Integer max) {
+    // tiene que estar vacio el metodo
+    def index() {
        //params.max = Math.min(max ?: 10, 100)
         //respond userService.list(params), model:[userCount: userService.count()]
         redirect(action: 'list', params:params)
     }
 
     def list(Integer max){
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
         def users = userService.getAll(page)
         [userInstanceList: users, usersTotal: users.size()]
     }
@@ -53,14 +54,19 @@ class UserController {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'Usuario'), user.getId()])
             }
         }
+
+        redirect(action: "list")
     }
 
     // todo tolerancia a fallos
+    /*IMPORTANTE - el g:form debe ser BEAN no RESOURCE porque sino te redirecciona mal
+    * <g:form bean="${userInstance}" method="PUT"> */
     def edit(Long id) {
         def userInstance = userService.getById(id.toInteger())
 
-        if (!userInstance.getId()) {
-            respond notFound(), view: 'create'
+        if (userInstance == null) {
+            render status: NOT_FOUND
+            redirect(action: "create")
             return
         }
 
@@ -68,21 +74,24 @@ class UserController {
     }
 
     // todo - actualizar usuario con todos los fk de las demas tablas
+    /* <g:actionSubmit class="save"
+                       value="${message(code: 'default.button.update.label')}"
+                       action="update"/>
+
+    Note to self: la accion debe dirigirme a este metodo, value uso solo para
+    mostrar el boton en es */
     def update() {
         def userInstance = new UserB(params);
 
-        if (!userInstance.getId()) {
-            respond notFound(), view:'edit'
+        if (userInstance == null) {
+            render status: NOT_FOUND
+            redirect(action: "list")
             return
         }
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.getId()])
-                redirect(action: 'list')
-            }
-            '*'{ respond userInstance, [status: OK] }
-        }
+        def userBUpdated = userService.update(userInstance, userInstance.getId())
+        System.out.println("Se actualizo user con id -- "+userInstance.getId());
+        redirect(action: 'list')
     }
 
     def delete(Long id) {
@@ -92,14 +101,8 @@ class UserController {
         }
 
         def userInstance = userService.delete(id.toInteger())
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), userInstance.getId()])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        System.out.println("Se borro user con id -- "+userInstance.getId());
+        redirect(action: 'list')
     }
 
     protected void notFound() {

@@ -3,11 +3,16 @@ package com.sd.clientsd.service.location;
 import com.protectionapp.sd2021.dto.localization.NeighborhoodDTO;
 import com.protectionapp.sd2021.dto.localization.NeighborhoodResult;
 import com.sd.clientsd.beans.location.NeighborhoodB;
+import com.sd.clientsd.rest.location.ICityResource;
 import com.sd.clientsd.rest.location.INeighborhoodResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import com.sd.clientsd.utils.config.Configurations;
+
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +27,9 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
     @Autowired
     private ICityService cityService;
+
+    @Autowired
+    private ICityResource cityResource;
 
     @Override
     protected NeighborhoodDTO convertToDTO(NeighborhoodB bean) {
@@ -47,7 +55,9 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
         final NeighborhoodB bean = new NeighborhoodB(params);
 
-        bean.setCity_id(cityService.getById(dto.getCity_id()));
+        if(dto.getCity_id()!=0){
+            bean.setCity_id(cityService.getById(dto.getCity_id()));
+        }
 
         return bean;
     }
@@ -88,12 +98,14 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     @Override
+    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_neighborhood_'+#id")
     public NeighborhoodB getById(Integer id) {
         final NeighborhoodDTO neighborhoodDTO = neighborhoodResource.getById(id);
         return convertToBean(neighborhoodDTO);
     }
 
     @Override
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_neighborhood_'+#id")
     public NeighborhoodB update(NeighborhoodB bean, Integer id) {
         final NeighborhoodDTO dto = convertToDTO(bean);
         final NeighborhoodDTO updated = neighborhoodResource.update(dto, id);
@@ -101,8 +113,18 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     @Override
+    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_neighborhood_'+#id")
     public NeighborhoodB delete(Integer id) {
         final NeighborhoodDTO deleted = neighborhoodResource.delete(id);
         return convertToBean(deleted);
+    }
+
+    public List<NeighborhoodB> convertDtoListToBList(@NotNull List<NeighborhoodDTO> dtos){
+        final List<NeighborhoodB> beans = new ArrayList<>();
+        dtos.forEach(neighborhoodDTO -> {
+            neighborhoodDTO.setCity_id(0);
+            beans.add(convertToBean(neighborhoodDTO));
+        });
+        return beans;
     }
 }

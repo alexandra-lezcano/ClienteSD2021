@@ -29,18 +29,18 @@
                 <fieldset class="form">
                     <div class="fieldcontain ${hasErrors(bean: neighborhoodInstance, field: 'name','error')}">
                         <label for="name">
-                            Nombre<g:textField name="name" value="${neighborhoodInstance?.name}"/>
+                            Nombre: <g:textField name="name" value="${neighborhoodInstance?.name}"/>
                         </label>
                     </div>
                     <div class="fieldcontain ${hasErrors(bean: neighborhoodInstance, field: 'description','error')}">
                         <label for="description">
-                            Descripcion<g:textField name="description" value="${neighborhoodInstance?.description}"/>
+                            Descripcion: <g:textField name="description" value="${neighborhoodInstance?.description}"/>
                         </label>
                     </div>
                     <div class="fieldcontain ${hasErrors(bean: neighborhoodInstance, field: 'city_id','error')}">
-                        <g:select id="city" name="city_id" from="${cityInstanceList}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id?.id}"/>
-
-
+                        <label for="city_id">
+                           Ciudad: <g:select id="city" name="city_id" from="${cityInstanceList}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id?.id}"/>
+                        </label>
                     </div>
                     <button type="submit" class="separar btn btn-success col-md-6 col-sm-12 rellenar">Crear</button>
                 </fieldset>
