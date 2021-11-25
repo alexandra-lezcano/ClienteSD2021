@@ -37,10 +37,11 @@
                         <g:textField name="description" value="${cityInstance?.description}"/>
                         </label>
                     </div>
-
-                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="Guardar Cambios" />
+                </fieldset>
+                <fieldset>
+                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="update" />
                     <g:actionSubmit class="margen-sm col-md-6 col-sm-12 delete btn-secondary"
-                                    value="${message(code: 'default.button.delete.label', default: 'delete')}"
+                                    value="delete"
                                     id="${cityInstance?.id}"
                                     onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
                     />
