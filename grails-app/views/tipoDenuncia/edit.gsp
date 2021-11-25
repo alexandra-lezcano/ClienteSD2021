@@ -9,13 +9,12 @@
     </head>
     <body>
         <a href="#edit-tipoDenuncia" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-            </ul>
+    <div class="nav" role="navigation">
+        <div class="row sin-margin">
+            <g:link class="" action="create"><button class="rellenar col-sm-6 col-xs-12 btn btn-primary">Crear Tipo de denuncia</button></g:link>
+            <g:link class="" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Lista de Tipos de denuncia</button></g:link>
         </div>
+    </div>
         <div id="edit-tipoDenuncia" class="content scaffold-edit" role="main">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
             <g:hasErrors bean="${tipoDenunciaInstance}">
@@ -38,12 +37,13 @@
                             <g:textField name="descripcion" value="${tipoDenunciaInstance?.descripcion}"/>
                         </label>
                     </div>
-                </fieldset>
-                <fieldset class="buttons">
+                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="Guardar Cambios" />
+                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 delete btn-secondary"
+                                    value="${message(code: 'default.button.delete.label', default: 'delete')}"
+                                    id="${tipoDenunciaInstance?.id}"
+                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
+                    />
 
-                    <g:actionSubmit class="save"
-                                    value="${message(code: 'default.button.update.label')}"
-                                    action="update"/>
                 </fieldset>
             </g:form>
         </div>

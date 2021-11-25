@@ -9,9 +9,9 @@
 <div class="error-page text-center">
     <asset:image class="sad col-md-6 col-sm-12 text-left" src="hazard-sign-svgrepo-com.svg" alt="SAD!"/>
     <div class="col-md-6 col-sm-12 float-right">
-        <h2 class="E404-text separar">¡Ha ocurrido un error en el servidor!</h2>
+        <h2 class="E404-text">¡Ha ocurrido un error en el servidor!</h2>
         <g:link uri="/">
-            <button  class="boton-denuncia separar bajar btn btn-danger">
+            <button  class="boton-denuncia btn btn-danger">
                 Volver al inicio
             </button>
         </g:link>

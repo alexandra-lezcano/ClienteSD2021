@@ -12,17 +12,16 @@
 <a href="#list-depEstado" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 
 <div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-    </ul>
+    <div class="row sin-margin">
+        <g:link class="" action="create"><button class="rellenar col-sm-6 col-xs-12 btn btn-primary">Crear Dependencia del Estado</button></g:link>
+        <g:link class="" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Lista de Dependencias</button></g:link>
+    </div>
 </div>
 
 <div id="list-depEstado" class="content scaffold-list" role="main">
 
-    <h1><g:message code="default.list.label" args="[entityName]" /></h1>
 
-    <table>
+    <table class="table table-striped table-bordered tabla-options">
         <thead>
         <tr>
 

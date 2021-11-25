@@ -46,9 +46,7 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
         params.put("telefono",dto.getTelefono());
         params.put("correo", dto.getTelefono());
         params.put("tipo", dto.getTipo_id().toString());
-
         final SujetoB bean = new SujetoB(params);
-        bean.setTipo(tipoSujetoService.getById(dto.getTipo_id()));
         return bean;
     }
 

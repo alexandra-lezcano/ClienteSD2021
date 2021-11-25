@@ -100,6 +100,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
     @Override
     public CityB delete(Integer id) {
+        System.out.println("ID: "+id);
         final CityDTO c= cityResource.delete(id);
         return convertToBean(c);
 

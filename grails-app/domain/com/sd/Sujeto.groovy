@@ -6,8 +6,7 @@ class Sujeto {
     String telefono; 
     String correo; 
     String direccion; 
-    Integer tipo; 
-    //Denuncia denuncia
+    TipoSujeto tipo; 
     static constraints = {
     }
 }

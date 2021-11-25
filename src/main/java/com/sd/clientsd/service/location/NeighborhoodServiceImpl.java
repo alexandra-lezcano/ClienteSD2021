@@ -63,6 +63,7 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
         final NeighborhoodDTO dto = convertToDTO(bean);
 
         final NeighborhoodDTO neighborhoodDTO  = neighborhoodResource.save(dto);
+
         final NeighborhoodB neighborhoodB = convertToBean(neighborhoodDTO);
 
         return neighborhoodB;

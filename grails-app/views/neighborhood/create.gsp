@@ -9,12 +9,12 @@
     </head>
     <body>
         <a href="#create-neighborhood" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-            </ul>
+    <div class="nav" role="navigation">
+        <div class="row sin-margin">
+            <g:link class="" action="create"><button class="rellenar col-sm-6 col-xs-12 btn btn-primary">Crear Barrio</button></g:link>
+            <g:link class="" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Lista de Barrios</button></g:link>
         </div>
+    </div>
         <div id="create-neighborhood" class="content scaffold-create" role="main">
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
 
@@ -42,9 +42,7 @@
                            Ciudad: <g:select id="city" name="city_id" from="${cityInstanceList}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id?.id}"/>
                         </label>
                     </div>
-                </fieldset>
-                <fieldset class="buttons">
-                    <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <button type="submit" class="separar btn btn-success col-md-6 col-sm-12 rellenar">Crear</button>
                 </fieldset>
             </g:form>
         </div>

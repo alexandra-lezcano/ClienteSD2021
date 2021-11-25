@@ -1,3 +1,5 @@
+<%@ page import="com.sd.Sujeto" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,23 +9,22 @@
     </head>
     <body>
         <a href="#create-sujeto" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-            </ul>
+    <div class="nav" role="navigation">
+        <div class="row sin-margin">
+            <g:link class="" action="create"><button class="rellenar col-sm-6 col-xs-12 btn btn-primary">Crear Sujeto</button></g:link>
+            <g:link class="" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Lista de Sujetos</button></g:link>
         </div>
+    </div>
         <div id="create-sujeto" class="content scaffold-create" role="main">
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
 
-            <g:hasErrors bean="${this.sujetoInstance}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.sujetoInstance}" var="error">
-                    <li><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
+            <g:hasErrors bean="${sujetoInstance}">
+                <ul class="errors" role="alert">
+                    <g:eachError bean="${sujetoInstance}" var="error">
+                        <li><g:message error="${error}"/></li>
+                    </g:eachError>
+                </ul>
             </g:hasErrors>
-
             <g:form action="save">
                 <fieldset class="form">
                     <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'nombre','error')}">
@@ -33,7 +34,7 @@
                     </div>
                     <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'ci','error')}">
                         <label for="ci">
-                            C.I.: <g:textField name="ci" value="${sujetoInstance?.ci}"/>
+                            Ci: <g:textField name="ci" value="${sujetoInstance?.ci}"/>
                         </label>
                     </div>
                     <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'telefono','error')}">
@@ -53,13 +54,10 @@
                     </div>
                     <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'tipo','error')}">
                         <label for="tipo">
-                            <g:select id="tipo" name="tipo" from="${tipoSujetos}" optionKey="id" optionValue="titulo" required="" value="${sujetoInstance?.tipo?.id}"/>
+                        Tipo: <g:select id="tipo" name="tipo" from="${tipoSujetoInstanceList}" optionKey="id" optionValue="titulo" required="" value="${sujetoInstance?.tipo}"/>
                         </label>
                     </div>
-
-                </fieldset>
-                <fieldset class="buttons">
-                    <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <button type="submit" class="separar btn btn-success col-md-6 col-sm-12 rellenar">Crear</button>
                 </fieldset>
             </g:form>
         </div>
