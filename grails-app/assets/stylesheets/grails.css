@@ -578,8 +578,7 @@ h8 {
 }
 
 #content hr.row, #content hr.divider {
-    border: 0 none;
-    border-top: 1px solid #EEE;
+    border: 1px solid #EEE;
     margin: 0 5%;
     margin-top: 40px
 }
@@ -830,13 +829,11 @@ ul.nav-sidebar li.active a {
 
 .table thead tr th {
     padding: 10px;
-    font-weight: normal;
     font-size: 18px
 }
 
 .table tbody tr td {
     vertical-align: top;
-    font-size: 12px;
     padding: 10px;
     border-top: 1px solid #EEE
 }
@@ -1085,14 +1082,14 @@ html, body, .st-container, .st-pusher, .st-content {
 
 /*Custom*/
 .texto-titulo{
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Roboto;
     font-weight: bold;
     color: white;
     font-size: 3em;
     margin:0;
 }
 .texto-frase{
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Roboto;
     font-weight: normal;
     color: white;
     font-size: 2em;
@@ -1116,7 +1113,7 @@ html, body, .st-container, .st-pusher, .st-content {
 }
 
 .footer{
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Roboto;
     font-size: 2em;
 }
 .contenedor{
@@ -1150,13 +1147,13 @@ html, body, .st-container, .st-pusher, .st-content {
 }
 
 .E404{
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Roboto;
     font-weight: bolder;
     font-size: 8em;
 }
 
 .E404-text{
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Roboto;
     font-size: 3em;
     font-weight: Bold;
 }
@@ -1173,4 +1170,30 @@ html, body, .st-container, .st-pusher, .st-content {
 
 .separar{
     margin-top: 40px;
+}
+
+.rellenar{
+    min-width: 100%;
+}
+
+.sin-margin{
+    margin-right: 0;
+    margin-left: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+.tabla-options{
+    font-family: Roboto;
+}
+
+.scaffold-list{
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+
+.margen-sm {
+    margin-top: 1%;
 }

@@ -17,7 +17,11 @@
                 </ul>
             </li>
         </ul>
-        <button class="boton btn btn-warning text-right">Iniciar Sesion</button>
-        <button class="btn text-right btn-primary">Registrarse</button>
+        <g:link resource="user" action="login">
+            <button class="boton btn btn-warning text-right">Iniciar Sesion</button>
+        </g:link>
+        <g:link resource="user" action="register">
+            <button class="btn text-right btn-primary">Registrarse</button>
+        </g:link>
     </div>
 </nav>

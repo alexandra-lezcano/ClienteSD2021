@@ -59,7 +59,12 @@ class SujetoController {
             redirect(action: "create")
             return
         }
-        [sujetoInstance: sujetoInstance]
+
+        def page=null ==params['tipo'] ? 1 : Integer.valueOf(params['tipo'])
+
+        def tipoSujetos = tipoSujetoService.getAll(page)
+
+        [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size(), sujetoInstance: sujetoInstance]
     }
 
     def update(Long id) {

@@ -20,6 +20,7 @@ class TipoSujetoController {
         def tipoSujetos = tipoSujetoService.getAll(page)
 
         [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size()]
+
     }
 
     def show(Long id) {
