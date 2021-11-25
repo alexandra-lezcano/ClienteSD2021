@@ -9,7 +9,10 @@ import com.sd.clientsd.beans.CasosDerivados.DepEstadoB;
 import com.sd.clientsd.rest.CasosDerivados.ICasosDerivadosResource;
 import com.sd.clientsd.rest.CasosDerivados.IDepEstadoResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 
@@ -90,12 +93,14 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
     }
 
     @Override
+    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_casos_derivados_'+#id")
     public CasoDerivadoB getById(Integer id) {
         final CasosDerivadosDTO dto= casosDerivadoResource.getById(id);
         return convertToBean(dto);
     }
 
     @Override
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_casos_derivados_'+#id")
     public CasoDerivadoB update(CasoDerivadoB bean, Integer id)  {
         final CasosDerivadosDTO dto= convertToDTO(bean);
         final CasosDerivadosDTO nuevo= casosDerivadoResource.update(dto,id);
@@ -103,6 +108,7 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
     }
 
     @Override
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_casos_derivados_'+#id")
     public CasoDerivadoB delete(Integer id) {
 
         final CasosDerivadosDTO d= casosDerivadoResource.delete(id);
