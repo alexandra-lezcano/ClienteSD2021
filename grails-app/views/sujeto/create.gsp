@@ -54,7 +54,7 @@
                     </div>
                     <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'tipo','error')}">
                         <label for="tipo">
-                        Tipo: <g:select id="tipo" name="tipo" from="${tipoSujetoInstanceList}" optionKey="id" optionValue="titulo" required="" value="${sujetoInstance?.tipo}"/>
+                        Tipo: <g:select id="tipo" name="tipo" from="${tipoSujetoInstanceList}" optionKey="id" optionValue="titulo" required="" value="${sujetoInstance?.tipo?.id}"/>
                         </label>
                     </div>
                     <button type="submit" class="separar btn btn-success col-md-6 col-sm-12 rellenar">Crear</button>

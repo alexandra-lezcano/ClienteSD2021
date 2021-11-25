@@ -15,15 +15,16 @@
 </head>
 
 <body>
-<div class="container contenedor">
-
-<g:render template="/layouts/header"/>
-
-<g:layoutBody/>
-
-<div class="footer row text-center" role="contentinfo">
-    <p>Protection App - Sistemas de Gestion - 2021</p>
-</div>
+    <div class="container contenedor">
+        <div class="wrap">
+            <div class="main">
+                <g:render template="/layouts/header"/>
+                <div class="contenido"><g:layoutBody/></div>
+            </div>
+        </div>
+        <div class="footer text-center" role="contentinfo">
+            <p>Protection App - Sistemas de Gestion - 2021</p>
+        </div>
 
 
 <div id="spinner" class="spinner" style="display:none;">

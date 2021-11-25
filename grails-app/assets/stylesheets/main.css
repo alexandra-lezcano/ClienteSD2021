@@ -7,6 +7,7 @@ input, select, textarea {
 
 h1, h2, h3, h4, h5, h6 {
     line-height: 1.1;
+    font-family: Roboto;
 }
 
 /* BASE LAYOUT */
@@ -219,15 +220,13 @@ fieldset,
     zoom: 1;
 }
 
-.fieldcontain {
-    margin-top: 1em;
-}
 
 .fieldcontain label,
 .fieldcontain .property-label {
     color: #666666;
-    text-align: right;
-    width: 25%;
+    text-align: left;
+    font-family: Roboto;
+    width: 50%;
 }
 
 .fieldcontain .property-label {

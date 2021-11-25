@@ -29,12 +29,12 @@
         <fieldset class="form">
             <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'nombre','error')}">
                 <label for="nombre"> Nombre:
-                <g:textField name="nombre" value="${depEstadoInstance?.nombre}"/>
+                Nombre: <g:textField name="nombre" value="${depEstadoInstance?.nombre}"/>
                 </label>
             </div>
             <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'description','error')}">
                 <label for="description"> Descripcion:
-                <g:textField name="description" value="${depEstadoInstance?.descripcion}"/>
+                Descripcion: <g:textField name="description" value="${depEstadoInstance?.descripcion}"/>
                 </label>
             </div>
             <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="Guardar Cambios" />

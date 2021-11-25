@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class DepEstadoB extends BaseBean {
     private static final long serialVersionUID = 1L;
-String nombre;
-String descripcion;
+    String nombre;
+    String descripcion;
     public DepEstadoB(Map<String, String> params) {
         super(params);
     }

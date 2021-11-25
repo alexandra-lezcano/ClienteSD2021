@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class SujetoB extends BaseBean {
 
-    ITipoSujetoService tipoSujetoService;
 
     private static final long serialVersionUID = 1L;
     private String nombre;
@@ -28,7 +27,6 @@ public class SujetoB extends BaseBean {
         setCorreo(params.get("correo"));
         setDireccion(params.get("direccion"));
         setTelefono(params.get("telefono"));
-        setTipo(tipoSujetoService.getById(Integer.parseInt(params.get("tipo"))));
     }
 
     public String getNombre() {
