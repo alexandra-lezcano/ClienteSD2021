@@ -70,8 +70,6 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
 
         if(tipoDenunciaResult.getTipoDenuncias()!=null) dtosList = tipoDenunciaResult.getTipoDenuncias();
 
-        System.out.println(tipoDenunciaResult.getTipoDenuncias().get(1).getTitulo());
-
       // final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenunciasList() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenunciasList();
         final List<TipoDenunciaB> beansList = new ArrayList<TipoDenunciaB>();
 

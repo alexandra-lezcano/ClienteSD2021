@@ -57,8 +57,6 @@ public class TipoSujetoServiceImpl extends BaseServiceImpl<TipoSujetoB, TipoSuje
 
         if(tipoSujetoResult.getTipoSujetos()!=null) dtosList = tipoSujetoResult.getTipoSujetos();
 
-        System.out.println(tipoSujetoResult.getTipoSujetos().get(1).getNombre());
-
         final List<TipoSujetoB> beansList = new ArrayList<TipoSujetoB>();
 
         dtosList.forEach(tipoSujetoDTO -> beansList.add(convertToBean(tipoSujetoDTO)));

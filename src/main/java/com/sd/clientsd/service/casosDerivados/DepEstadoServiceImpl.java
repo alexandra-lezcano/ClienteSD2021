@@ -68,8 +68,6 @@ return bean;
 
         if(depEstadoResult.getDepEstados()!=null) dtosList = depEstadoResult.getDepEstados();
 
-        System.out.println(depEstadoResult.getDepEstados().get(1).getName());
-
         final List<DepEstadoB> beansList = new ArrayList<DepEstadoB>();
 
         dtosList.forEach(depEstadoDTO -> beansList.add(convertToBean(depEstadoDTO)));
