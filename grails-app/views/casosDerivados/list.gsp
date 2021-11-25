@@ -24,7 +24,7 @@
         <tr>
 
             <g:sortableColumn property="date"
-                              title="${message(code: 'depEstado.label', default: 'date')}" />
+                              title="${message(code: 'depEstado.label', default: 'Fecha')}" />
 
             <th>Description</th>
             <th>Accion</th>

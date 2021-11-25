@@ -7,7 +7,8 @@ import com.sd.clientsd.rest.location.ICityResource;
 import com.sd.clientsd.rest.location.INeighborhoodResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import com.sd.clientsd.utils.config.Configurations;
-import org.jetbrains.annotations.NotNull;
+
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
