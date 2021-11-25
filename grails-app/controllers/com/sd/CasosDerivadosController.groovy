@@ -53,7 +53,7 @@ class CasosDerivadosController {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'casosDerivados.label', default: 'casosDerivados'), casosDerivadosInstance.getId()])
             }
         }
-        redirect(action: "index", id: casosDerivadosInstance.getId())
+        redirect(action: "list", id: casosDerivadosInstance.getId())
 
 
     }

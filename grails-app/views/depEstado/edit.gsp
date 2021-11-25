@@ -32,7 +32,7 @@
                 Nombre: <g:textField name="nombre" value="${depEstadoInstance?.nombre}"/>
                 </label>
             </div>
-            <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'description','error')}">
+            <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'descripcion','error')}">
                 <label for="description"> Descripcion:
                 Descripcion: <g:textField name="description" value="${depEstadoInstance?.descripcion}"/>
                 </label>

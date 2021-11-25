@@ -5,6 +5,8 @@ import com.protectionapp.sd2021.dto.localization.NeighborhoodResult;
 import com.sd.clientsd.beans.location.NeighborhoodB;
 import com.sd.clientsd.rest.location.INeighborhoodResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import com.sd.clientsd.utils.config.Configurations;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

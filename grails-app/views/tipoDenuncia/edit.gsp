@@ -37,6 +37,8 @@
                             <g:textField name="descripcion" value="${tipoDenunciaInstance?.descripcion}"/>
                         </label>
                     </div>
+                </fieldset>
+                <fieldset>
                     <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="Guardar Cambios" />
                     <g:actionSubmit class="margen-sm col-md-6 col-sm-12 delete btn-secondary"
                                     value="${message(code: 'default.button.delete.label', default: 'delete')}"

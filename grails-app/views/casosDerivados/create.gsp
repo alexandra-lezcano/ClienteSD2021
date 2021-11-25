@@ -29,13 +29,13 @@
 
     <g:form action="save">
         <fieldset class="form">
-            <div class="fieldcontain ${hasErrors(bean: casosDerivadosInstance, field: 'name','error')}">
-                <label for="date">
+            <div class="fieldcontain ${hasErrors(bean: casosDerivadosInstance, field: 'date','error')}">
+                <label for="date">Fecha
                     <g:textField name="date" value="${casosDerivadosInstance?.date}"/>
                 </label>
             </div>
             <div class="fieldcontain ${hasErrors(bean: casosDerivadosInstance, field: 'description','error')}">
-                <label for="description">
+                <label for="description">Descripcion
                     <g:textField name="description" value="${depEstadoInstance?.description}"/>
                 </label>
             </div>
