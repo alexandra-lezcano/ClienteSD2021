@@ -2,12 +2,15 @@ package com.sd.clientsd.beans.location;
 
 import com.sd.clientsd.beans.base.BaseBean;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class CityB extends BaseBean {
     private static final long serialVersionUID = 1L;
     private String name;
     private String description;
+    private List<NeighborhoodB> neighborhoodBList;
 
     public CityB(Map<String, String> params){super(params);}
 
@@ -20,6 +23,7 @@ public class CityB extends BaseBean {
         }
         setName(params.get("name"));
         setDescription(params.get("description"));
+        this.neighborhoodBList = new ArrayList<>();
     }
 
     public String getName() {
@@ -36,5 +40,13 @@ public class CityB extends BaseBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<NeighborhoodB> getNeighborhoodBList() {
+        return neighborhoodBList;
+    }
+
+    public void setNeighborhoodBList(List<NeighborhoodB> neighborhoodBList) {
+        this.neighborhoodBList = neighborhoodBList;
     }
 }

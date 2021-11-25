@@ -18,21 +18,14 @@ class NeighborhoodController {
     }
 
     def list(Integer max) {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
-
+        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
         def neighborhoods = neighborhoodService.getAll(page)
 
-
         [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size()]
-
-
     }
 
-    def listCities(Integer max) {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
-
-        def cities = cityService.getAll(page)
-
+    def listCities() {
+        def cities = cityService.getAllNotPaged()
         [cityInstanceList: cities, citiesTotal: cities.size()]
     }
 
@@ -43,9 +36,9 @@ class NeighborhoodController {
     }
 
     def create() {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+        //def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
 
-        def cities = cityService.getAll(page)
+        def cities = cityService.getAllNotPaged()
 
         [cityInstanceList: cities, citiesTotal: cities.size(),
         cityInstance: new City(params),neighborhoodInstance: new Neighborhood (params)]
@@ -55,7 +48,7 @@ class NeighborhoodController {
     def save() {
         def neighborhood = new NeighborhoodB(params)
 
-System.out.println("param"+params['city_id'])
+        System.out.println("param"+params['city_id'])
         neighborhood.setCity_id(cityService.getById(Integer.parseInt(params['city_id'])))
 
         def neighborhoodInstance = neighborhoodService.save(neighborhood)
@@ -70,7 +63,7 @@ System.out.println("param"+params['city_id'])
                 flash.message = message(code: 'default.created.message', args: [message(code: 'neighborhood.label', default: 'Neighborhood'), neighborhoodInstance.getId()])
             }
         }
-        redirect(action: "list", id: neighborhoodInstance.getId())
+        redirect(action: "list")
     }
 
     def edit(Long id) {
@@ -81,7 +74,9 @@ System.out.println("param"+params['city_id'])
             redirect(action: "create")
             return
         }
-        [neighborhoodInstance: neighborhoodInstance]
+        def cities = cityService.getAllNotPaged()
+
+        [neighborhoodInstance: neighborhoodInstance, cityInstanceList: cities]
     }
 
     def update(Neighborhood neighborhood) {
@@ -92,6 +87,7 @@ System.out.println("param"+params['city_id'])
             redirect(action: "create")
             return
         }
+        neighborhoodB.setCity_id(cityService.getById(Integer.parseInt(params['city_id'])))
 
         def neighborhoodBUpdated = neighborhoodService.update(neighborhoodB, neighborhoodB.getId())
         redirect(action: 'list')

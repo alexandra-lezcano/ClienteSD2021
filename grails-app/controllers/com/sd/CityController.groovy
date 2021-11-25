@@ -14,12 +14,13 @@ class CityController {
     }
 
     def show(Long id) {
-        CityB cityB = cityService.getById(id)
-        [cityInstance: cityB]
+        CityB cityB = cityService.getById(id.toInteger())
+        def neighborhoods = cityB.getNeighborhoodBList()
+        [cityInstance: cityB, neighborhoodInstanceList: neighborhoods]
     }
 
     def list(Integer max) {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
 
         def cities = cityService.getAll(page)
 
@@ -42,7 +43,7 @@ class CityController {
         // Muestra un mensajito por defecto
         withFormat{
             html{
-                flash.message = message(code: 'default.created.message', args: [message(code: 'city.label', default: 'City'), cityInstance.getId()])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'city.label', default: 'Ciudad'), cityInstance.getId()])
             }
         }
         redirect(action: "list")

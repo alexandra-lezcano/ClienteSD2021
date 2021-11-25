@@ -26,12 +26,29 @@
                     <f:display bean="cityInstance" property="description"/>
                 </li>
             </ul>
-            <g:form resource="${cityInstance}" method="DELETE">
-                <fieldset class="buttons">
-                    <g:link class="edit" action="edit" id="${cityInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-                    <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                </fieldset>
-            </g:form>
+            <table>
+                <thead>
+                <tr>
+                    <g:sortableColumn property="name"
+                                      title="${message(code: 'neighborhood.label', default: 'Nombre')}" />
+
+                    <th>Descripcion</th>
+                </tr>
+                </thead>
+                <tbody>
+                <g:each in="${neighborhoodInstanceList}" status="i" var="neighborhoodInstance">
+
+                    <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                        <td>
+                             ${fieldValue(bean: neighborhoodInstance, field: "name")}
+                        </td>
+                        <td>
+                            ${fieldValue(bean: neighborhoodInstance, field: "description")}
+                        </td>
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>
