@@ -1,8 +1,8 @@
 package com.sd.clientsd.rest.location;
 
-import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.protectionapp.sd2021.dto.localization.CityDTO;
 import com.protectionapp.sd2021.dto.localization.CityResult;
+import com.protectionapp.sd2021.dto.localization.NeighborhoodResult;
 import com.sd.clientsd.rest.base.BaseResourceImpl;
 import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.stereotype.Repository;
@@ -29,5 +29,10 @@ public class CityResourceImpl extends BaseResourceImpl<CityDTO> implements ICity
             cResult = getWebResource().path(path).get(cResultClass);
         }
         return cResult;
+    }
+
+    @Override
+    public NeighborhoodResult getNeighborhoodByCityId(Integer id) {
+        return getWebResource().path("/"+id+"/neighborhoods").get(NeighborhoodResult.class);
     }
 }

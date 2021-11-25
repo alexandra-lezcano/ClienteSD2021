@@ -1,34 +1,31 @@
 package com.sd.clientsd.service.location;
 
-import com.protectionapp.sd2021.dto.casosDerivados.DepEstadoDTO;
-import com.protectionapp.sd2021.dto.casosDerivados.DepEstadoResult;
-import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaDTO;
-import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.protectionapp.sd2021.dto.localization.CityDTO;
 import com.protectionapp.sd2021.dto.localization.CityResult;
-import com.sd.clientsd.beans.CasosDerivados.DepEstadoB;
-import com.sd.clientsd.beans.denuncia.TipoDenunciaB;
+import com.protectionapp.sd2021.dto.localization.NeighborhoodDTO;
+import com.protectionapp.sd2021.dto.localization.NeighborhoodResult;
 import com.sd.clientsd.beans.location.CityB;
-import com.sd.clientsd.rest.CasosDerivados.IDepEstadoResource;
+import com.sd.clientsd.beans.location.NeighborhoodB;
 import com.sd.clientsd.rest.location.ICityResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import com.sd.clientsd.utils.config.Configurations;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 @Service("cityService")
 public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements ICityService {
 
     @Autowired
     private ICityResource cityResource;
 
+    @Autowired
+    private INeighborhoodService neighborhoodService;
 
     @Override
     protected CityDTO convertToDTO(CityB bean) {
@@ -39,17 +36,32 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
         dto.setName(bean.getName());
         dto.setDescription(bean.getDescription());
+
+        final Set<Integer> neighborhoodIds = new HashSet<>();
+        if(bean.getNeighborhoodBList()!=null){
+            bean.getNeighborhoodBList().forEach(neighborhoodB -> neighborhoodIds.add(neighborhoodB.getId()));
+        }
+
+        dto.setNeighborhoods(neighborhoodIds);
         return dto;
     }
 
     @Override
-    protected CityB convertToBean(CityDTO dto) {
+    protected CityB convertToBean(@NotNull CityDTO dto) {
         final Map<String,String> params = new HashMap<>();
         params.put("id",String.valueOf(dto.getId()));
         params.put("name",dto.getName());
         params.put("description", dto.getDescription());
 
         final CityB bean= new CityB(params);
+
+        final NeighborhoodResult neighborhoodResult = cityResource.getNeighborhoodByCityId(dto.getId());
+        if(neighborhoodResult!=null){
+            final List<NeighborhoodDTO> neighborhoodDtos =  neighborhoodResult.getNeighborhoods();
+            final List<NeighborhoodB> neighborhoodBList = neighborhoodService.convertDtoListToBList(neighborhoodDtos);
+            bean.setNeighborhoodBList(neighborhoodBList);
+        }
+
         return bean;
     }
 
@@ -103,7 +115,8 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     }
 
     public List<CityB> getAllNotPaged() {
-        final CityResult result = new CityResult();
+        System.out.println("Inside city get all not paged");
+        final CityResult result = cityResource.getAll();
 
         final List<CityDTO> dtosList = null == result.getCities() ? new ArrayList<CityDTO>() : result.getCities();
         final List<CityB> beansList = new ArrayList<CityB>();
@@ -111,9 +124,4 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
         dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
         return beansList;
     }
-
-
-
-
-
 }
