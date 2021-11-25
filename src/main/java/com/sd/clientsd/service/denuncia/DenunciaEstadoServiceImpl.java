@@ -2,10 +2,7 @@ package com.sd.clientsd.service.denuncia;
 
 import com.protectionapp.sd2021.dto.denuncia.DenunciaEstadoDTO;
 import com.protectionapp.sd2021.dto.denuncia.DenunciaEstadoResult;
-import com.protectionapp.sd2021.dto.localization.CityDTO;
-import com.protectionapp.sd2021.dto.localization.CityResult;
 import com.sd.clientsd.beans.denuncia.DenunciaEstadoB;
-import com.sd.clientsd.beans.location.CityB;
 import com.sd.clientsd.rest.denuncia.IDenunciaEstadoResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,13 +48,10 @@ public class DenunciaEstadoServiceImpl extends BaseServiceImpl<DenunciaEstadoB, 
 
     @Override
     public List<DenunciaEstadoB> getAll(Integer page) {
-        DenunciaEstadoResult denunciaEstadoResult = denunciaEstadoResource.getByPage(page);
-        List<DenunciaEstadoDTO> dtosList = new ArrayList<DenunciaEstadoDTO>();
-
-        if(denunciaEstadoResult.getDenunciaEstados()!=null) dtosList = denunciaEstadoResult.getDenunciaEstados();
-        final List<DenunciaEstadoB> beansList = new ArrayList<DenunciaEstadoB>();
-
-        dtosList.forEach(denunciaEstadoDTO -> beansList.add(convertToBean(denunciaEstadoDTO)));
+        final DenunciaEstadoResult denunciaEstadoResult = denunciaEstadoResource.getByPage(page);
+        final List<DenunciaEstadoDTO> dtoList = null == denunciaEstadoResult.getDenunciaEstados() ? new ArrayList<>() : denunciaEstadoResult.getDenunciaEstados();
+        final List<DenunciaEstadoB> beansList = new ArrayList<>();
+        dtoList.forEach(denunciaEstadoDTO -> beansList.add(convertToBean(denunciaEstadoDTO)));
         return beansList;
     }
 

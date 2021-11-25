@@ -1,7 +1,9 @@
 package com.sd
 
 import com.sd.clientsd.beans.denuncia.DenunciaEstadoB
+import com.sd.clientsd.beans.location.CityB
 import com.sd.clientsd.service.denuncia.IDenunciaEstadoService
+import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
 class DenunciaEstadoController {
@@ -12,11 +14,6 @@ class DenunciaEstadoController {
 
     def index(Integer max) {
         redirect(action: 'list', params:params)
-    }
-
-    def show(Long id) {
-        DenunciaEstadoB denunciaEstadoB = denunciaEstadoService.getById(id.toInteger())
-        [denunciaEstadoInstance: denunciaEstadoB]
     }
 
     def list(Integer max) {
@@ -33,7 +30,7 @@ class DenunciaEstadoController {
         def denunciaEstado = new DenunciaEstadoB(params)
         def denunciaEstadoInstance = denunciaEstadoService.save(denunciaEstado)
 
-        if(!denunciaEstadoInstance.getId()){
+        if(!denunciaEsdatoInstance.getId()){
             render(view: "create", model: [denunciaEstadoInstance: denunciaEstadoInstance])
             return
         }
@@ -41,7 +38,7 @@ class DenunciaEstadoController {
         // Muestra un mensajito por defecto
         withFormat{
             html{
-                flash.message = message(code: 'default.created.message', args: [message(code: 'denunciaEstado.label', default: 'DenunciaEstado'), denunciaEstadoInstance.getId()])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'denunciaEstado.label', default: 'DenunciaEstado'), denunciaEsdatoInstance.getId()])
             }
         }
         redirect(action: "list")
