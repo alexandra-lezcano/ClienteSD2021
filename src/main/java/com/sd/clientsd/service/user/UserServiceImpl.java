@@ -1,12 +1,16 @@
 package com.sd.clientsd.service.user;
 
 import com.protectionapp.sd2021.dto.user.UserDTO;
+import com.protectionapp.sd2021.dto.user.UserResult;
 import com.sd.clientsd.beans.user.UserB;
 import com.sd.clientsd.rest.user.IUserResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +19,8 @@ import java.util.Map;
 public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements IUserService {
    @Autowired
    private IUserResource userResource;
+
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
     @Override
     protected UserDTO convertToDTO(UserB bean) {
@@ -54,26 +60,44 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 
     @Override
     public UserB save(UserB bean) {
-        return null;
+        final UserDTO dto = convertToDTO(bean);
+        final UserDTO userDTO = userResource.save(dto);
+        final UserB userB = convertToBean(userDTO);
+
+        return userB;
     }
 
     @Override
     public List<UserB> getAll(Integer page) {
-        return null;
+        final UserResult userResult = userResource.getByPage(page);
+        List<UserDTO> userDTOS = new ArrayList<>();
+        if(userResult.getUsers()!=null) userDTOS = userResult.getUsers();
+
+        final List<UserB> beansList = new ArrayList<>();
+        userDTOS.forEach(userDTO -> beansList.add(convertToBean(userDTO)));
+
+        return beansList;
     }
 
     @Override
     public UserB getById(Integer id) {
-        return null;
+        logger.info("Obtener usuario "+id);
+        final UserDTO dto = userResource.getById(id);
+        return convertToBean(dto);
     }
 
     @Override
     public UserB update(UserB bean, Integer id) {
-        return null;
+        logger.info("Actualizar usuario "+id);
+        final UserDTO dto = convertToDTO(bean);
+        final UserDTO updatedDto = userResource.update(dto, id);
+        return convertToBean(dto);
     }
 
     @Override
     public UserB delete(Integer id) {
-        return null;
+        logger.info("Eliminar usuario "+id);
+        final UserDTO deleted = userResource.delete(id);
+        return convertToBean(deleted);
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import com.sd.clientsd.utils.config.Configurations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,7 +90,7 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
     }
 
     @Override
-    @Cacheable(value="cliente-cache", key = "'web_tipo_denuncia_'+#id")
+    @Cacheable(value=Configurations.CACHE_NAME, key = "'web_tipo_denuncia_'+#id")
     public TipoDenunciaB getById(Integer id) {
         logger.info("getById test");
         final TipoDenunciaDTO tipoDenunciaDTO = tipoDenunciaResource.getById(id);
@@ -97,7 +98,7 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
     }
 
     @Override
-    @CachePut(value="cliente-cache", key = "'web_tipo_denuncia_'+#id")
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_tipo_denuncia_'+#id")
     public TipoDenunciaB update(TipoDenunciaB bean, Integer id) {
         logger.info("update test");
         final TipoDenunciaDTO dto = convertToDTO(bean);
@@ -106,7 +107,7 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
     }
 
     @Override
-    @CacheEvict(value="cliente-cache", key = "'web_tipo_denuncia_'+#id")
+    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_tipo_denuncia_'+#id")
     public TipoDenunciaB delete(Integer id) {
         logger.info("delete test");
         System.out.println("Hasta aca llegue...id: "+id);

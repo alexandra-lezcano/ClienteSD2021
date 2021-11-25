@@ -14,13 +14,17 @@ public class NeighborhoodB extends BaseBean {
 
     @Override
     protected void create(Map<String, String> params) {
-            if(params.containsKey("id") && params.get("id") != null){
-                setId(Integer.valueOf(params.get("id")));
-            } else {
-                setId(0);
-            }
-            setDescription(params.get("description"));
-            setName(params.get("name"));
+        if(params.containsKey("id") && params.get("id") != null){
+
+            setId(Integer.valueOf(params.get("id")));
+        } else {
+            setId(0);
+        }
+
+        setDescription(params.get("description"));
+        setName(params.get("name"));
+
+
     }
 
     public String getDescription() {

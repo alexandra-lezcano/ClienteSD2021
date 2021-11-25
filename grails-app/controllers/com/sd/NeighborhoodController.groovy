@@ -22,6 +22,7 @@ class NeighborhoodController {
 
         def neighborhoods = neighborhoodService.getAll(page)
 
+
         [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size()]
 
 
@@ -42,11 +43,20 @@ class NeighborhoodController {
     }
 
     def create() {
-        [tipoDenunciaInstance: new TipoDenuncia(params)]
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+
+        def cities = cityService.getAll(page)
+
+        [cityInstanceList: cities, citiesTotal: cities.size(),
+        cityInstance: new City(params),neighborhoodInstance: new Neighborhood (params)]
+
     }
 
     def save() {
         def neighborhood = new NeighborhoodB(params)
+
+System.out.println("param"+params['city_id'])
+        neighborhood.setCity_id(cityService.getById(Integer.parseInt(params['city_id'])))
 
         def neighborhoodInstance = neighborhoodService.save(neighborhood)
 
@@ -60,7 +70,7 @@ class NeighborhoodController {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'neighborhood.label', default: 'Neighborhood'), neighborhoodInstance.getId()])
             }
         }
-        redirect(action: "show", id: neighborhoodInstance.getId())
+        redirect(action: "list", id: neighborhoodInstance.getId())
     }
 
     def edit(Long id) {

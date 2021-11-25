@@ -1,9 +1,11 @@
 package com.sd.clientsd.utils.config;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 public class Configurations {
+    public static final String CACHE_NAME = "cliente-cache";
     private static String TIPO_SUJETO_RESOURCE;
     private static String NEIGHBORHOOD_RESOURCE;
     private static String CITY_RESOURCE;
