@@ -40,12 +40,9 @@
                     </div>
                 </fieldset>
                 <fieldset class="buttons">
-
-                    <g:actionSubmit class="save" value="update" />
-                    <g:actionSubmit class="delete"
-                                    value="${message(code: 'default.button.delete.label', default: 'delete')}"
-                                    id="${cityInstance?.id}"
-                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
+                    <g:actionSubmit class="save"
+                                    action="update"
+                                    value="${message(code: 'default.button.update.label')}"
                     />
                 </fieldset>
             </g:form>
