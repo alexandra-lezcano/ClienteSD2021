@@ -37,9 +37,9 @@
                             <g:textField name="descripcion" value="${tipoDenunciaInstance?.descripcion}"/>
                         </label>
                     </div>
-                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="Guardar Cambios" />
+                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="update" />
                     <g:actionSubmit class="margen-sm col-md-6 col-sm-12 delete btn-secondary"
-                                    value="${message(code: 'default.button.delete.label', default: 'delete')}"
+                                    value="delete"
                                     id="${tipoDenunciaInstance?.id}"
                                     onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
                     />

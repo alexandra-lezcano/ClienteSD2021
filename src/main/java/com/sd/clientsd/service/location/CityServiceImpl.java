@@ -8,8 +8,12 @@ import com.sd.clientsd.beans.location.CityB;
 import com.sd.clientsd.beans.location.NeighborhoodB;
 import com.sd.clientsd.rest.location.ICityResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import com.sd.clientsd.utils.config.Configurations;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -85,12 +89,15 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     }
 
     @Override
+    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_city_'+#id")
+
     public CityB getById(Integer id) {
         final CityDTO dto= cityResource.getById(id);
         return convertToBean(dto);
     }
 
     @Override
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB update(CityB bean, Integer id) {
         final CityDTO dto= convertToDTO(bean);
         final CityDTO nuevo= cityResource.update(dto,id);
@@ -99,6 +106,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
 
     @Override
+    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB delete(Integer id) {
         System.out.println("ID: "+id);
         final CityDTO c= cityResource.delete(id);

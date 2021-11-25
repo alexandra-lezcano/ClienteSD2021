@@ -6,8 +6,12 @@ import com.sd.clientsd.beans.location.NeighborhoodB;
 import com.sd.clientsd.rest.location.ICityResource;
 import com.sd.clientsd.rest.location.INeighborhoodResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import com.sd.clientsd.utils.config.Configurations;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -93,12 +97,14 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     @Override
+    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_neighborhood_'+#id")
     public NeighborhoodB getById(Integer id) {
         final NeighborhoodDTO neighborhoodDTO = neighborhoodResource.getById(id);
         return convertToBean(neighborhoodDTO);
     }
 
     @Override
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_neighborhood_'+#id")
     public NeighborhoodB update(NeighborhoodB bean, Integer id) {
         final NeighborhoodDTO dto = convertToDTO(bean);
         final NeighborhoodDTO updated = neighborhoodResource.update(dto, id);
@@ -106,6 +112,7 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     @Override
+    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_neighborhood_'+#id")
     public NeighborhoodB delete(Integer id) {
         final NeighborhoodDTO deleted = neighborhoodResource.delete(id);
         return convertToBean(deleted);

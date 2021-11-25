@@ -42,9 +42,9 @@
                         <g:select id="city" name="city_id" from="${cities}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id?.id}" class="many-to-one"/>
                         </label>
                     </div>
-                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="Guardar Cambios" />
+                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="update" />
                     <g:actionSubmit class="margen-sm col-md-6 col-sm-12 delete btn-secondary"
-                                    value="${message(code: 'default.button.delete.label', default: 'delete')}"
+                                    value="delete"
                                     id="${neighborhoodInstance?.id}"
                                     onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
                     />
