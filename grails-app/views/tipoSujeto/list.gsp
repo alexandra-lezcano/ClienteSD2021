@@ -27,7 +27,6 @@
         <tr>
             <g:sortableColumn property="titulo"
                               title="${message(code: 'tipoSujeto.label', default: 'Titulo')}" />
-
             <th>Accion</th>
         </tr>
         </thead>
@@ -52,7 +51,7 @@
         </tbody>
     </table>
     <div class="pagination">
-        <g:paginate total="${tipoSujetosTotal}" />
+        <g:paginate total="${tipoDenunciasTotal}" />
     </div>
 </div>
 </body>

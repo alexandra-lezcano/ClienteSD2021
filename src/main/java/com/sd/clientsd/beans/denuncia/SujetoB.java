@@ -1,10 +1,14 @@
 package com.sd.clientsd.beans.denuncia;
 
 import com.sd.clientsd.beans.base.BaseBean;
+import com.sd.clientsd.service.denuncia.ITipoSujetoService;
 
 import java.util.Map;
 
 public class SujetoB extends BaseBean {
+
+    ITipoSujetoService tipoSujetoService;
+
     private static final long serialVersionUID = 1L;
     private String nombre;
     private String ci;
@@ -12,7 +16,6 @@ public class SujetoB extends BaseBean {
     private String correo;
     private String direccion;
     private TipoSujetoB tipo;
-   // private Integer denuncia;
 
     public SujetoB(Map<String, String> params){super(params);}
 
@@ -25,6 +28,7 @@ public class SujetoB extends BaseBean {
         setCorreo(params.get("correo"));
         setDireccion(params.get("direccion"));
         setTelefono(params.get("telefono"));
+        setTipo(tipoSujetoService.getById(Integer.parseInt(params.get("tipo"))));
     }
 
     public String getNombre() {

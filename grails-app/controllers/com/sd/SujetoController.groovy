@@ -1,73 +1,78 @@
 package com.sd
 
-import grails.validation.ValidationException
+import com.sd.clientsd.beans.denuncia.SujetoB
+import com.sd.clientsd.service.denuncia.ISujetoService
+import com.sd.clientsd.service.denuncia.ITipoSujetoService
 import static org.springframework.http.HttpStatus.*
 
 class SujetoController {
 
-    SujetoService sujetoService
+    ISujetoService sujetoService
+    ITipoSujetoService tipoSujetoService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond sujetoService.list(params), model:[sujetoCount: sujetoService.count()]
+    def index() {
+        redirect(action: 'list', params:params)
+    }
+
+    def list(Integer max) {
+        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+        def sujetos = sujetoService.getAll(page)
+        [sujetoInstanceList: sujetos, sujetosTotal: sujetos.size()]
     }
 
     def show(Long id) {
-        respond sujetoService.get(id)
+        SujetoB sujetoB = sujetoService.getById(id)
+        [sujetoInstance: sujetoB]
     }
 
     def create() {
-        respond new Sujeto(params)
+        def page=null ==params['tipo'] ? 1 : Integer.valueOf(params['tipo'])
+
+        def tipoSujetos = tipoSujetoService.getAll(page)
+
+        [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size(), sujetoInstance: new Sujeto(params)]
     }
 
-    def save(Sujeto sujeto) {
-        if (sujeto == null) {
-            notFound()
+    def save() {
+        def sujeto = new SujetoB(params)
+        def sujetoInstance = sujetoService.save(sujeto)
+
+        if(!sujetoInstance.getId()){
+            render(view: "create", model: [tipoDenunciaInstance: sujetoInstance])
             return
         }
-
-        try {
-            sujetoService.save(sujeto)
-        } catch (ValidationException e) {
-            respond sujeto.errors, view:'create'
-            return
-        }
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'sujeto.label', default: 'Sujeto'), sujeto.id])
-                redirect sujeto
+        withFormat{
+            html{
+                flash.message = message(code: 'default.created.message', args: [message(code: 'sujeto.label', default: 'Sujeto'), tipoDenunciaInstance.getId()])
             }
-            '*' { respond sujeto, [status: CREATED] }
         }
+        redirect(action: "index", id: sujetoInstance.getId())
     }
 
     def edit(Long id) {
-        respond sujetoService.get(id)
+        def sujetoInstance = sujetoService.getById(id.toInteger())
+
+        if(sujetoInstance == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
+            return
+        }
+        [sujetoInstance: sujetoInstance]
     }
 
-    def update(Sujeto sujeto) {
-        if (sujeto == null) {
-            notFound()
+    def update(Long id) {
+        def sujetoInstance = sujetoService.delete(id.toInteger())
+        if(sujetoInstance == null){
+            render status: NOT_FOUND
+            redirect(action: "create")
             return
         }
 
-        try {
-            sujetoService.save(sujeto)
-        } catch (ValidationException e) {
-            respond sujeto.errors, view:'edit'
-            return
-        }
+        flash.message = message(code: 'default.deleted.message',  args: [message(code: 'sujeto.label', default: 'Sujeto'), id])
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'sujeto.label', default: 'Sujeto'), sujeto.id])
-                redirect sujeto
-            }
-            '*'{ respond sujeto, [status: OK] }
-        }
+        redirect(action: 'list')
     }
 
     def delete(Long id) {

@@ -9,12 +9,12 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Controladores <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                        <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-                            <li class="controller">
-                                <g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link>
-                            </li>
-                        </g:each>
-                    </ul>
+                    <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
+                        <li class="controller">
+                            <g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link>
+                        </li>
+                    </g:each>
+                </ul>
             </li>
         </ul>
         <button class="boton btn btn-warning text-right">Iniciar Sesion</button>
