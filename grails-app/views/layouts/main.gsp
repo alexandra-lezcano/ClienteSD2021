@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="footer text-center" role="contentinfo">
-            <p>Protection App - Sistemas de Gestion - 2021</p>
+            <p>Protection App - Sistemas Web y Distribuidos - 2021</p>
         </div>
 
 

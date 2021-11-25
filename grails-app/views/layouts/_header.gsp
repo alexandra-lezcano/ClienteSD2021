@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-static-top header-fix" role="navigation">
     <a class="navbar-brand align-middle" href="/#">
         <asset:image class="logo text-center col-4" src="grails.svg" alt="Protection App"/>
-        <p class="titulo-logo text-left float-right align-middle">Protection</p>
+        <p class="titulo-logo text-left float-right align-middle">Protection App</p>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
