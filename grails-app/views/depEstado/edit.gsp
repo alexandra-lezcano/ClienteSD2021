@@ -28,8 +28,8 @@
         <g:hiddenField name="id" value="${depEstadoInstance?.id}" />
         <fieldset class="form">
             <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'nombre','error')}">
-                <label for="nombre"> Nombre:
-                Nombre: <g:textField name="nombre" value="${depEstadoInstance?.nombre}"/>
+                <label for="name"> Nombre:
+                Nombre: <g:textField name="name" value="${depEstadoInstance?.nombre}"/>
                 </label>
             </div>
             <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'descripcion','error')}">

@@ -10,7 +10,7 @@ class CasosDerivadosController {
 
     ICasosDerivadosService casoDerivadoService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
     def index(Integer max) {
 
         redirect(action: 'list', params:params)
@@ -53,7 +53,7 @@ class CasosDerivadosController {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'casosDerivados.label', default: 'casosDerivados'), casosDerivadosInstance.getId()])
             }
         }
-        redirect(action: "list", id: casosDerivadosInstance.getId())
+        redirect(action: "list")
 
 
     }

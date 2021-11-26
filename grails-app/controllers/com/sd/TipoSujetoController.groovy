@@ -8,7 +8,7 @@ class TipoSujetoController {
 
     ITipoSujetoService tipoSujetoService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
 
     def index(Integer max) {
         redirect(action: 'list', params:params)
