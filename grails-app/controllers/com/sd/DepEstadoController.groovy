@@ -54,7 +54,7 @@ class DepEstadoController {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'depEstado.label', default: 'depEstado'), depEstadoInstance.getId()])
             }
         }
-        redirect(action: "list", id: depEstadoInstance.getId())
+        redirect(action: "list")
 
         /*
         if (depEstado == null) {

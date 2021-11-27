@@ -11,7 +11,7 @@ class NeighborhoodController {
 
     INeighborhoodService neighborhoodService
     ICityService cityService
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
 
     def index(Integer max) {
         redirect(action: 'list', params:params)
@@ -95,8 +95,7 @@ class NeighborhoodController {
 
     def delete(Long id) {
         def neighborhoodInstance = neighborhoodService.delete(id.toInteger())
-        System.out.println("Se borro "+neighborhoodInstance.id+" "+neighborhoodInstance.titulo)
-        // como hago para mostrar la tabla en la paginacion que ya estaba?
+
 
         if(neighborhoodInstance == null){
             render status: NOT_FOUND

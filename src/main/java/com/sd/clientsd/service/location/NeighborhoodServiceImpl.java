@@ -47,6 +47,7 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     @Override
+
     protected NeighborhoodB convertToBean(NeighborhoodDTO dto) {
         final Map<String, String> params = new HashMap<>();
         params.put("id",String.valueOf(dto.getId()));

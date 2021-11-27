@@ -75,7 +75,6 @@ class CityController {
 
     def delete(Long id) {
         def cityInstance = cityService.delete(id.toInteger())
-        System.out.println("Se borro "+cityInstance.id+" "+cityInstance.name)
 
         if(cityInstance == null){
             render status: NOT_FOUND

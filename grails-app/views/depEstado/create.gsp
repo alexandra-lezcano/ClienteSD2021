@@ -29,7 +29,7 @@
 
                 <g:form action="save">
                 <fieldset class="form">
-                    <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'nombre','error')}">
+                    <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'name','error')}">
                         <label for="name"> Nombre:
                         <g:textField name="name" value="${depEstadoInstance?.name}"/>
                         </label>
