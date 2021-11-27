@@ -27,6 +27,7 @@
         <th>CN</th>
         <th>Correo</th>
         <th>Telefono</th>
+        <th>Ciudad</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -39,6 +40,7 @@
             <td> ${fieldValue(bean:userInstance, field:"cn")}</td>
             <td> ${fieldValue(bean:userInstance, field:"email")}</td>
             <td> ${fieldValue(bean:userInstance, field:"phone")}</td>
+            <td> ${fieldValue(bean:userInstance?.city, field:"name")}</td>
             <td>
                 <g:link class="delete"
                         action="delete"

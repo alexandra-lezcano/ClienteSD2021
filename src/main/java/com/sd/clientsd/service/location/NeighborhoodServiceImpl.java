@@ -23,8 +23,6 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     @Autowired
     private ICityService cityService;
 
-    @Autowired
-    private ICityResource cityResource;
 
     @Override
     protected NeighborhoodDTO convertToDTO(NeighborhoodB bean) {
