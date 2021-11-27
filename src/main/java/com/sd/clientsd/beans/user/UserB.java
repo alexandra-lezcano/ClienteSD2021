@@ -1,7 +1,11 @@
 package com.sd.clientsd.beans.user;
 
 import com.sd.clientsd.beans.base.BaseBean;
+import com.sd.clientsd.beans.location.CityB;
+import com.sd.clientsd.beans.location.NeighborhoodB;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,14 +19,15 @@ public class UserB extends BaseBean  {
     private String address;
     private String email;
     private Integer phone;
-   // private Integer cityId;
+    private CityB city;
     //private Integer roleId;
-   //private Set<Integer> neighborhoodIds;
+    private List<NeighborhoodB> neighborhoods;
    // private Set<Integer> denunciasIds;
 
     public UserB(Map<String, String> params) {
         super(params);
     }
+    public UserB(){}
 
     @Override
     protected void create(Map<String, String> params) {
@@ -38,10 +43,11 @@ public class UserB extends BaseBean  {
         setAddress(params.get("address"));
         setEmail(params.get("email"));
         setPhone(Integer.valueOf(params.get("phone")));
-       // setCityId(Integer.valueOf(params.get("cityId")));
-        //setNeighborhoodIds(params.get(""));
-        //setDenunciasIds(params.get(""));
+
+        this.neighborhoods = new ArrayList<>();
     }
+
+    public void constructB(Map<String, String> params) { this.create(params);}
 
     public String getName() {
         return name;
@@ -97,5 +103,21 @@ public class UserB extends BaseBean  {
 
     public void setPhone(Integer phone) {
         this.phone = phone;
+    }
+
+    public CityB getCity() {
+        return city;
+    }
+
+    public void setCity(CityB city) {
+        this.city = city;
+    }
+
+    public List<NeighborhoodB> getNeighborhoods() {
+        return neighborhoods;
+    }
+
+    public void setNeighborhoods(List<NeighborhoodB> neighborhoods) {
+        this.neighborhoods = neighborhoods;
     }
 }

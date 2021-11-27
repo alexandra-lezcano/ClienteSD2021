@@ -47,7 +47,7 @@
                             id="${cityInstance?.id}"
                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');">
                         Borrar
-                    </g:link>
+                    </g:link> |
                     <g:link class="show" action="show" id="${cityInstance?.id}">Ver detalles</g:link>
                 </td>
             </tr>

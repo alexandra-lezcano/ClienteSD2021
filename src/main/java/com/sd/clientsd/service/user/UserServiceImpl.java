@@ -2,23 +2,30 @@ package com.sd.clientsd.service.user;
 
 import com.protectionapp.sd2021.dto.user.UserDTO;
 import com.protectionapp.sd2021.dto.user.UserResult;
+import com.sd.clientsd.beans.location.NeighborhoodB;
 import com.sd.clientsd.beans.user.UserB;
+import com.sd.clientsd.rest.location.ICityResource;
 import com.sd.clientsd.rest.user.IUserResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import com.sd.clientsd.service.location.ICityService;
+import com.sd.clientsd.service.location.INeighborhoodService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("userService")
 public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements IUserService {
    @Autowired
    private IUserResource userResource;
+
+   @Autowired
+   private ICityService cityService;
+
+   @Autowired
+   private INeighborhoodService neighborhoodService;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -36,7 +43,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         dto.setAddress(bean.getAddress());
         dto.setEmail(bean.getEmail());
         dto.setPhone(bean.getPhone());
-//        dto.setCityId(bean.getCityId());
+        if(bean.getCity()!=null) dto.setCityId(bean.getCity().getId());
+        if(bean.getNeighborhoods()!=null){
+            final Set<Integer> neighborhoodIds = new HashSet<>();
+            bean.getNeighborhoods().forEach(neighborhoodB -> neighborhoodIds.add(neighborhoodB.getId()));
+            dto.setNeighborhoodIds(neighborhoodIds);
+        }
 
         return dto;
     }
@@ -52,9 +64,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         params.put("address", dto.getAddress());
         params.put("email", dto.getEmail());
         params.put("phone", String.valueOf(dto.getPhone()));
-     //  params.put("cityId", String.valueOf(dto.getCityId()));
 
         final UserB bean = new UserB(params);
+
+        if(dto.getCityId()!=null) bean.setCity(cityService.getById(dto.getCityId()));
+        if(dto.getNeighborhoodIds()!=null){
+            final List<NeighborhoodB> neighborhoodBList = new ArrayList<>();
+            dto.getNeighborhoodIds().forEach(neighborhoodId -> neighborhoodBList.add(neighborhoodService.getById(neighborhoodId)));
+            bean.setNeighborhoods(neighborhoodBList);
+        }
+
         return bean;
     }
 

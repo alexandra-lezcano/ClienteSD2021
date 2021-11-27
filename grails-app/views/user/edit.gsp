@@ -27,36 +27,7 @@
             <g:form bean="${userInstance}" method="PUT">
                 <g:hiddenField name="id" value="${userInstance?.id}" />
                 <fieldset class="form">
-                    <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'name','error')}">
-                        <label for="name">
-                            Nombre: <g:textField name="name" value="${userInstance?.name}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'surname','error')}">
-                        <label for="surname">
-                            Apellido: <g:textField name="surname" value="${userInstance?.surname}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'cn','error')}">
-                        <label for="cn">
-                            Cedula de Identidad: <g:textField name="cn" value="${userInstance?.cn}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'address','error')}">
-                        <label for="address">
-                            Direccion: <g:textField name="address" value="${userInstance?.address}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'email','error')}">
-                        <label for="email">
-                            Correo Electronico: <g:textField name="email" value="${userInstance?.email}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'phone','error')}">
-                        <label for="phone">
-                            Numero de Telefono: <g:textField name="phone" value="${userInstance?.phone}"/>
-                        </label>
-                    </div>
+                    <g:render template="form"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:actionSubmit class="save"
