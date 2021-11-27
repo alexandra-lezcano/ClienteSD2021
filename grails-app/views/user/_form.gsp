@@ -37,9 +37,12 @@
                           optionValue="name"
                           required=""
                           value="${userInstance?.city?.id}"
-            onchange="go()"
         />
     </label>
+</div>
+
+<div id="#insertNeighborhood">
+
 </div>
 
 <g:javascript>
@@ -48,6 +51,10 @@
       url:'${g.createLink( controller:'user', action:'findNeighborhoodsByCity')}',
       data: {
           cityId: $("#city").val()
+      },
+      success: function(template){
+          console.log("DENTRO DE AJAX");
+          $("#insertNeighborhood").innerHTML(template);
       }
     });
   }

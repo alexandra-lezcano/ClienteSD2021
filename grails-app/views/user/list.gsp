@@ -48,16 +48,18 @@
                         id="${userInstance?.id}"
                         onclick="return confirm('${message(code: 'default.button.delete.confirm.message')}');">
                         Eliminar usuario
-                </g:link>
+                </g:link> |
+                <g:link class="show" action="show" id="${userInstance?.id}">Ver detalles</g:link>
             </td>
         </tr>
-
     </g:each>
     </tbody>
 
 </table>
     <div class="pagination">
-        <g:paginate total="${usersTotal ?: 0}" />
+        <g:paginate next="Siguiente" prev="Anterior"
+                    maxsteps="0" controller="user"
+                    action="list" total="${usersTotal}" />
     </div>
 </div>
 </body>

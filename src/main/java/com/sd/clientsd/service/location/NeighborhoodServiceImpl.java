@@ -86,9 +86,9 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
         return beansList;
     }
 
+    @Override
     public List<NeighborhoodB> getAllNotPaged() {
         final NeighborhoodResult neighborhoodResult = new NeighborhoodResult();
-        //tipoDenunciaResource.getAll();
         final List<NeighborhoodDTO> dtosList = null == neighborhoodResult.getNeighborhoods() ? new ArrayList<>() : neighborhoodResult.getNeighborhoods();
         final List<NeighborhoodB> beansList = new ArrayList<>();
 

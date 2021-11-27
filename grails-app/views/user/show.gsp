@@ -15,16 +15,41 @@
     </div>
         <div id="show-user" class="content scaffold-show" role="main">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <f:display bean="user" />
-            <g:form resource="${this.user}" method="DELETE">
-                <fieldset class="buttons">
-                    <g:link class="edit" action="edit" resource="${this.user}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-                    <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                </fieldset>
-            </g:form>
+            <ul class="property-list">
+                <li class="fieldcontain">
+                    <span class="property-label">Nombre</span>
+                    <div class="property-value"><f:display bean="userInstance" property="name"/></div>
+                </li>
+                <li class="fieldcontain">
+                    <span class="property-label">Apellido</span>
+                    <div class="property-value"><f:display bean="userInstance" property="surname"/></div>
+                </li>
+                <li class="fieldcontain">
+                    <span class="property-label">Username</span>
+                    <div class="property-value"><f:display bean="userInstance" property="username"/></div>
+                </li>
+                <li class="fieldcontain">
+                    <span class="property-label">Cedula de Identidad</span>
+                    <div class="property-value"><f:display bean="userInstance" property="cn"/></div>
+                </li>
+                <li class="fieldcontain">
+                    <span class="property-label">Direccion</span>
+                    <div class="property-value"><f:display bean="userInstance" property="address"/></div>
+                </li>
+                <li class="fieldcontain">
+                    <span class="property-label">Correo Electronico</span>
+                    <div class="property-value"><f:display bean="userInstance" property="email"/></div>
+                </li>
+                <li class="fieldcontain">
+                    <span class="property-label">Numero de Telefon</span>
+                    <div class="property-value"><f:display bean="userInstance" property="phone"/></div>
+                </li>
+                <li class="fieldcontain">
+                    <span class="property-label">Ciudad</span>
+                    <div class="property-value">${fieldValue(bean:userInstance?.city, field:"name")}</div>
+                </li>
+            </ul>
+            <g:render template="/city/barrios" var="neighborhoodInstanceList"/>
         </div>
     </body>
 </html>

@@ -3,6 +3,7 @@ package com.sd
 import com.sd.clientsd.beans.location.CityB
 import com.sd.clientsd.beans.user.UserB
 import com.sd.clientsd.service.location.ICityService
+import com.sd.clientsd.service.location.INeighborhoodService
 import com.sd.clientsd.service.user.IUserService
 import static org.springframework.http.HttpStatus.*
 
@@ -10,6 +11,7 @@ class UserController {
 
     IUserService userService
     ICityService cityService
+    INeighborhoodService neighborhoodService
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
@@ -20,40 +22,31 @@ class UserController {
         redirect(action: 'list', params:params)
     }
 
-    def list(Integer max){
+    def list(Integer id){
         def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
         def users = userService.getAll(page)
         [userInstanceList: users, usersTotal: users.size()]
     }
 
     def show(Long id) {
-        //respond userService.get(id)
-        UserB userB = userService.getById(id.toInteger())
-        [userInstance: userB]
+        def userB = userService.getById(id.toInteger())
+        def neighborhoods = userB.getNeighborhoods()
+        [userInstance: userB, neighborhoodInstanceList: neighborhoods]
     }
 
-    /*Alex: hasta ahora no entiendo si esto es necesario o no, siempre muestro
-    * lo que esta en mi vista con los beans que yo cree */
     def create() {
         def cities = cityService.getAllNotPaged();
         [userInstance: new User(), cityInstanceList: cities]
-       // [userInstance: new User(params), cityInstanceList: cities]
-        // come back here,how do I use the create method with BEANS instead of DOMAINS
-        // how to use tags / g select or something that lets me render a template of neighList from City controller?
-        // can i easily bring the city object  after the selection with its attributes
-        // en el getall ya tengo una lista de beans city, ahora necesito acceder a los
-        // atributos de ese city
     }
 
     // todo tolerancia a fallos
-    // todo - crear usuario con todos los fk de las demas tablas
-    // investigar cual es la dif entre respond y redirect
     def save() {
         def userB = new UserB(params);
         userB.setUsername(userB.getEmail())
 
         CityB city = cityService.getById(Integer.valueOf(params.get("cityId")));
         userB.setCity(city)
+        userB.setNeighborhoods(city.getNeighborhoodBList())
 
         def user = userService.save(userB)
 
@@ -85,10 +78,10 @@ class UserController {
         }
 
         def cities = cityService.getAllNotPaged()
+
         [userInstance: userInstance, cityInstanceList: cities]
     }
 
-    // todo - actualizar usuario con todos los fk de las demas tablas
     /* <g:actionSubmit class="save"
                        value="${message(code: 'default.button.update.label')}"
                        action="update"/>
@@ -106,6 +99,7 @@ class UserController {
 
         CityB city = cityService.getById(Integer.valueOf(params.get("cityId")));
         userInstance.setCity(city)
+        userInstance.setNeighborhoods(city.getNeighborhoodBList())
 
         def userBUpdated = userService.update(userInstance, userInstance.getId())
         System.out.println("Se actualizo user con id -- "+userInstance.getId());
@@ -123,13 +117,18 @@ class UserController {
         redirect(action: 'list')
     }
 
+    // intento fallido de mostrar el g select para que un usuario pueda elegir en cuantos barrios de su ciudad trabaja
     def findNeighborhoodsByCity() {
         System.out.println("params desde findNeigh -> "+ params)
         System.out.println("params desde findNeigh -> "+ params.get("cityId"))
 
         def city = cityService.getById(Integer.valueOf(params.get("cityId")));
         def neighborhoodInstanceList = city.getNeighborhoodBList();
-        render(template: 'neighborhoodsSelection', collection: neighborhoodInstanceList)
+
+       String contenido = g.render(template: 'neighborhoodsSelection', bean: [userInstance: neighborhoodInstanceList])
+       //render (template: 'neighborhoodsSelection', var: neighborhoodInstanceList) // intentar con var en el futuro
+       //render { div(id: "myDiv", "some text inside the div") }
+        render contenido
     }
 
     protected void notFound() {

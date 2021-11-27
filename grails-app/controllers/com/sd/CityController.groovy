@@ -14,7 +14,7 @@ class CityController {
     }
 
     def show(Long id) {
-        CityB cityB = cityService.getById(id.toInteger())
+        def cityB = cityService.getById(id.toInteger())
         def neighborhoods = cityB.getNeighborhoodBList()
         [cityInstance: cityB, neighborhoodInstanceList: neighborhoods]
     }
