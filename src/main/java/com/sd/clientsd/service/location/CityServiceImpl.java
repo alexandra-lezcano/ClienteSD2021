@@ -15,6 +15,7 @@ import com.sun.istack.NotNull;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -30,6 +31,9 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
     @Autowired
     private INeighborhoodService neighborhoodService;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     protected CityDTO convertToDTO(CityB bean) {
@@ -74,7 +78,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
         final CityDTO dto= convertToDTO(bean);
         final CityDTO city= cityResource.save(dto);
         final CityB cityB=convertToBean(city);
-
+        cacheManager.getCache(Configurations.CACHE_NAME).put("web_city_"+cityB.getId(), cityB);
         return cityB;
     }
 
@@ -110,10 +114,16 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
 
     @Override
-    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
+    //@CacheEvict(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB delete(Integer id) {
         System.out.println("ID: "+id);
+
         final CityDTO c= cityResource.delete(id);
+        if(c.getNeighborhoods()!=null){
+            c.getNeighborhoods().forEach( nId -> cacheManager.getCache(Configurations.CACHE_NAME).evict("web_neighborhood_"+nId));
+        }
+        cacheManager.getCache(Configurations.CACHE_NAME).evict("web_city_"+id);
+
         return convertToBean(c);
 
     }

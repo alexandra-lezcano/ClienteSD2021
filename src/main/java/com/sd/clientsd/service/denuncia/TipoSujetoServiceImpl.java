@@ -1,14 +1,16 @@
 package com.sd.clientsd.service.denuncia;
 
-import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaDTO;
-import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.protectionapp.sd2021.dto.denuncia.TipoSujetoDTO;
 import com.protectionapp.sd2021.dto.denuncia.TipoSujetoResult;
-import com.sd.clientsd.beans.denuncia.TipoDenunciaB;
 import com.sd.clientsd.beans.denuncia.TipoSujetoB;
 import com.sd.clientsd.rest.denuncia.ITipoSujetoResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +23,9 @@ public class TipoSujetoServiceImpl extends BaseServiceImpl<TipoSujetoB, TipoSuje
 
     @Autowired
     private ITipoSujetoResource tipoSujetoResource;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     protected TipoSujetoDTO convertToDTO(TipoSujetoB bean) {
@@ -47,6 +52,7 @@ public class TipoSujetoServiceImpl extends BaseServiceImpl<TipoSujetoB, TipoSuje
         final TipoSujetoDTO dto = convertToDTO(bean);
         final TipoSujetoDTO tipoSujetoDTO = tipoSujetoResource.save(dto);
         final TipoSujetoB tipoSujetoB = convertToBean(tipoSujetoDTO);
+        cacheManager.getCache(Configurations.CACHE_NAME).put("web_tipo_sujeto_"+tipoSujetoB.getId(), tipoSujetoB);
         return tipoSujetoB;
     }
 
@@ -73,12 +79,14 @@ public class TipoSujetoServiceImpl extends BaseServiceImpl<TipoSujetoB, TipoSuje
     }
 
     @Override
+    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_tipo_sujeto_'+#id")
     public TipoSujetoB getById(Integer id) {
         final TipoSujetoDTO tipoSujetoDTO = tipoSujetoResource.getById(id);
         return convertToBean(tipoSujetoDTO);
     }
 
     @Override
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_tipo_sujeto_'+#id")
     public TipoSujetoB update(TipoSujetoB bean, Integer id) {
         final TipoSujetoDTO dto = convertToDTO(bean);
         final TipoSujetoDTO updated = tipoSujetoResource.update(dto,id);
@@ -86,6 +94,7 @@ public class TipoSujetoServiceImpl extends BaseServiceImpl<TipoSujetoB, TipoSuje
     }
 
     @Override
+    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_tipo_sujeto_'+#id")
     public TipoSujetoB delete(Integer id) {
         final TipoSujetoDTO deleted = tipoSujetoResource.delete(id);
         return convertToBean(deleted);

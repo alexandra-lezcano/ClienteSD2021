@@ -10,6 +10,7 @@ import com.sd.clientsd.rest.CasosDerivados.IDepEstadoResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,8 +27,8 @@ public class DepEstadoServiceImpl extends BaseServiceImpl<DepEstadoB, DepEstadoD
     @Autowired
     private IDepEstadoResource depEstadoResource;
 
-
-
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     protected DepEstadoDTO convertToDTO(DepEstadoB bean) {
@@ -39,8 +40,6 @@ public class DepEstadoServiceImpl extends BaseServiceImpl<DepEstadoB, DepEstadoD
         dto.setName(bean.getNombre());
         dto.setDescription(bean.getDescripcion());
         return dto;
-
-
     }
 
     @Override
@@ -51,7 +50,7 @@ public class DepEstadoServiceImpl extends BaseServiceImpl<DepEstadoB, DepEstadoD
         params.put("description", dto.getDescription());
 
         final DepEstadoB bean= new DepEstadoB(params);
-return bean;
+        return bean;
 
     }
 
@@ -60,7 +59,7 @@ return bean;
         final DepEstadoDTO dto= convertToDTO(bean);
         final DepEstadoDTO depEstado= depEstadoResource.save(dto);
         final DepEstadoB depEstadoB=convertToBean(depEstado);
-
+        cacheManager.getCache(Configurations.CACHE_NAME).put("web_depEstado_"+depEstadoB.getId(), depEstadoB);
         return depEstadoB;
     }
 
@@ -76,12 +75,6 @@ return bean;
 
         dtosList.forEach(depEstadoDTO -> beansList.add(convertToBean(depEstadoDTO)));
         return beansList;
-
-
-
-
-
-
     }
 
     @Override
