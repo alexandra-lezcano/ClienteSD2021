@@ -39,17 +39,20 @@
                 <td>
                     <g:link class="delete"
                             action="delete"
+                            value="delete"
                             id="${tipoSujetoInstance?.id}"
                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');">
                         Borrar
                     </g:link>
+                    <g:link class="show" action="show" id="${tipoSujetoInstance?.id}">Ver detalles</g:link>
+
                 </td>
             </tr>
         </g:each>
         </tbody>
     </table>
     <div class="pagination">
-        <g:paginate total="${tipoDenunciasTotal}" />
+        <g:paginate total="${tipoSujetosTotal}" />
     </div>
 </div>
 </body>

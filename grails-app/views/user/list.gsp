@@ -44,6 +44,7 @@
             <td>
                 <g:link class="delete"
                         action="delete"
+                        value="delete"
                         id="${userInstance?.id}"
                         onclick="return confirm('${message(code: 'default.button.delete.confirm.message')}');">
                         Eliminar usuario

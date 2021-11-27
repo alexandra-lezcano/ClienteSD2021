@@ -1,0 +1,8 @@
+depestado - error de redireccion --ARREGLADO
+casos derivados - error de redireccion --ARREGLADO
+barrio falta borrar --ARREGLADO
+tipo sujeto elegir, listar--ARREGLADO
+cambiar denuncias y caso der tiene que ser uno a muchos 
+falta borrar boton de guardar cambios
+
+0975182847

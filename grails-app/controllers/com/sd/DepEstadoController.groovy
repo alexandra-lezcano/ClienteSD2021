@@ -34,6 +34,7 @@ class DepEstadoController {
     def create() {
 
         [depEstadoInstance: new DepEstado(params) ]
+
       //  respond new DepEstado(params)
     }
 
@@ -53,7 +54,7 @@ class DepEstadoController {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'depEstado.label', default: 'depEstado'), depEstadoInstance.getId()])
             }
         }
-        redirect(action: "index", id: depEstadoInstance.getId())
+        redirect(action: "list")
 
         /*
         if (depEstado == null) {

@@ -28,18 +28,18 @@
         <g:hiddenField name="id" value="${depEstadoInstance?.id}" />
         <fieldset class="form">
             <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'nombre','error')}">
-                <label for="nombre"> Nombre:
-                Nombre: <g:textField name="nombre" value="${depEstadoInstance?.nombre}"/>
+                <label for="name"> Nombre:
+                Nombre: <g:textField name="name" value="${depEstadoInstance?.nombre}"/>
                 </label>
             </div>
-            <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'description','error')}">
+            <div class="fieldcontain ${hasErrors(bean: depEstadoInstance, field: 'descripcion','error')}">
                 <label for="description"> Descripcion:
                 Descripcion: <g:textField name="description" value="${depEstadoInstance?.descripcion}"/>
                 </label>
             </div>
-            <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="Guardar Cambios" />
+            <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="update" />
             <g:actionSubmit class="margen-sm col-md-6 col-sm-12 delete btn-secondary"
-                            value="${message(code: 'default.button.delete.label', default: 'delete')}"
+                            value="delete"
                             id="${depEstadoInstance?.id}"
                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
             />

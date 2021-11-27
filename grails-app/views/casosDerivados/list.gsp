@@ -24,7 +24,7 @@
         <tr>
 
             <g:sortableColumn property="date"
-                              title="${message(code: 'depEstado.label', default: 'date')}" />
+                              title="${message(code: 'depEstado.label', default: 'Fecha')}" />
 
             <th>Description</th>
             <th>Accion</th>
@@ -44,10 +44,13 @@
                 <td>
                     <g:link class="delete"
                             action="delete"
+                            value="delete"
                             id="${casosDerivadosInstance?.id}"
                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');">
                         Borrar
                     </g:link>
+                    <g:link class="show" action="show" id="${casosDerivadosInstance?.id}">Ver detalles</g:link>
+
                 </td>
             </tr>
         </g:each>

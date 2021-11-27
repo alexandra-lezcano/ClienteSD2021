@@ -8,7 +8,11 @@ import com.sd.clientsd.beans.CasosDerivados.DepEstadoB;
 import com.sd.clientsd.beans.denuncia.TipoDenunciaB;
 import com.sd.clientsd.rest.CasosDerivados.IDepEstadoResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -81,12 +85,14 @@ return bean;
     }
 
     @Override
+    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_depEstado_'+#id")
     public DepEstadoB getById(Integer id) {
         final DepEstadoDTO dto= depEstadoResource.getById(id);
         return convertToBean(dto);
     }
 
     @Override
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_depEstado_'+#id")
     public DepEstadoB update(DepEstadoB bean, Integer id) {
         final DepEstadoDTO dto= convertToDTO(bean);
         final DepEstadoDTO nuevo= depEstadoResource.update(dto,id);
@@ -94,6 +100,7 @@ return bean;
     }
 
     @Override
+    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_depEstado_'+#id")
     public DepEstadoB delete(Integer id) {
 
         final DepEstadoDTO d= depEstadoResource.delete(id);
