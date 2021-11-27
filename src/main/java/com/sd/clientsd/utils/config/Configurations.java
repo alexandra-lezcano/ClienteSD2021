@@ -6,6 +6,7 @@ import java.util.Properties;
 
 public class Configurations {
     public static final String CACHE_NAME = "cliente-cache";
+    private static String DENUNCIA_RESOURCE;
     private static String DENUNCIA_ESTADO_RESOURCE;
     private static String TIPO_SUJETO_RESOURCE;
     private static String NEIGHBORHOOD_RESOURCE;
@@ -28,7 +29,8 @@ public class Configurations {
             NEIGHBORHOOD_RESOURCE = properties.getProperty("resource.neighborhood");
             TIPO_SUJETO_RESOURCE = properties.getProperty("resource.tipoSujeto");
             SUJETO_RESOURCE = properties.getProperty("resource.sujeto");
-            DENUNCIA_ESTADO_RESOURCE = properties.getProperty("resource.denunciaEstado");
+            DENUNCIA_ESTADO_RESOURCE = properties.getProperty("resource.estadoDenuncia");
+            DENUNCIA_RESOURCE = properties.getProperty("resource.denuncia");
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Something went wrong at configuration initialization.");
@@ -58,4 +60,6 @@ public class Configurations {
     public static String getSujetoResource(){return SUJETO_RESOURCE;}
 
     public static String gerDenunciaEstadoResource() {return DENUNCIA_ESTADO_RESOURCE;}
+
+    public static String getDenunciaResource() { return DENUNCIA_RESOURCE;}
 }
