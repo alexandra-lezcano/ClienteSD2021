@@ -8,6 +8,9 @@ class User {
     private String address;
     private String email;
     private Integer phone;
+    private City city;
+
+    static hasMany = [neighborhoods : Neighborhood]
 
     static constraints = {
     }

@@ -27,6 +27,7 @@
         <th>CN</th>
         <th>Correo</th>
         <th>Telefono</th>
+        <th>Ciudad</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -39,6 +40,7 @@
             <td> ${fieldValue(bean:userInstance, field:"cn")}</td>
             <td> ${fieldValue(bean:userInstance, field:"email")}</td>
             <td> ${fieldValue(bean:userInstance, field:"phone")}</td>
+            <td> ${fieldValue(bean:userInstance?.city, field:"name")}</td>
             <td>
                 <g:link class="delete"
                         action="delete"
@@ -46,16 +48,18 @@
                         id="${userInstance?.id}"
                         onclick="return confirm('${message(code: 'default.button.delete.confirm.message')}');">
                         Eliminar usuario
-                </g:link>
+                </g:link> |
+                <g:link class="show" action="show" id="${userInstance?.id}">Ver detalles</g:link>
             </td>
         </tr>
-
     </g:each>
     </tbody>
 
 </table>
     <div class="pagination">
-        <g:paginate total="${usersTotal ?: 0}" />
+        <g:paginate next="Siguiente" prev="Anterior"
+                    maxsteps="0" controller="user"
+                    action="list" total="${usersTotal}" />
     </div>
 </div>
 </body>
