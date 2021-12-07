@@ -5,6 +5,7 @@ import com.protectionapp.sd2021.dto.denuncia.SujetoResult;
 import com.sd.clientsd.beans.denuncia.SujetoB;
 import com.sd.clientsd.rest.denuncia.ISujetoresource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import org.hibernate.validator.constraints.LuhnCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,4 +90,8 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
         return convertToBean(deleted);
     }
 
+    public List<SujetoB> newList(){
+        final List<SujetoB> ret = new ArrayList<>();
+        return ret;
+    }
 }

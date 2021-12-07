@@ -14,6 +14,7 @@ import com.sd.clientsd.service.casosDerivados.ICasosDerivadosService;
 import com.sd.clientsd.service.location.ICityService;
 import com.sd.clientsd.service.location.INeighborhoodService;
 import com.sd.clientsd.service.user.IUserService;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,9 +79,15 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
     @Override
     public DenunciaB save(DenunciaB bean) {
         final DenunciaDTO dto= convertToDTO(bean);
+        Date fecha = new Date(System.currentTimeMillis());
+        dto.setFecha(fecha);
+        String codigo = RandomStringUtils.random(8, "012345678ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        dto.setCodigo(codigo);
+        if(denunciaEstadoService.getById(1)!=null){
+            dto.setEstado_id(1);
+        }
         final DenunciaDTO denuncia= denunciaResource.save(dto);
         final DenunciaB denunciaB=convertToBean(denuncia);
-
         return denunciaB;
     }
 

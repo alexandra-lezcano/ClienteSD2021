@@ -7,7 +7,7 @@ import com.sd.clientsd.rest.base.BaseResourceImpl;
 import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.stereotype.Repository;
 
-@Repository (value="denunciaEstado")
+@Repository (value="denunciaEstados")
 public class DenunciaEstadoResourceImpl extends BaseResourceImpl<DenunciaEstadoDTO> implements IDenunciaEstadoResource {
     private static final String RESOURCE_PATH = Configurations.gerDenunciaEstadoResource();
     public DenunciaEstadoResourceImpl(){super(DenunciaEstadoDTO.class, RESOURCE_PATH);}

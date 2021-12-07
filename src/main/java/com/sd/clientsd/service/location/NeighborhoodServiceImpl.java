@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service(value="neighborhoodService")
 public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, NeighborhoodDTO> implements INeighborhoodService {
@@ -63,7 +64,7 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
     @Override
     public NeighborhoodB save(NeighborhoodB bean) {
-      //  System.out.println("id ciudad"+bean.getCity_id().getId());
+        //  System.out.println("id ciudad"+bean.getCity_id().getId());
         final NeighborhoodDTO dto = convertToDTO(bean);
 
         final NeighborhoodDTO neighborhoodDTO  = neighborhoodResource.save(dto);
@@ -87,6 +88,7 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     @Override
+    @Cacheable(value= Configurations.CACHE_NAME, key="'web_neighborhood_'+#id")
     public List<NeighborhoodB> getAllNotPaged() {
         final NeighborhoodResult neighborhoodResult = new NeighborhoodResult();
         final List<NeighborhoodDTO> dtosList = null == neighborhoodResult.getNeighborhoods() ? new ArrayList<>() : neighborhoodResult.getNeighborhoods();
@@ -124,6 +126,16 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
             neighborhoodDTO.setCity_id(0);
             beans.add(convertToBean(neighborhoodDTO));
         });
+        return beans;
+    }
+
+    public List<NeighborhoodB> getAllByCity(Integer city){
+        final NeighborhoodResult neighborhoodResult = new NeighborhoodResult();
+        final List<NeighborhoodDTO> dtosList = null == neighborhoodResult.getNeighborhoods() ? new ArrayList<>() : neighborhoodResult.getNeighborhoods();
+        final List<NeighborhoodB> beansList = new ArrayList<>();
+
+        dtosList.forEach(neighborhoodDTO -> beansList.add(convertToBean(neighborhoodDTO)));
+        final List<NeighborhoodB> beans = beansList.stream().filter(bean -> bean.getCity_id().getId() == city).collect(Collectors.toList());
         return beans;
     }
 }
