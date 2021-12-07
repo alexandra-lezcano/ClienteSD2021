@@ -5,6 +5,7 @@ class CasosDerivados {
     Date date;
     String description;
     Integer trabajador_social_id;
+    Set <DepEstado> depEstadoBSet;
     static constraints = {
     }
 }
