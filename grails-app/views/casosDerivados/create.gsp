@@ -39,6 +39,14 @@
                     <g:textField name="description" value="${depEstadoInstance?.description}"/>
                 </label>
             </div>
+        <div class="fieldcontain ${hasErrors(bean: casosDerivadosInstance, field: 'depEstadoBSet', 'error')} required">
+            <label class="col-sm-2 col-sm-2 control-label" for="depEstadoBSet">DepEstado*</label>
+            <div class="col-sm-10">
+                <g:each in="${depEstadoInstanceList}" var="depEstado">
+                    ${depEstado?.getNombre()}   <g:checkBox name="depEstadoBSet"  from="${depEstadoInstanceList}" optionValue="nombre" value="${depEstado?.id}"  checked="false"/>
+                </g:each>
+            </div>
+        </div>
             <button type="submit" class="separar btn btn-success col-md-6 col-sm-12 rellenar">Crear</button>
         </fieldset>
     </g:form>

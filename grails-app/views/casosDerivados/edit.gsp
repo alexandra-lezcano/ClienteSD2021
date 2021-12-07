@@ -34,7 +34,7 @@
             </div>
             <div class="fieldcontain ${hasErrors(bean: casosDerivadosInstance, field: 'description','error')}">
                 <label for="description"> Descripcion:
-                <g:textField name="description" value="${depEstadoInstance?.descripcion}"/>
+                <g:textField name="description" value="${casosDerivadosInstance?.description}"/>
                 </label>
             </div>
             <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="update" />

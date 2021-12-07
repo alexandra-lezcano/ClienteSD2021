@@ -13,7 +13,7 @@ public class DepEstadoResourceImpl extends BaseResourceImpl<DepEstadoDTO> implem
 
     @Override
     public DepEstadoResult getAll() {
-        return getWebResource().get(DepEstadoResult.class);
+        return getWebResource().path("/").get(DepEstadoResult.class);
     }
 
     @Override

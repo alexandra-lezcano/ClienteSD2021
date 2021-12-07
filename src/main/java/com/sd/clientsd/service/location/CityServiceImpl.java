@@ -94,7 +94,6 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
     @Override
     @Cacheable(value= Configurations.CACHE_NAME, key = "'web_city_'+#id")
-
     public CityB getById(Integer id) {
         final CityDTO dto= cityResource.getById(id);
         return convertToBean(dto);
