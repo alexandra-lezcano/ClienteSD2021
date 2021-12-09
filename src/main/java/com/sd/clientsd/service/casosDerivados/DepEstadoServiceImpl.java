@@ -76,12 +76,32 @@ return bean;
 
         dtosList.forEach(depEstadoDTO -> beansList.add(convertToBean(depEstadoDTO)));
         return beansList;
+    }
 
+    @Override
+    public List<DepEstadoB> getAll(Integer page, Integer size) {
+        DepEstadoResult depEstadoResult = depEstadoResource.getByPage(page, size);
+        List<DepEstadoDTO> dtosList = new ArrayList<DepEstadoDTO>();
 
+        if(depEstadoResult.getDepEstados()!=null) dtosList = depEstadoResult.getDepEstados();
 
+        final List<DepEstadoB> beansList = new ArrayList<DepEstadoB>();
 
+        dtosList.forEach(depEstadoDTO -> beansList.add(convertToBean(depEstadoDTO)));
+        return beansList;
+    }
 
+    @Override
+    public List<DepEstadoB> getAll() {
+        DepEstadoResult depEstadoResult = depEstadoResource.getByPage();
+        List<DepEstadoDTO> dtosList = new ArrayList<DepEstadoDTO>();
 
+        if(depEstadoResult.getDepEstados()!=null) dtosList = depEstadoResult.getDepEstados();
+
+        final List<DepEstadoB> beansList = new ArrayList<DepEstadoB>();
+
+        dtosList.forEach(depEstadoDTO -> beansList.add(convertToBean(depEstadoDTO)));
+        return beansList;
     }
 
     @Override

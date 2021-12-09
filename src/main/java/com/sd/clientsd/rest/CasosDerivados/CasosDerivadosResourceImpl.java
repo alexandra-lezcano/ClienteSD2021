@@ -19,7 +19,35 @@ public class CasosDerivadosResourceImpl  extends BaseResourceImpl<CasosDerivados
 
     @Override
     public CasosDerivadosResult getByPage(Integer pageNum) {
-        return getWebResource().path("/page/"+pageNum).get(CasosDerivadosResult.class);
+        CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
+        if(getWebResource()!=null){
+            Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;
+            String path = "/page/"+pageNum;
+            casosDerivadosResult = getWebResource().path(path).get(casosDerivadosResultClass);
+        }
+        return casosDerivadosResult;
+    }
+
+    @Override
+    public CasosDerivadosResult getByPage(Integer page, Integer size) {
+        CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
+        if(getWebResource()!=null){
+            Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;
+            String path = "/page/"+page+"/"+size;
+            casosDerivadosResult = getWebResource().path(path).get(casosDerivadosResultClass);
+        }
+        return casosDerivadosResult;
+    }
+
+    @Override
+    public CasosDerivadosResult getByPage() {
+        CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
+        if(getWebResource()!=null){
+            Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;
+            String path = "/page/";
+            casosDerivadosResult = getWebResource().path(path).get(casosDerivadosResultClass);
+        }
+        return casosDerivadosResult;
     }
 }
 

@@ -3,9 +3,12 @@ package com.sd
 import com.sd.clientsd.beans.denuncia.SujetoB
 import com.sd.clientsd.service.denuncia.ISujetoService
 import com.sd.clientsd.service.denuncia.ITipoSujetoService
+import com.sd.clientsd.utils.config.Configurations
+
 import static org.springframework.http.HttpStatus.*
 
 class SujetoController {
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
 
     ISujetoService sujetoService
     ITipoSujetoService tipoSujetoService
@@ -17,7 +20,7 @@ class SujetoController {
     }
 
     def list(Integer max) {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+        def page=null ==params['page'] ? 1 : Integer.valueOf(params['page'])
         def sujetos = sujetoService.getAll(page)
         [sujetoInstanceList: sujetos, sujetosTotal: sujetos.size()]
     }
@@ -28,12 +31,14 @@ class SujetoController {
     }
 
     def create() {
-        def page=null ==params['tipo'] ? 1 : Integer.valueOf(params['tipo'])
-
+        def page=null ==params['tipo'] ? 0 : Integer.valueOf(params['tipo'])
         def tipoSujetos = tipoSujetoService.getAll(page)
+        def prev = page -1;
+        def sig = page +1;
+        if(tipoSujetos.size() < ELEMS_PAGINATION){sig = -1}
 
-        [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size(),
-         tipoSujetoInstance: new TipoSujeto(params), sujetoInstance: new Sujeto(params)]
+        [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size(), tipoSujetoInstance: new TipoSujeto(params), sujetoInstance: new Sujeto(params),
+        sig: sig, prev: prev]
     }
 
     def save() {

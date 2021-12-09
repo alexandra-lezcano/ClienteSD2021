@@ -2,6 +2,8 @@ package com.sd
 
 import com.sd.clientsd.beans.denuncia.TipoDenunciaB
 import com.sd.clientsd.service.denuncia.ITipoDenunciaService
+import com.sd.clientsd.utils.config.Configurations
+
 import static org.springframework.http.HttpStatus.*
 
 class TipoDenunciaController {
@@ -14,6 +16,9 @@ class TipoDenunciaController {
     *  @Service("tipoDenunciaService")  */
 
     //services
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
+
+
     ITipoDenunciaService tipoDenunciaService
 
     static allowedMethods = [save: "POST", update: "PUT"]
@@ -22,13 +27,14 @@ class TipoDenunciaController {
         redirect(action: 'list', params:params)
     }
 
-    // todo arreglar la paginacion!
     def list(Integer max) {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
-
+        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def tipoDenunicas = tipoDenunciaService.getAll(page)
+        def prev = page-1;
+        def sig = page+1;
+        if(tipoDenunicas.size() < ELEMS_PAGINATION){sig = -1}
 
-        [tipoDenunciaInstanceList: tipoDenunicas, tipoDenunciasTotal: tipoDenunicas.size()]
+        [tipoDenunciaInstanceList: tipoDenunicas, tipoDenunciasTotal: tipoDenunicas.size(), prev: prev, sig: sig]
     }
 
     // EL SHOW NO ES NECESARIO SEGUN ALDO

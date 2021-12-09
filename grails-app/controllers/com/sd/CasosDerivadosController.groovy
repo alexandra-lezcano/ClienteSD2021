@@ -4,11 +4,12 @@ import com.sd.clientsd.beans.CasosDerivados.CasoDerivadoB
 import com.sd.clientsd.beans.CasosDerivados.DepEstadoB
 import com.sd.clientsd.service.casosDerivados.ICasosDerivadosService
 import com.sd.clientsd.service.casosDerivados.IDepEstadoService
+import com.sd.clientsd.utils.config.Configurations
 
 import static org.springframework.http.HttpStatus.*
 
 class CasosDerivadosController {
-
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
 
     ICasosDerivadosService casoDerivadoService
     IDepEstadoService depEstadoService
@@ -19,14 +20,16 @@ class CasosDerivadosController {
 
     }
     def list(Integer max) {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
-
+        def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
         def casosDerivados =  casoDerivadoService.getAll(page)
+        def prev = page - 1;
+        def sig = page + 1;
+        if(casosDerivados.size() < ELEMS_PAGINATION){sig = -1}
         def depEstado =  depEstadoService.getAll(page)
 
-
         [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size()
-        ,casosDerivadosInstanceList: casosDerivados, casosDerivadosTotal: casosDerivados.size()]
+        ,casosDerivadosInstanceList: casosDerivados, casosDerivadosTotal: casosDerivados.size(),
+        sig: sig, prev: prev]
     }
 
 

@@ -7,4 +7,6 @@ import com.sd.clientsd.rest.base.IBaseResource;
 public interface ISujetoresource extends IBaseResource<SujetoDto> {
     public SujetoResult getAll();
     public SujetoResult getByPage(Integer page);
+    public SujetoResult getByPage(Integer page, Integer size);
+    public SujetoResult getByPage();
 }
