@@ -6,4 +6,6 @@ import com.sd.clientsd.rest.base.IBaseResource;
 
 public interface IUserResource  extends IBaseResource<UserDTO> {
     public UserResult getByPage(Integer pageNum);
+    public UserResult getByPage(Integer page, Integer size);
+    public UserResult getByPage();
 }

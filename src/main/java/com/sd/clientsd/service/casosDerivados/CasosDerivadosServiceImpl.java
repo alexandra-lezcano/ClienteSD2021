@@ -98,22 +98,44 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
 
         if(casoDerivadoResult.getCasosDerivados()!=null) dtosList = casoDerivadoResult.getCasosDerivados();
 
-       // System.out.println(casoDerivadoResult.getCasosDerivados().get(1).getDate());
+        final List<CasoDerivadoB> beansList = new ArrayList<CasoDerivadoB>();
+
+        dtosList.forEach(casoDerivadoDTO -> {beansList.add(convertToBean(casoDerivadoDTO));});
+        return beansList;
+    }
+
+    @Override
+    public List<CasoDerivadoB> getAll(Integer page, Integer size) {
+        CasosDerivadosResult casoDerivadoResult = casosDerivadoResource.getByPage(page, size);
+        List<CasosDerivadosDTO> dtosList = new ArrayList<CasosDerivadosDTO>();
+
+        if(casoDerivadoResult.getCasosDerivados()!=null) dtosList = casoDerivadoResult.getCasosDerivados();
 
         final List<CasoDerivadoB> beansList = new ArrayList<CasoDerivadoB>();
 
         dtosList.forEach(casoDerivadoDTO -> {
 
-                beansList.add(convertToBean(casoDerivadoDTO));
+            beansList.add(convertToBean(casoDerivadoDTO));
 
         });
         return beansList;
+    }
 
+    @Override
+    public List<CasoDerivadoB> getAll() {
+        CasosDerivadosResult casoDerivadoResult = casosDerivadoResource.getByPage();
+        List<CasosDerivadosDTO> dtosList = new ArrayList<CasosDerivadosDTO>();
 
+        if(casoDerivadoResult.getCasosDerivados()!=null) dtosList = casoDerivadoResult.getCasosDerivados();
 
+        final List<CasoDerivadoB> beansList = new ArrayList<CasoDerivadoB>();
 
+        dtosList.forEach(casoDerivadoDTO -> {
 
+            beansList.add(convertToBean(casoDerivadoDTO));
 
+        });
+        return beansList;
     }
 
     @Override

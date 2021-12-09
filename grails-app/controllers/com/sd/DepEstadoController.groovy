@@ -2,10 +2,12 @@ package com.sd
 
 import com.sd.clientsd.beans.CasosDerivados.DepEstadoB
 import com.sd.clientsd.service.casosDerivados.IDepEstadoService
+import com.sd.clientsd.utils.config.Configurations
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
 class DepEstadoController {
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
 
     IDepEstadoService depEstadoService
 
@@ -17,11 +19,12 @@ class DepEstadoController {
 
     }
     def list(Integer max) {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
-
+        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
         def depEstado =  depEstadoService.getAll(page)
-
-        [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size()]
+        def prev = page -1
+        def sig = page +1
+        if(sig < ELEMS_PAGINATION){sig = -1}
+        [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size(), sig: sig, prev: prev]
     }
 
 

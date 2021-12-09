@@ -105,6 +105,30 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
     }
 
     @Override
+    public List<DenunciaB> getAll(Integer page, Integer size) {
+        DenunciaResult denunciaResult = denunciaResource.getByPage(page, size);
+        List<DenunciaDTO> dtosList = new ArrayList<DenunciaDTO>();
+
+        if(denunciaResult.getDenuncias()!=null) dtosList = denunciaResult.getDenuncias();
+        final List<DenunciaB> beansList = new ArrayList<DenunciaB>();
+
+        dtosList.forEach(denunciaDTO -> beansList.add(convertToBean(denunciaDTO)));
+        return beansList;
+    }
+
+    @Override
+    public List<DenunciaB> getAll() {
+        DenunciaResult denunciaResult = denunciaResource.getByPage();
+        List<DenunciaDTO> dtosList = new ArrayList<DenunciaDTO>();
+
+        if(denunciaResult.getDenuncias()!=null) dtosList = denunciaResult.getDenuncias();
+        final List<DenunciaB> beansList = new ArrayList<DenunciaB>();
+
+        dtosList.forEach(denunciaDTO -> beansList.add(convertToBean(denunciaDTO)));
+        return beansList;
+    }
+
+    @Override
     public DenunciaB getById(Integer id) {
         final DenunciaDTO dto= denunciaResource.getById(id);
         return convertToBean(dto);

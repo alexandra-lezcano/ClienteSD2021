@@ -72,6 +72,24 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
     }
 
     @Override
+    public List<SujetoB> getAll(Integer page, Integer size) {
+        final SujetoResult sujetoResult = sujetoResource.getByPage(page, size);
+        final List<SujetoDto> dtosList = null == sujetoResult.getSujetos() ? new ArrayList<>() : sujetoResult.getSujetos();
+        final List<SujetoB> beansList = new ArrayList<>();
+        dtosList.forEach(sujetoDto -> beansList.add(convertToBean(sujetoDto)));
+        return beansList;
+    }
+
+    @Override
+    public List<SujetoB> getAll() {
+        final SujetoResult sujetoResult = sujetoResource.getByPage();
+        final List<SujetoDto> dtosList = null == sujetoResult.getSujetos() ? new ArrayList<>() : sujetoResult.getSujetos();
+        final List<SujetoB> beansList = new ArrayList<>();
+        dtosList.forEach(sujetoDto -> beansList.add(convertToBean(sujetoDto)));
+        return beansList;
+    }
+
+    @Override
     public SujetoB getById(Integer id) {
         final SujetoDto sujetoDto = sujetoResource.getById(id);
         return convertToBean(sujetoDto);

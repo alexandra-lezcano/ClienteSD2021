@@ -88,6 +88,32 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     @Override
+    public List<NeighborhoodB> getAll(Integer page, Integer size) {
+        NeighborhoodResult neighborhoodResult = neighborhoodResource.getByPage(page, size);
+        List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
+
+        if(neighborhoodResult.getNeighborhoods()!=null) dtosList = neighborhoodResult.getNeighborhoods();
+
+        final List<NeighborhoodB> beansList = new ArrayList<NeighborhoodB>();
+
+        dtosList.forEach(neighborhoodDTO -> beansList.add(convertToBean(neighborhoodDTO)));
+        return beansList;
+    }
+
+    @Override
+    public List<NeighborhoodB> getAll() {
+        NeighborhoodResult neighborhoodResult = neighborhoodResource.getBypage();
+        List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
+
+        if(neighborhoodResult.getNeighborhoods()!=null) dtosList = neighborhoodResult.getNeighborhoods();
+
+        final List<NeighborhoodB> beansList = new ArrayList<NeighborhoodB>();
+
+        dtosList.forEach(neighborhoodDTO -> beansList.add(convertToBean(neighborhoodDTO)));
+        return beansList;
+    }
+
+    @Override
     @Cacheable(value= Configurations.CACHE_NAME, key="'web_neighborhood_'+#id")
     public List<NeighborhoodB> getAllNotPaged() {
         final NeighborhoodResult neighborhoodResult = new NeighborhoodResult();

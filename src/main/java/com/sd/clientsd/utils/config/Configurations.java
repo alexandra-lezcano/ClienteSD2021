@@ -15,6 +15,7 @@ public class Configurations {
     private static String TIPO_DENUNCIA_RESOURCE;
     private static String USER_RESOURCE;
     private static String SUJETO_RESOURCE;
+    private static Integer ELEMS_PAGINATION;
 
     static {
         try {
@@ -31,6 +32,10 @@ public class Configurations {
             SUJETO_RESOURCE = properties.getProperty("resource.sujeto");
             DENUNCIA_ESTADO_RESOURCE = properties.getProperty("resource.estadoDenuncia");
             DENUNCIA_RESOURCE = properties.getProperty("resource.denuncia");
+
+            ELEMS_PAGINATION = Integer.parseInt(properties.getProperty("global.pagination"));
+
+
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Something went wrong at configuration initialization.");
@@ -62,4 +67,6 @@ public class Configurations {
     public static String gerDenunciaEstadoResource() {return DENUNCIA_ESTADO_RESOURCE;}
 
     public static String getDenunciaResource() { return DENUNCIA_RESOURCE;}
+
+    public static Integer getElemsPagination(){ return ELEMS_PAGINATION;}
 }

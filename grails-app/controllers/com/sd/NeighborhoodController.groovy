@@ -4,11 +4,14 @@ import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.beans.denuncia.TipoDenunciaB
 import com.sd.clientsd.beans.location.NeighborhoodB
 import com.sd.clientsd.service.location.INeighborhoodService
+import com.sd.clientsd.utils.config.Configurations
 import grails.validation.ValidationException
+import org.grails.datastore.mapping.query.Query.In
+
 import static org.springframework.http.HttpStatus.*
 
 class NeighborhoodController {
-
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
     INeighborhoodService neighborhoodService
     ICityService cityService
     static allowedMethods = [save: "POST", update: "PUT"]
@@ -18,10 +21,13 @@ class NeighborhoodController {
     }
 
     def list(Integer max) {
-        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
+        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def neighborhoods = neighborhoodService.getAll(page)
+        def prev = page - 1
+        def sig = page + 1
+        if(neighborhoods.size() < ELEMS_PAGINATION) {sig = -1}
 
-        [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size()]
+        [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size(), prev: prev, sig: sig]
     }
 
     def listCities() {

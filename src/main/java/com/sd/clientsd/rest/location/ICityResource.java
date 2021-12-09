@@ -8,5 +8,8 @@ import com.sd.clientsd.rest.base.IBaseResource;
 public interface ICityResource extends IBaseResource<CityDTO> {
     public CityResult getAll();
     public CityResult getByPage(Integer pageNum);
+    public CityResult getByPage(Integer pageNum, Integer size);
+    public CityResult getByPage();
+
     NeighborhoodResult getNeighborhoodByCityId(Integer id);
 }

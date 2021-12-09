@@ -29,7 +29,7 @@
                <fieldset class="form">
                    <div class="fieldcontain ${hasErrors(bean: denunciaInstance, field: 'city','error')}">
                        <label for="city">
-                           Ciudad: <g:select id="city" name="city" from="${cityInstanceList}" optionKey="id" optionValue="name" required="" value="${denunciaInstance?.city?.id}"/>
+                           Ciudad: <g:select id="city" name="city" from="${cityInstanceList}" optionKey="id" optionValue="name" value="${denunciaInstance?.city?.id}"/>
                        </label>
                    </div>
                    <div class="fieldcontain ${hasErrors(bean: denunciaInstance, field: 'neighborhood','error')}">

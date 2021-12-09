@@ -7,4 +7,6 @@ import com.sd.clientsd.rest.base.IBaseResource;
 public interface IDenunciaEstadoResource extends IBaseResource<DenunciaEstadoDTO> {
     public DenunciaEstadoResult getAll();
     public DenunciaEstadoResult getByPage(Integer page);
+    public DenunciaEstadoResult getByPage(Integer page, Integer size);
+    public DenunciaEstadoResult getByPage();
 }
