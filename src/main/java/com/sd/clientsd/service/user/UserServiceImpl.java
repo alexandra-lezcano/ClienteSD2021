@@ -1,7 +1,10 @@
 package com.sd.clientsd.service.user;
 
+import com.protectionapp.sd2021.dto.localization.CityDTO;
+import com.protectionapp.sd2021.dto.localization.CityResult;
 import com.protectionapp.sd2021.dto.user.UserDTO;
 import com.protectionapp.sd2021.dto.user.UserResult;
+import com.sd.clientsd.beans.location.CityB;
 import com.sd.clientsd.beans.location.NeighborhoodB;
 import com.sd.clientsd.beans.user.UserB;
 import com.sd.clientsd.rest.location.ICityResource;
@@ -120,4 +123,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         final UserDTO deleted = userResource.delete(id);
         return convertToBean(deleted);
     }
+
+
 }

@@ -36,7 +36,7 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
         }
        // dto.setDate(bean.getDate());
         dto.setDescription(bean.getDescription());
-        dto.setUser_id(bean.getTrabajador_social_id());
+        dto.setUser(bean.getTrabajador_social_id());
 
         if(bean.getDepEstadoBSet()!=null) {
             Set<DepEstadoB> dependencias = bean.getDepEstadoBSet();

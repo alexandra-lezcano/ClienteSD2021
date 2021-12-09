@@ -39,7 +39,7 @@ class CasosDerivadosController {
     def create() {
 
         def depEstados= depEstadoService.getAllNotPaged()
-def depEstadoNuevo = casoDerivadoService.newLista();
+        def depEstadoNuevo = casoDerivadoService.newLista();
         [depEstadoInstanceList: depEstados,depEstadoNewLista:depEstadoNuevo, depEstadoInstance: new DepEstado(params), casosDerivadosInstance: new CasosDerivados(params)]
         //  respond new DepEstado(params)
     }

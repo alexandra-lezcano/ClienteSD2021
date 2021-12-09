@@ -1,16 +1,18 @@
 package com.sd.clientsd.rest.base;
 
 import com.protectionapp.sd2021.dto.base.BaseDTO;
+import com.sd.clientsd.service.login.IAuthService;
 import com.sd.clientsd.utils.config.Configurations;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 public abstract class BaseResourceImpl <DTO extends BaseDTO> implements IBaseResource<DTO>{
 
     private final String resourcePath;
     private final Class<DTO> dtoClass;
     private final WebResource webResource;
-
+    private IAuthService authService;
     //private static final String BASE_URL = "http://localhost:8080";
     private static final String BASE_URL = Configurations.getBaseUrl();
 
@@ -56,4 +58,22 @@ public abstract class BaseResourceImpl <DTO extends BaseDTO> implements IBaseRes
         // ej: getJerseyClient().resource(getBaseUrl()+pathToResource+"/"+id).delete(UserDTO.class);
         return getWebResource().path("/"+id).delete(this.dtoClass);
     }
+    /* Este método se encarga de establecer un usuario y contraseña en la cabecera del request
+     * del webResource, lo que le permite autenticarse para acceder a los recursos del webService
+     * El web service esta configurado para requerir un tipo de autenticación básica la cual se
+     * establece en este método
+     * Este método se usa siempre antes de llamar al método getWebResource() en todas las clases ResourceImpl
+     * menos las clases ResourceImpl de user y role, en donde authService provocaría un fallo
+     * ya que authService requiere que el usuario este logueado para que pueda funcionar
+     */
+    public void setWebResourceBasicAuthFilter(){
+        String u = authService.getUsername();
+        String p = authService.getPassword();
+        this.webResource.addFilter(new HTTPBasicAuthFilter(u,p));
+    }
+
+
+
+
+
 }
