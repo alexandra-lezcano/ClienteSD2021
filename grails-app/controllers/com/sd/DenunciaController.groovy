@@ -1,8 +1,8 @@
 package com.sd
-
 import com.sd.clientsd.beans.denuncia.DenunciaB
 import com.sd.clientsd.service.denuncia.IDenunciaService
 import com.sd.clientsd.service.denuncia.ISujetoService
+import com.sd.clientsd.service.denuncia.ITipoDenunciaService
 import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.service.location.INeighborhoodService
 import static org.springframework.http.HttpStatus.*
@@ -13,6 +13,7 @@ class DenunciaController {
     ICityService cityService
     INeighborhoodService neighborhoodService;
     ISujetoService sujetoService;
+    ITipoDenunciaService tipoDenunciaService;
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -21,16 +22,24 @@ class DenunciaController {
     }
 
     def list(Integer max){
-        def page = null == params['id'] ? 0 : Integer.valueOf(params['id'])
+        def page = null == params['page'] ? 0 : Integer.valueOf(params['page'])
         def denuncias = denunciaService.getAll(page)
-        [denunciaInstanceList: denuncias, denunciasTotal: denuncias.size()]
+        def prev = page - 1;
+        def sig = page -1;
+        [denunciaInstanceList: denuncias, denunciasTotal: denuncias.size(), sig: sig, prev: prev]
     }
 
     def create() {
         def cities = cityService.getAllNotPaged()
-        def barrios = neighborhoodService.getAllNotPaged()
-        [denunciaInstance: new Denuncia(params), cityInstanceList: cities,
-        neighborhoodInstanceList: barrios]
+        def city_id = 11;
+        def barrios = neighborhoodService.getAllByCity(city_id)
+        def sujetos = sujetoService.newList();
+        def tipos = tipoDenunciaService.getAllNotPaged();
+        def denunciaInstance = new Denuncia(params);
+        [denunciaInstance        : denunciaInstance, cityInstanceList: cities,
+         sujetoInstance          : new Sujeto(params), sujetoInstanceList: sujetos,
+         neighborhoodInstanceList: barrios, city_id: city_id,
+         tipoDenunciaInstanceList: tipos]
     }
 
     def save() {

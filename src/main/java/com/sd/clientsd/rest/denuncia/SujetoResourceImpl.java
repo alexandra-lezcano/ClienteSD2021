@@ -31,4 +31,28 @@ public class SujetoResourceImpl extends BaseResourceImpl<SujetoDto> implements I
         }
         return sResult;
     }
+
+    @Override
+    public SujetoResult getByPage(Integer page, Integer size) {
+        SujetoResult sResult = new SujetoResult();
+
+        if(getWebResource()!=null){
+            Class<SujetoResult> sResultClass = SujetoResult.class;
+            String path = "/page/"+page+"/"+size;
+            sResult = getWebResource().path(path).get(sResultClass);
+        }
+        return sResult;
+    }
+
+    @Override
+    public SujetoResult getByPage() {
+        SujetoResult sResult = new SujetoResult();
+
+        if(getWebResource()!=null){
+            Class<SujetoResult> sResultClass = SujetoResult.class;
+            String path = "/page/";
+            sResult = getWebResource().path(path).get(sResultClass);
+        }
+        return sResult;
+    }
 }

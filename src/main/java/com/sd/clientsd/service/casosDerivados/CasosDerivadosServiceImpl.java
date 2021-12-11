@@ -22,6 +22,9 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
     private ICasosDerivadosResource casosDerivadoResource;
 
     @Autowired
+    private  IDepEstadoService depEstadoService;
+
+    @Autowired
     private CacheManager cacheManager;
 
     @Override
@@ -33,6 +36,17 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
        // dto.setDate(bean.getDate());
         dto.setDescription(bean.getDescription());
         dto.setUser_id(bean.getTrabajador_social_id());
+
+        if(bean.getDepEstadoBSet()!=null) {
+            Set<DepEstadoB> dependencias = bean.getDepEstadoBSet();
+            Set<Integer> dependencias_ids = new HashSet<Integer>();
+            for (DepEstadoB d : dependencias) {
+                dependencias_ids.add(d.getId());
+            }
+            dto.setDependencias_ids(dependencias_ids);
+
+        }
+
         return dto;
     }
 
@@ -45,6 +59,18 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
     //    params.put("trabajador_social_id", Integer.toString(dto.getUser_id()));
 
         final CasoDerivadoB bean= new CasoDerivadoB(params);
+        if(dto.getDependencias_ids()!=null){
+            Set<Integer> dependencias_ids = dto.getDependencias_ids();
+            Set<DepEstadoB> dependencias = new HashSet<DepEstadoB>();
+            for (Integer d : dependencias_ids) {
+                System.out.println("aqui"+depEstadoService.getById(d));
+
+                dependencias.add(depEstadoService.getById(d));
+            }
+            bean.setDepEstadoBSet(dependencias);
+
+        }
+
         return bean;
     }
 
@@ -65,16 +91,46 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
 
         if(casoDerivadoResult.getCasosDerivados()!=null) dtosList = casoDerivadoResult.getCasosDerivados();
 
-       // System.out.println(casoDerivadoResult.getCasosDerivados().get(1).getDate());
+        final List<CasoDerivadoB> beansList = new ArrayList<CasoDerivadoB>();
+
+        dtosList.forEach(casoDerivadoDTO -> {beansList.add(convertToBean(casoDerivadoDTO));});
+        return beansList;
+    }
+
+    @Override
+    public List<CasoDerivadoB> getAll(Integer page, Integer size) {
+        CasosDerivadosResult casoDerivadoResult = casosDerivadoResource.getByPage(page, size);
+        List<CasosDerivadosDTO> dtosList = new ArrayList<CasosDerivadosDTO>();
+
+        if(casoDerivadoResult.getCasosDerivados()!=null) dtosList = casoDerivadoResult.getCasosDerivados();
 
         final List<CasoDerivadoB> beansList = new ArrayList<CasoDerivadoB>();
 
         dtosList.forEach(casoDerivadoDTO -> {
 
-                beansList.add(convertToBean(casoDerivadoDTO));
+            beansList.add(convertToBean(casoDerivadoDTO));
 
         });
         return beansList;
+
+    }
+
+    @Override
+    public List<CasoDerivadoB> getAll() {
+        CasosDerivadosResult casoDerivadoResult = casosDerivadoResource.getByPage();
+        List<CasosDerivadosDTO> dtosList = new ArrayList<CasosDerivadosDTO>();
+
+        if(casoDerivadoResult.getCasosDerivados()!=null) dtosList = casoDerivadoResult.getCasosDerivados();
+
+        final List<CasoDerivadoB> beansList = new ArrayList<CasoDerivadoB>();
+
+        dtosList.forEach(casoDerivadoDTO -> {
+
+            beansList.add(convertToBean(casoDerivadoDTO));
+
+        });
+        return beansList;
+
     }
 
     @Override
@@ -98,6 +154,11 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
 
         final CasosDerivadosDTO d= casosDerivadoResource.delete(id);
         return convertToBean(d);
+    }
+
+    public Set<DepEstadoB> newLista(){
+         Set<DepEstadoB> nuevo= new HashSet<DepEstadoB>();
+         return nuevo;
     }
 
 

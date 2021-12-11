@@ -1,10 +1,12 @@
 package com.sd.clientsd.beans.CasosDerivados;
 
+
 import com.sd.clientsd.beans.base.BaseBean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 public class CasoDerivadoB extends BaseBean {
     private static final long serialVersionUID = 1L;
@@ -13,6 +15,7 @@ public class CasoDerivadoB extends BaseBean {
     Date date;
     String description;
     Integer trabajador_social_id;
+    Set<DepEstadoB> depEstadoBSet;
     public CasoDerivadoB(Map<String, String> params) {
         super(params);
     }
@@ -26,8 +29,8 @@ public class CasoDerivadoB extends BaseBean {
             setId(0);
         }
 
-
         setDescription(params.get("description"));
+
       //  setTrabajador_social_id(Integer.valueOf(params.get("trabajador_social_id")));
 
 
@@ -65,5 +68,14 @@ public class CasoDerivadoB extends BaseBean {
     @Override
     public void setId(Integer id) {
         super.setId(id);
+    }
+
+
+    public Set<DepEstadoB> getDepEstadoBSet() {
+        return depEstadoBSet;
+    }
+
+    public void setDepEstadoBSet(Set<DepEstadoB> depEstadoBSet) {
+        this.depEstadoBSet = depEstadoBSet;
     }
 }

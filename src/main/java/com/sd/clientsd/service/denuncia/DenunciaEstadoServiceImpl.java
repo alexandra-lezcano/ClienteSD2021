@@ -56,6 +56,24 @@ public class DenunciaEstadoServiceImpl extends BaseServiceImpl<DenunciaEstadoB, 
     }
 
     @Override
+    public List<DenunciaEstadoB> getAll(Integer page, Integer size) {
+        final DenunciaEstadoResult denunciaEstadoResult = denunciaEstadoResource.getByPage(page, size);
+        final List<DenunciaEstadoDTO> dtoList = null == denunciaEstadoResult.getDenunciaEstados() ? new ArrayList<>() : denunciaEstadoResult.getDenunciaEstados();
+        final List<DenunciaEstadoB> beansList = new ArrayList<>();
+        dtoList.forEach(denunciaEstadoDTO -> beansList.add(convertToBean(denunciaEstadoDTO)));
+        return beansList;
+    }
+
+    @Override
+    public List<DenunciaEstadoB> getAll() {
+        final DenunciaEstadoResult denunciaEstadoResult = denunciaEstadoResource.getByPage();
+        final List<DenunciaEstadoDTO> dtoList = null == denunciaEstadoResult.getDenunciaEstados() ? new ArrayList<>() : denunciaEstadoResult.getDenunciaEstados();
+        final List<DenunciaEstadoB> beansList = new ArrayList<>();
+        dtoList.forEach(denunciaEstadoDTO -> beansList.add(convertToBean(denunciaEstadoDTO)));
+        return beansList;
+    }
+
+    @Override
     public DenunciaEstadoB getById(Integer id) {
         final DenunciaEstadoDTO denunciaEstadoDTO = denunciaEstadoResource.getById(id);
         return convertToBean(denunciaEstadoDTO);

@@ -17,7 +17,40 @@ public class UserResourceImpl extends BaseResourceImpl<UserDTO> implements IUser
 
     @Override
     public UserResult getByPage(Integer pageNum) {
-        String path = "/page/"+pageNum;
-        return getWebResource().path(path).get(UserResult.class);
+        UserResult userResult = new UserResult();
+
+        if(getWebResource()!=null){
+            Class<UserResult> userResultClass = UserResult.class;
+            String path = "/page/"+pageNum;
+            userResult = getWebResource().path(path).get(userResultClass);
+        }
+
+        return userResult;
+    }
+
+    @Override
+    public UserResult getByPage(Integer page, Integer size) {
+        UserResult userResult = new UserResult();
+
+        if(getWebResource()!=null){
+            Class<UserResult> userResultClass = UserResult.class;
+            String path = "/page/"+page+"/"+size;
+            userResult = getWebResource().path(path).get(userResultClass);
+        }
+
+        return userResult;
+    }
+
+    @Override
+    public UserResult getByPage() {
+        UserResult userResult = new UserResult();
+
+        if(getWebResource()!=null){
+            Class<UserResult> userResultClass = UserResult.class;
+            String path = "/page/";
+            userResult = getWebResource().path(path).get(userResultClass);
+        }
+
+        return userResult;
     }
 }

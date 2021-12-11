@@ -32,12 +32,17 @@
         </thead>
         <tbody>
         <g:each in="${casosDerivadosInstanceList}" status="i" var="casosDerivadosInstance">
+       
 
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                 <td>
-                    <g:link class="edit" action="edit" id="${casosDerivadosInstance?.id}">
-                        ${fieldValue(bean: casosDerivadosInstance, field: "date")}</g:link>
+            <g:each in="${casosDerivadosInstance?.getDepEstadoBSet()}"  var="depEstadoInstance">
+
+                <g:link class="edit" action="edit" id="${depEstadoInstance.id}">
+                        ${fieldValue(bean: depEstadoInstance, field: "nombre")}</g:link>
+            </g:each>
                 </td>
+
                 <td>
                     ${fieldValue(bean: casosDerivadosInstance, field: "description")}
                 </td>
@@ -56,8 +61,6 @@
         </g:each>
         </tbody>
     </table>
-    <div class="pagination">
-        <g:paginate total="${casosDerivadosTotal}" />
-    </div>
+    <g:render template="/layouts/pagination"/>
 </div>
 </body>

@@ -7,4 +7,6 @@ import com.sd.clientsd.rest.base.IBaseResource;
 public interface IDepEstadoResource extends IBaseResource<DepEstadoDTO> {
     public DepEstadoResult getAll();
     public DepEstadoResult getByPage(Integer pageNum);
+    public DepEstadoResult getByPage(Integer page, Integer size);
+    public DepEstadoResult getByPage();
 }

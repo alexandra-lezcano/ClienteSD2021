@@ -9,4 +9,5 @@ import java.util.List;
 public interface INeighborhoodService extends IBaseService<NeighborhoodB, NeighborhoodDTO> {
     List<NeighborhoodB> convertDtoListToBList(List<NeighborhoodDTO> dtos);
     List<NeighborhoodB> getAllNotPaged();
+    List<NeighborhoodB> getAllByCity(Integer city);
 }

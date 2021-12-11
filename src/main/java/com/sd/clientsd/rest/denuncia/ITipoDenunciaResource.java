@@ -8,4 +8,6 @@ import com.sd.clientsd.rest.base.IBaseResource;
 public interface ITipoDenunciaResource extends IBaseResource<TipoDenunciaDTO> {
     public TipoDenunciaResult getAll();
     public TipoDenunciaResult getByPage(Integer pageNum);
+    public TipoDenunciaResult getByPage(Integer page, Integer size);
+    public TipoDenunciaResult getByPage();
 }

@@ -5,9 +5,12 @@ import com.sd.clientsd.beans.user.UserB
 import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.service.location.INeighborhoodService
 import com.sd.clientsd.service.user.IUserService
+import com.sd.clientsd.utils.config.Configurations
+
 import static org.springframework.http.HttpStatus.*
 
 class UserController {
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
 
     IUserService userService
     ICityService cityService
@@ -21,9 +24,12 @@ class UserController {
     }
 
     def list(Integer id){
-        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
+        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def users = userService.getAll(page)
-        [userInstanceList: users, usersTotal: users.size()]
+        def prev = page -1;
+        def sig = page +1;
+        if(users.size() < ELEMS_PAGINATION){sig = -1}
+        [userInstanceList: users, usersTotal: users.size(), prev: prev, sig: sig]
     }
 
     def show(Long id) {

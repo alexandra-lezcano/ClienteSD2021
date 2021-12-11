@@ -29,4 +29,26 @@ public class DenunciaResourceImpl extends BaseResourceImpl<DenunciaDTO> implemen
         }
         return dResult;
     }
+
+    @Override
+    public DenunciaResult getByPage(Integer pageNum, Integer size) {
+        DenunciaResult dResult = new DenunciaResult();
+        if(getWebResource()!=null){
+            Class<DenunciaResult> dResultClass = DenunciaResult.class;
+            String path = "/page/"+pageNum+"/"+size;
+            dResult = getWebResource().path(path).get(dResultClass);
+        }
+        return dResult;
+    }
+
+    @Override
+    public DenunciaResult getByPage(){
+        DenunciaResult dResult = new DenunciaResult();
+        if(getWebResource()!=null){
+            Class<DenunciaResult> dResultClass = DenunciaResult.class;
+            String path = "/page/";
+            dResult = getWebResource().path(path).get(dResultClass);
+        }
+        return dResult;
+    }
 }
