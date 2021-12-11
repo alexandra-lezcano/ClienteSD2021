@@ -8,11 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository (value="denunciaEstados")
 public class DenunciaEstadoResourceImpl extends BaseResourceImpl<DenunciaEstadoDTO> implements IDenunciaEstadoResource {
-    //@Autowired
-    //AppConfig appConfig;
-    //private static final String RESOURCE_PATH = Configurations.gerDenunciaEstadoResource();
-   //private final String RESOURCE_PATH = appConfig.getDenunciaEstadoResource();
-    public DenunciaEstadoResourceImpl(){super(DenunciaEstadoDTO.class, "/denunicaEstado");}
+    private static final String RESOURCE_PATH = Configurations.gerDenunciaEstadoResource();
+    public DenunciaEstadoResourceImpl(){super(DenunciaEstadoDTO.class, RESOURCE_PATH);}
 
     @Override
     public DenunciaEstadoResult getAll(){return getWebResource().get(DenunciaEstadoResult.class);}

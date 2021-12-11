@@ -3,15 +3,16 @@ package com.sd.clientsd.rest.denuncia;
 import com.protectionapp.sd2021.dto.denuncia.TipoSujetoDTO;
 import com.protectionapp.sd2021.dto.denuncia.TipoSujetoResult;
 import com.sd.clientsd.rest.base.BaseResourceImpl;
+import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.stereotype.Repository;
 
 @Repository(value="tipoSujetoResource")
 public class TipoSujetoResourceImpl extends BaseResourceImpl<TipoSujetoDTO> implements ITipoSujetoResource {
 
-    //private static final String RESOURCE_PATH = Configurations.getTipoSujetoResource();
+    private static final String RESOURCE_PATH = Configurations.getTipoSujetoResource();
 
     public TipoSujetoResourceImpl(){
-        super(TipoSujetoDTO.class, "/tiposSujetos");
+        super(TipoSujetoDTO.class, RESOURCE_PATH);
     }
 
     @Override
