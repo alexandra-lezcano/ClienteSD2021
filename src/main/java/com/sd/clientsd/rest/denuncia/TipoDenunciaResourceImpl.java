@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository(value = "tipoDenunciaResource")
 public class TipoDenunciaResourceImpl extends BaseResourceImpl<TipoDenunciaDTO> implements ITipoDenunciaResource{
-    private static final String RESOURCE_PATH = Configurations.getTipoDenunciaResource();
+    //private static final String RESOURCE_PATH = Configurations.getTipoDenunciaResource();
 
     public TipoDenunciaResourceImpl() {
-        super(TipoDenunciaDTO.class, RESOURCE_PATH);
+        super(TipoDenunciaDTO.class, "/tipoDenuncias");
     }
 
     @Override

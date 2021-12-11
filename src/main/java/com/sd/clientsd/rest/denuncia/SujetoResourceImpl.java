@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository(value = "sujetoResource")
 public class SujetoResourceImpl extends BaseResourceImpl<SujetoDto> implements ISujetoresource {
-    private static final String RESOURCE_PATH = Configurations.getSujetoResource();
+   // private static final String RESOURCE_PATH = Configurations.getSujetoResource();
 
     public SujetoResourceImpl() {
-        super(SujetoDto.class, RESOURCE_PATH);
+        super(SujetoDto.class, "/sujetos");
     }
 
     @Override
