@@ -1,5 +1,6 @@
 package com.sd.clientsd.rest.denuncia;
 
+import com.protectionapp.sd2021.dto.denuncia.TipoDenunciaResult;
 import com.protectionapp.sd2021.dto.denuncia.TipoSujetoDTO;
 import com.protectionapp.sd2021.dto.denuncia.TipoSujetoResult;
 import com.sd.clientsd.rest.base.BaseResourceImpl;

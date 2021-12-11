@@ -6,15 +6,17 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
 public abstract class BaseResourceImpl <DTO extends BaseDTO> implements IBaseResource<DTO>{
+
     private final String resourcePath;
     private final Class<DTO> dtoClass;
     private final WebResource webResource;
+
 
     private static final String BASE_URL = Configurations.getBaseUrl();
 
     public BaseResourceImpl(Class<DTO> dtoClass, String resourcePath) {
         final Client jerseyClient = Client.create();
-       this.resourcePath =  BASE_URL + resourcePath;
+        this.resourcePath =  BASE_URL + resourcePath;
         this.dtoClass = dtoClass;
         this.webResource = jerseyClient.resource(this.resourcePath);
     }

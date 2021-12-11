@@ -2,6 +2,7 @@ package com.sd.clientsd.rest.denuncia;
 
 import com.protectionapp.sd2021.dto.denuncia.DenunciaEstadoDTO;
 import com.protectionapp.sd2021.dto.denuncia.DenunciaEstadoResult;
+import com.protectionapp.sd2021.dto.denuncia.SujetoResult;
 import com.sd.clientsd.rest.base.BaseResourceImpl;
 import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.stereotype.Repository;
