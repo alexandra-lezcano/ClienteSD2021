@@ -17,7 +17,7 @@ class SujetoController {
     }
 
     def list(Integer max) {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
         def sujetos = sujetoService.getAll(page)
         [sujetoInstanceList: sujetos, sujetosTotal: sujetos.size()]
     }

@@ -15,7 +15,7 @@ class TipoSujetoController {
     }
 
     def list(Integer max) {
-        def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
+        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
 
         def tipoSujetos = tipoSujetoService.getAll(page)
 

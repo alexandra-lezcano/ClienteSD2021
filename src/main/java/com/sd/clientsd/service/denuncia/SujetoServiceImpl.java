@@ -5,7 +5,12 @@ import com.protectionapp.sd2021.dto.denuncia.SujetoResult;
 import com.sd.clientsd.beans.denuncia.SujetoB;
 import com.sd.clientsd.rest.denuncia.ISujetoresource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +25,8 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
     private ISujetoresource sujetoResource;
     @Autowired
     private ITipoSujetoService tipoSujetoService;
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     protected SujetoDto convertToDTO(SujetoB bean) {
@@ -58,6 +65,7 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
         final SujetoDto dto = convertToDTO(bean);
         final SujetoDto sujetoDto  = sujetoResource.save(dto);
         final SujetoB sujetoB = convertToBean(sujetoDto);
+        cacheManager.getCache(Configurations.CACHE_NAME).put("web_sujeto_"+sujetoB.getId(), sujetoB);
         return sujetoB;
     }
 
@@ -71,12 +79,14 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
     }
 
     @Override
+    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_sujeto_'+#id")
     public SujetoB getById(Integer id) {
         final SujetoDto sujetoDto = sujetoResource.getById(id);
         return convertToBean(sujetoDto);
     }
 
     @Override
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_sujeto_'+#id")
     public SujetoB update(SujetoB bean, Integer id) {
         final SujetoDto dto = convertToDTO(bean);
         final SujetoDto updated = sujetoResource.update(dto, id);
@@ -84,6 +94,7 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
     }
 
     @Override
+    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_sujeto_'+#id")
     public SujetoB delete(Integer id) {
         final SujetoDto deleted = sujetoResource.delete(id);
         return convertToBean(deleted);

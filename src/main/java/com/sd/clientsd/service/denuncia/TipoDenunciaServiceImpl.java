@@ -8,6 +8,7 @@ import com.sd.clientsd.service.base.BaseServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,6 +24,9 @@ import java.util.Map;
 public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, TipoDenunciaDTO> implements ITipoDenunciaService {
     @Autowired
     private ITipoDenunciaResource tipoDenunciaResource;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -49,17 +53,12 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
         return bean;
     }
 
-    /* En este metodo yo voy a recibir un BEAN de la UI->Controller que debe ser enviado
-    * por la red a nuestra API en formato de DTO
-    *
-    * tipoDenunciaResource.save(dto) hace un POST al endopoint /tipoDenuncias
-    * que responde un DTO, el cual enviamos de vualta hacia la Controller->UI como BEAN
-    * para ser renderizado. */
     @Override
     public TipoDenunciaB save(TipoDenunciaB bean) {
         final TipoDenunciaDTO dto = convertToDTO(bean);
         final TipoDenunciaDTO tipoDenundiaDto  = tipoDenunciaResource.save(dto);
         final TipoDenunciaB tipoDenunciaB = convertToBean(tipoDenundiaDto);
+        cacheManager.getCache(Configurations.CACHE_NAME).put("web_tipo_denuncia_"+tipoDenunciaB.getId(), tipoDenunciaB);
         return tipoDenunciaB;
     }
 
@@ -72,7 +71,6 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
 
       // final List<TipoDenunciaDTO> dtosList = null == tipoDenunciaResult.getTipoDenunciasList() ? new ArrayList<TipoDenunciaDTO>() : tipoDenunciaResult.getTipoDenunciasList();
         final List<TipoDenunciaB> beansList = new ArrayList<TipoDenunciaB>();
-
         dtosList.forEach(tipoDenunciaDTO -> beansList.add(convertToBean(tipoDenunciaDTO)));
         return beansList;
     }
@@ -108,9 +106,7 @@ public class TipoDenunciaServiceImpl extends BaseServiceImpl<TipoDenunciaB, Tipo
     @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_tipo_denuncia_'+#id")
     public TipoDenunciaB delete(Integer id) {
         logger.info("delete test");
-        System.out.println("Hasta aca llegue...id: "+id);
         final TipoDenunciaDTO deleted = tipoDenunciaResource.delete(id);
-        System.out.println("Se borro algo?..."+ deleted.getId());
         return convertToBean(deleted);
     }
 }

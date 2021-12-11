@@ -10,6 +10,7 @@ import com.sd.clientsd.utils.config.Configurations;
 
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -28,6 +29,8 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     @Autowired
     private ICityService cityService;
 
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     protected NeighborhoodDTO convertToDTO(NeighborhoodB bean) {
@@ -63,13 +66,10 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
     @Override
     public NeighborhoodB save(NeighborhoodB bean) {
-      //  System.out.println("id ciudad"+bean.getCity_id().getId());
         final NeighborhoodDTO dto = convertToDTO(bean);
-
         final NeighborhoodDTO neighborhoodDTO  = neighborhoodResource.save(dto);
-
         final NeighborhoodB neighborhoodB = convertToBean(neighborhoodDTO);
-
+        cacheManager.getCache(Configurations.CACHE_NAME).put("web_neighborhood_"+neighborhoodB.getId(), neighborhoodB);
         return neighborhoodB;
     }
 
