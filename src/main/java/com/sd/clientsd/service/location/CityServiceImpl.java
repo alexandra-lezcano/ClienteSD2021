@@ -88,7 +88,6 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
         List<CityDTO> dtosList = new ArrayList<CityDTO>();
 
         if(cityResult.getCities()!=null) dtosList = cityResult.getCities();
-      //  System.out.println(cityResult.getCities().get(1).getName());
         final List<CityB> beansList = new ArrayList<CityB>();
 
         dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
@@ -97,8 +96,31 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     }
 
     @Override
-    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_city_'+#id")
+    public List<CityB> getAll(Integer page, Integer size) {
+        CityResult cityResult = cityResource.getByPage(page, size);
+        List<CityDTO> dtosList = new ArrayList<CityDTO>();
 
+        if(cityResult.getCities()!=null) dtosList = cityResult.getCities();
+        final List<CityB> beansList = new ArrayList<CityB>();
+
+        dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
+        return beansList;
+    }
+
+    @Override
+    public List<CityB> getAll() {
+        CityResult cityResult = cityResource.getByPage();
+        List<CityDTO> dtosList = new ArrayList<CityDTO>();
+
+        if(cityResult.getCities()!=null) dtosList = cityResult.getCities();
+        final List<CityB> beansList = new ArrayList<CityB>();
+
+        dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
+        return beansList;
+    }
+
+    @Override
+    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB getById(Integer id) {
         final CityDTO dto= cityResource.getById(id);
         return convertToBean(dto);

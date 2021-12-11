@@ -7,4 +7,6 @@ import com.sd.clientsd.rest.base.IBaseResource;
 public interface ICasosDerivadosResource extends IBaseResource<CasosDerivadosDTO> {
     public CasosDerivadosResult getAll();
     public CasosDerivadosResult getByPage(Integer pageNum);
+    public CasosDerivadosResult getByPage(Integer page, Integer size);
+    public CasosDerivadosResult getByPage();
 }

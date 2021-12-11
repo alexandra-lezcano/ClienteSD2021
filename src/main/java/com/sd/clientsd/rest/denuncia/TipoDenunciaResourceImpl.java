@@ -30,4 +30,28 @@ public class TipoDenunciaResourceImpl extends BaseResourceImpl<TipoDenunciaDTO> 
         }
         return tResult;
     }
+
+    @Override
+    public TipoDenunciaResult getByPage(Integer page, Integer size) {
+        TipoDenunciaResult tResult = new TipoDenunciaResult();
+
+        if(getWebResource()!=null){
+            Class<TipoDenunciaResult> tResultClass = TipoDenunciaResult.class;
+            String path = "/page/"+page+"/"+size;
+            tResult = getWebResource().path(path).get(tResultClass);
+        }
+        return tResult;
+    }
+
+    @Override
+    public TipoDenunciaResult getByPage() {
+        TipoDenunciaResult tResult = new TipoDenunciaResult();
+
+        if(getWebResource()!=null){
+            Class<TipoDenunciaResult> tResultClass = TipoDenunciaResult.class;
+            String path = "/page/";
+            tResult = getWebResource().path(path).get(tResultClass);
+        }
+        return tResult;
+    }
 }

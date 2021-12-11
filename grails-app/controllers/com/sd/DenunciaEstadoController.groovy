@@ -3,10 +3,12 @@ package com.sd
 import com.sd.clientsd.beans.denuncia.DenunciaEstadoB
 import com.sd.clientsd.beans.location.CityB
 import com.sd.clientsd.service.denuncia.IDenunciaEstadoService
+import com.sd.clientsd.utils.config.Configurations
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
 class DenunciaEstadoController {
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
 
     IDenunciaEstadoService denunciaEstadoService
 
@@ -17,9 +19,13 @@ class DenunciaEstadoController {
     }
 
     def list(Integer max) {
-        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
+
+        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def estados = denunciaEstadoService.getAll(page)
-        [denunciaEstadoInstanceList: estados, denunciaEsdatoTotal: estados.size()]
+        def prev = page - 1;
+        def sig = page +1;
+        if (estados.size() < ELEMS_PAGINATION){sig = -1}
+        [denunciaEstadoInstanceList: estados, denunciaEsdatoTotal: estados.size(), sig: sig, prev: prev]
     }
 
     def create() {

@@ -7,4 +7,5 @@ import com.sd.clientsd.service.base.IBaseService;
 import java.util.List;
 
 public interface ISujetoService extends IBaseService<SujetoB, SujetoDto> {
+    public List<SujetoB> newList();
 }

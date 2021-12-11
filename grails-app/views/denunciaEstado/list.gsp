@@ -33,7 +33,7 @@
 
                 <td>
                     <g:link class="edit" action="edit" id="${denunciaEstadoInstance?.id}">
-                        ${fieldValue(bean: denunciaEstadoInstance, field: "name")}</g:link>
+                        ${fieldValue(bean: denunciaEstadoInstance, field: "nombre")}</g:link>
                 </td>
                 <td>
                     <g:link class="delete"
@@ -48,9 +48,7 @@
         </g:each>
         </tbody>
     </table>
-    <div class="pagination">
-        <g:paginate total="${denunciaEsdatoTotal}" />
-    </div>
+    <g:render template="/layouts/pagination"/>
 </div>
 </body>
 

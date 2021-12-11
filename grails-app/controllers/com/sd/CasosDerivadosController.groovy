@@ -1,15 +1,18 @@
 package com.sd
 
 import com.sd.clientsd.beans.CasosDerivados.CasoDerivadoB
+import com.sd.clientsd.beans.CasosDerivados.DepEstadoB
 import com.sd.clientsd.service.casosDerivados.ICasosDerivadosService
+import com.sd.clientsd.service.casosDerivados.IDepEstadoService
+import com.sd.clientsd.utils.config.Configurations
 
 import static org.springframework.http.HttpStatus.*
 
 class CasosDerivadosController {
-
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
 
     ICasosDerivadosService casoDerivadoService
-
+    IDepEstadoService depEstadoService
     static allowedMethods = [save: "POST", update: "PUT"]
     def index(Integer max) {
 
@@ -17,11 +20,17 @@ class CasosDerivadosController {
 
     }
     def list(Integer max) {
-        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
+        def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
 
         def casosDerivados =  casoDerivadoService.getAll(page)
+        def prev = page - 1;
+        def sig = page + 1;
+        if(casosDerivados.size() < ELEMS_PAGINATION){sig = -1}
+        def depEstado =  depEstadoService.getAll(page)
 
-        [ casosDerivadosInstanceList: casosDerivados, casosDerivadosTotal: casosDerivados.size()]
+        [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size()
+        ,casosDerivadosInstanceList: casosDerivados, casosDerivadosTotal: casosDerivados.size(),
+        sig: sig, prev: prev]
     }
 
 
@@ -33,7 +42,9 @@ class CasosDerivadosController {
 
     def create() {
 
-        [casosDerivadosInstance: new CasosDerivados(params) ]
+        def depEstados= depEstadoService.getAllNotPaged()
+def depEstadoNuevo = casoDerivadoService.newLista();
+        [depEstadoInstanceList: depEstados,depEstadoNewLista:depEstadoNuevo, depEstadoInstance: new DepEstado(params), casosDerivadosInstance: new CasosDerivados(params)]
         //  respond new DepEstado(params)
     }
 
@@ -41,7 +52,19 @@ class CasosDerivadosController {
 
 
         def casosDerivados = new CasoDerivadoB(params)
+        Set<DepEstadoB> dependencias= new HashSet<DepEstadoB>();
+       for (String d: params['depEstadoBSet']){
+           dependencias.add(depEstadoService.getById(Integer.parseInt(d)))
+
+       }
+
+        casosDerivados.setDepEstadoBSet(dependencias)
+
+
         def casosDerivadosInstance= casoDerivadoService.save(casosDerivados)
+
+
+
 
         if(!casosDerivadosInstance.getId()){
             render(view: "create", model: [casosDerivadosInstance: casosDerivadosInstance])
@@ -82,7 +105,7 @@ class CasosDerivadosController {
             return
         }
 
-        def casosDerivadosBUpdated = casoDerivadoService.update(casosDerivadosB, casosDerivadosB.getId())
+        def casosDerivadosInstance = casoDerivadoService.update(casosDerivadosB, casosDerivadosB.getId())
 
         redirect(action: 'list')
 
@@ -90,6 +113,7 @@ class CasosDerivadosController {
     }
 
     def delete(Long id) {
+        System.out.print(id)
         def casosDerivadosInstance = casoDerivadoService.delete(id.toInteger())
 
 

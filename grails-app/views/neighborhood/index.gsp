@@ -10,7 +10,7 @@
     <div class="nav" role="navigation">
         <div class="row sin-margin">
             <g:link class="" action="create"><button class="rellenar col-sm-6 col-xs-12 btn btn-primary">Crear Barrio</button></g:link>
-            <g:link class="" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Lista de Barrios</button></g:link>
+            <g:link class="" action="list" params="[page: 0]"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Lista de Barrios</button></g:link>
         </div>
     </div>
     <div id="list-tipoDenuncia" class="content scaffold-list" role="main">

@@ -5,6 +5,7 @@ import com.protectionapp.sd2021.dto.denuncia.SujetoResult;
 import com.sd.clientsd.beans.denuncia.SujetoB;
 import com.sd.clientsd.rest.denuncia.ISujetoresource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import org.hibernate.validator.constraints.LuhnCheck;
 import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -79,6 +80,24 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
     }
 
     @Override
+    public List<SujetoB> getAll(Integer page, Integer size) {
+        final SujetoResult sujetoResult = sujetoResource.getByPage(page, size);
+        final List<SujetoDto> dtosList = null == sujetoResult.getSujetos() ? new ArrayList<>() : sujetoResult.getSujetos();
+        final List<SujetoB> beansList = new ArrayList<>();
+        dtosList.forEach(sujetoDto -> beansList.add(convertToBean(sujetoDto)));
+        return beansList;
+    }
+
+    @Override
+    public List<SujetoB> getAll() {
+        final SujetoResult sujetoResult = sujetoResource.getByPage();
+        final List<SujetoDto> dtosList = null == sujetoResult.getSujetos() ? new ArrayList<>() : sujetoResult.getSujetos();
+        final List<SujetoB> beansList = new ArrayList<>();
+        dtosList.forEach(sujetoDto -> beansList.add(convertToBean(sujetoDto)));
+        return beansList;
+    }
+
+    @Override
     @Cacheable(value= Configurations.CACHE_NAME, key = "'web_sujeto_'+#id")
     public SujetoB getById(Integer id) {
         final SujetoDto sujetoDto = sujetoResource.getById(id);
@@ -100,4 +119,8 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
         return convertToBean(deleted);
     }
 
+    public List<SujetoB> newList(){
+        final List<SujetoB> ret = new ArrayList<>();
+        return ret;
+    }
 }

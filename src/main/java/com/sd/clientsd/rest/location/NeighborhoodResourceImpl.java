@@ -45,4 +45,28 @@ public class NeighborhoodResourceImpl extends BaseResourceImpl<NeighborhoodDTO> 
         }
         return nResult;
     }
+
+    @Override
+    public NeighborhoodResult getByPage(Integer pagenum, Integer size) {
+        NeighborhoodResult nResult = new NeighborhoodResult();
+
+        if(getWebResource()!=null){
+            Class<NeighborhoodResult> nResultClass = NeighborhoodResult.class;
+            String path = "/page/"+pagenum+"/"+size;
+            nResult = getWebResource().path(path).get(nResultClass);
+        }
+        return nResult;
+    }
+
+    @Override
+    public NeighborhoodResult getBypage() {
+        NeighborhoodResult nResult = new NeighborhoodResult();
+
+        if(getWebResource()!=null){
+            Class<NeighborhoodResult> nResultClass = NeighborhoodResult.class;
+            String path = "/page";
+            nResult = getWebResource().path(path).get(nResultClass);
+        }
+        return nResult;
+    }
 }

@@ -2,10 +2,12 @@ package com.sd
 
 import com.sd.clientsd.beans.denuncia.TipoSujetoB
 import com.sd.clientsd.service.denuncia.ITipoSujetoService
+import com.sd.clientsd.utils.config.Configurations
+
 import static org.springframework.http.HttpStatus.*
 
 class TipoSujetoController {
-
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
     ITipoSujetoService tipoSujetoService
 
     static allowedMethods = [save: "POST", update: "PUT"]
@@ -15,11 +17,14 @@ class TipoSujetoController {
     }
 
     def list(Integer max) {
-        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
+
+        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
 
         def tipoSujetos = tipoSujetoService.getAll(page)
-
-        [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size()]
+        def prev = page -1;
+        def sig = page+1;
+        if(tipoSujetos.size() < ELEMS_PAGINATION){sig = -1}
+        [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size(), prev: prev, sig:sig]
 
     }
 

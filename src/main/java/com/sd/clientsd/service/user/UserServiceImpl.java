@@ -101,6 +101,31 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 
         final List<UserB> beansList = new ArrayList<>();
         userDTOS.forEach(userDTO -> beansList.add(convertToBean(userDTO)));
+
+        return beansList;
+    }
+
+    @Override
+    public List<UserB> getAll(Integer page, Integer size) {
+        final UserResult userResult = userResource.getByPage(page, size);
+        List<UserDTO> userDTOS = new ArrayList<>();
+        if(userResult.getUsers()!=null) userDTOS = userResult.getUsers();
+
+        final List<UserB> beansList = new ArrayList<>();
+        userDTOS.forEach(userDTO -> beansList.add(convertToBean(userDTO)));
+
+        return beansList;
+    }
+
+    @Override
+    public List<UserB> getAll() {
+        final UserResult userResult = userResource.getByPage();
+        List<UserDTO> userDTOS = new ArrayList<>();
+        if(userResult.getUsers()!=null) userDTOS = userResult.getUsers();
+
+        final List<UserB> beansList = new ArrayList<>();
+        userDTOS.forEach(userDTO -> beansList.add(convertToBean(userDTO)));
+
         return beansList;
     }
 

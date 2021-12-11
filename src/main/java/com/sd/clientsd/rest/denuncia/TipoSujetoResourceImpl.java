@@ -30,4 +30,28 @@ public class TipoSujetoResourceImpl extends BaseResourceImpl<TipoSujetoDTO> impl
         }
         return tResult;
     }
+
+    @Override
+    public TipoSujetoResult getByPage(Integer page, Integer size) {
+        TipoSujetoResult tResult = new TipoSujetoResult();
+
+        if(getWebResource()!=null){
+            Class<TipoSujetoResult> tResultClass = TipoSujetoResult.class;
+            String path = "/page/"+page+"/"+size;
+            tResult = getWebResource().path(path).get(tResultClass);
+        }
+        return tResult;
+    }
+
+    @Override
+    public TipoSujetoResult getByPage() {
+        TipoSujetoResult tResult = new TipoSujetoResult();
+
+        if(getWebResource()!=null){
+            Class<TipoSujetoResult> tResultClass = TipoSujetoResult.class;
+            String path = "/page/";
+            tResult = getWebResource().path(path).get(tResultClass);
+        }
+        return tResult;
+    }
 }

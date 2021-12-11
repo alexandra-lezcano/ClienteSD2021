@@ -6,7 +6,7 @@ import com.sd.clientsd.rest.base.BaseResourceImpl;
 import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.stereotype.Repository;
 
-@Repository (value="denunciaEstado")
+@Repository (value="denunciaEstados")
 public class DenunciaEstadoResourceImpl extends BaseResourceImpl<DenunciaEstadoDTO> implements IDenunciaEstadoResource {
     //@Autowired
     //AppConfig appConfig;
@@ -23,7 +23,31 @@ public class DenunciaEstadoResourceImpl extends BaseResourceImpl<DenunciaEstadoD
 
         if(getWebResource()!=null){
             Class<DenunciaEstadoResult> dResultClass = DenunciaEstadoResult.class;
-            String path = "/page"+page;
+            String path = "/page/"+page;
+            dResult = getWebResource().path(path).get(dResultClass);
+        }
+        return dResult;
+    }
+
+    @Override
+    public DenunciaEstadoResult getByPage(Integer page, Integer size) {
+        DenunciaEstadoResult dResult = new DenunciaEstadoResult();
+
+        if(getWebResource()!=null){
+            Class<DenunciaEstadoResult> dResultClass = DenunciaEstadoResult.class;
+            String path = "/page/"+page+"/"+size;
+            dResult = getWebResource().path(path).get(dResultClass);
+        }
+        return dResult;
+    }
+
+    @Override
+    public DenunciaEstadoResult getByPage() {
+        DenunciaEstadoResult dResult = new DenunciaEstadoResult();
+
+        if(getWebResource()!=null){
+            Class<DenunciaEstadoResult> dResultClass = DenunciaEstadoResult.class;
+            String path = "/page/";
             dResult = getWebResource().path(path).get(dResultClass);
         }
         return dResult;

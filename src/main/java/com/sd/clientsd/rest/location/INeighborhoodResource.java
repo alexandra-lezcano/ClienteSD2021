@@ -7,4 +7,6 @@ import com.sd.clientsd.rest.base.IBaseResource;
 public interface INeighborhoodResource extends IBaseResource<NeighborhoodDTO> {
     public NeighborhoodResult getAll();
     public NeighborhoodResult getByPage(Integer pagenum);
+    public NeighborhoodResult getByPage(Integer pagenum, Integer size);
+    public NeighborhoodResult getBypage();
 }

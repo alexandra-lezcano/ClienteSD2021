@@ -69,6 +69,32 @@ public class TipoSujetoServiceImpl extends BaseServiceImpl<TipoSujetoB, TipoSuje
         return beansList;
     }
 
+    @Override
+    public List<TipoSujetoB> getAll(Integer page, Integer size) {
+        TipoSujetoResult tipoSujetoResult = tipoSujetoResource.getByPage(page, size);
+        List<TipoSujetoDTO> dtosList = new ArrayList<TipoSujetoDTO>();
+
+        if(tipoSujetoResult.getTipoSujetos()!=null) dtosList = tipoSujetoResult.getTipoSujetos();
+
+        final List<TipoSujetoB> beansList = new ArrayList<TipoSujetoB>();
+
+        dtosList.forEach(tipoSujetoDTO -> beansList.add(convertToBean(tipoSujetoDTO)));
+        return beansList;
+    }
+
+    @Override
+    public List<TipoSujetoB> getAll() {
+        TipoSujetoResult tipoSujetoResult = tipoSujetoResource.getByPage();
+        List<TipoSujetoDTO> dtosList = new ArrayList<TipoSujetoDTO>();
+
+        if(tipoSujetoResult.getTipoSujetos()!=null) dtosList = tipoSujetoResult.getTipoSujetos();
+
+        final List<TipoSujetoB> beansList = new ArrayList<TipoSujetoB>();
+
+        dtosList.forEach(tipoSujetoDTO -> beansList.add(convertToBean(tipoSujetoDTO)));
+        return beansList;
+    }
+
     public List<TipoSujetoB> getAllNotPage() {
         final TipoSujetoResult tipoSujetoResult = new TipoSujetoResult();
         final List<TipoSujetoDTO> dtosList = null == tipoSujetoResult.getTipoSujetos() ? new ArrayList<TipoSujetoDTO>() : tipoSujetoResult.getTipoSujetos();
