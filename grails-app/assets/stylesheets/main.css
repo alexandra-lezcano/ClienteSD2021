@@ -1,6 +1,5 @@
 /* FONT STACK */
-body,
-input, select, textarea {
+body,footer,input, select, textarea {
     font-family: "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     width: 100%;
 }
@@ -101,13 +100,13 @@ img {
 
 .footer {
     background: #67CDFD;
-    color: #ffffff;
+    color: #2559a7;
     clear: both;
     position: fixed;
     min-width: 100%;
     bottom: 0;
-    font-size: 1em;
-    margin-top: 1.5em;
+    font-size: 1.5em;
+    margin-top: 2em;
     padding: 1em;
     padding-bottom: 2em;
     min-height: 2em;

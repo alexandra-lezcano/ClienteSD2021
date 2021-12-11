@@ -23,10 +23,10 @@ import java.util.Map;
 
 @Repository(value = "neighborhoodResource")
 public class NeighborhoodResourceImpl extends BaseResourceImpl<NeighborhoodDTO> implements INeighborhoodResource {
-    private static final String RESOURCE_PATH = Configurations.getNeighborhoodResource();
+   // private static final String RESOURCE_PATH = Configurations.getNeighborhoodResource();
 
     public NeighborhoodResourceImpl() {
-        super(NeighborhoodDTO.class, RESOURCE_PATH);
+        super(NeighborhoodDTO.class, "/neighborhoods");
     }
 
     @Override
