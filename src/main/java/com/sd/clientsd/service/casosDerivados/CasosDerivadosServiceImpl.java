@@ -3,6 +3,7 @@ package com.sd.clientsd.service.casosDerivados;
 import com.protectionapp.sd2021.dto.casosDerivados.CasosDerivadosDTO;
 import com.protectionapp.sd2021.dto.casosDerivados.CasosDerivadosResult;
 import com.sd.clientsd.beans.CasosDerivados.CasoDerivadoB;
+import com.sd.clientsd.beans.CasosDerivados.DepEstadoB;
 import com.sd.clientsd.rest.CasosDerivados.ICasosDerivadosResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import com.sd.clientsd.utils.config.Configurations;
