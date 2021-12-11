@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository(value = "userResource")
 public class UserResourceImpl extends BaseResourceImpl<UserDTO> implements IUserResource {
-   // private static final String RESOURCE_PATH = Configurations.getUserResource();
+    private static final String RESOURCE_PATH = Configurations.getUserResource();
 
     public UserResourceImpl() {
-        super(UserDTO.class, "/users");
+        super(UserDTO.class, RESOURCE_PATH);
     }
 
     @Override

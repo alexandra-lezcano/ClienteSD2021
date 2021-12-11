@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository(value="cityResource")
 public class CityResourceImpl extends BaseResourceImpl<CityDTO> implements ICityResource {
-    //private static final String RESOURCE_PATH = Configurations.getCityResource();
+    private static final String RESOURCE_PATH = Configurations.getCityResource();
     public CityResourceImpl(){
-        super(CityDTO.class, "/cities");
+        super(CityDTO.class, RESOURCE_PATH);
     }
 
     @Override

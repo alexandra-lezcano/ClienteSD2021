@@ -26,7 +26,6 @@ import com.sd.clientsd.service.location.CityServiceImpl
 // Place your Spring DSL code here
 //resources.groovy contains spring bean definitions
 beans = {
-  //  appConfig(AppConfig)
     //resources
     depEstadoResource(DepEstadoResourceImpl)
     tipoDenunciaResource(TipoDenunciaResourceImpl)
