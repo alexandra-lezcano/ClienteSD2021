@@ -20,8 +20,6 @@ class UserController {
 
     // tiene que estar vacio el metodo
     def index() {
-       //params.max = Math.min(max ?: 10, 100)
-        //respond userService.list(params), model:[userCount: userService.count()]
         redirect(action: 'list', params:params)
     }
 
@@ -90,10 +88,7 @@ class UserController {
 
     /* <g:actionSubmit class="save"
                        value="${message(code: 'default.button.update.label')}"
-                       action="update"/>
-
-    Note to self: la accion debe dirigirme a este metodo, value uso solo para
-    mostrar el boton en es */
+                       action="update"/>*/
     def update() {
         def userInstance = new UserB(params);
         System.out.println(params)
@@ -108,7 +103,6 @@ class UserController {
         userInstance.setNeighborhoods(city.getNeighborhoodBList())
 
         def userBUpdated = userService.update(userInstance, userInstance.getId())
-        System.out.println("Se actualizo user con id -- "+userInstance.getId());
         redirect(action: 'list')
     }
 

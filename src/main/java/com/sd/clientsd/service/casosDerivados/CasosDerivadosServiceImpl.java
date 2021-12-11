@@ -2,15 +2,12 @@ package com.sd.clientsd.service.casosDerivados;
 
 import com.protectionapp.sd2021.dto.casosDerivados.CasosDerivadosDTO;
 import com.protectionapp.sd2021.dto.casosDerivados.CasosDerivadosResult;
-import com.protectionapp.sd2021.dto.casosDerivados.DepEstadoDTO;
-import com.protectionapp.sd2021.dto.casosDerivados.DepEstadoResult;
 import com.sd.clientsd.beans.CasosDerivados.CasoDerivadoB;
-import com.sd.clientsd.beans.CasosDerivados.DepEstadoB;
 import com.sd.clientsd.rest.CasosDerivados.ICasosDerivadosResource;
-import com.sd.clientsd.rest.CasosDerivados.IDepEstadoResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -23,10 +20,12 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
 
     @Autowired
     private ICasosDerivadosResource casosDerivadoResource;
+
     @Autowired
     private  IDepEstadoService depEstadoService;
 
-
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     protected CasosDerivadosDTO convertToDTO(CasoDerivadoB bean) {
@@ -49,16 +48,11 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
         }
 
         return dto;
-
-
     }
 
     @Override
     protected CasoDerivadoB convertToBean(CasosDerivadosDTO dto) {
         final Map<String,String> params = new HashMap<>();
-
-
-
         params.put("id",String.valueOf(dto.getId()));
      //   params.put("date",dateToStr);
         params.put("description", dto.getDescription());
@@ -78,7 +72,6 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
         }
 
         return bean;
-
     }
 
     @Override
@@ -86,7 +79,7 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
         final CasosDerivadosDTO dto= convertToDTO(bean);
         final CasosDerivadosDTO casoDerivado= casosDerivadoResource.save(dto);
         final CasoDerivadoB casoDerivadoB=convertToBean(casoDerivado);
-
+        cacheManager.getCache(Configurations.CACHE_NAME).put("web_casos_derivados_"+casoDerivadoB.getId(), casoDerivadoB);
         return casoDerivadoB;
     }
 
@@ -119,6 +112,7 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
 
         });
         return beansList;
+
     }
 
     @Override
@@ -136,6 +130,7 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
 
         });
         return beansList;
+
     }
 
     @Override
@@ -159,7 +154,6 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
 
         final CasosDerivadosDTO d= casosDerivadoResource.delete(id);
         return convertToBean(d);
-
     }
 
     public Set<DepEstadoB> newLista(){
