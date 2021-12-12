@@ -20,6 +20,7 @@ class DepEstadoController {
     }
     def list(Integer max) {
         def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
+
         def depEstado =  depEstadoService.getAll(page)
         def prev = page -1
         def sig = page +1

@@ -39,7 +39,7 @@
                     </div>
                 </fieldset>
                 <fieldset>
-                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="update" />
+                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" action ="update" value="Actualizar" />
                     <g:actionSubmit class="margen-sm col-md-6 col-sm-12 delete btn-secondary"
                                     value="delete"
                                     id="${cityInstance?.id}"

@@ -26,7 +26,7 @@
                 </li>
                 <li class="fieldcontain">
                     <span class="property-label">Username</span>
-                    <div class="property-value"><f:display bean="userInstance" property="username"/></div>
+                    <div class="property-value"><f:display bean="userInstance" property="email"/></div>
                 </li>
                 <li class="fieldcontain">
                     <span class="property-label">Cedula de Identidad</span>

@@ -21,6 +21,7 @@ class CasosDerivadosController {
     }
     def list(Integer max) {
         def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
+
         def casosDerivados =  casoDerivadoService.getAll(page)
         def prev = page - 1;
         def sig = page + 1;
