@@ -31,15 +31,18 @@ class DenunciaController {
 
     def create() {
         def cities = cityService.getAllNotPaged()
-        def city_id = 11;
-        def barrios = neighborhoodService.getAllByCity(city_id)
+        def barrios = neighborhoodService.getAllByCity()
         def sujetos = sujetoService.newList();
         def tipos = tipoDenunciaService.getAllNotPaged();
         def denunciaInstance = new Denuncia(params);
         [denunciaInstance        : denunciaInstance, cityInstanceList: cities,
          sujetoInstance          : new Sujeto(params), sujetoInstanceList: sujetos,
-         neighborhoodInstanceList: barrios, city_id: city_id,
-         tipoDenunciaInstanceList: tipos]
+         neighborhoodInstanceList: barrios, tipoDenunciaInstanceList: tipos]
+    }
+
+    def updateNeighborhood(Integer city){
+        def barrios = neighborhoodService.getAllByCity(city)
+        render (g.select(id:"neighborhoods", name:"neighborhood", from:barrios, optionKey: 'id', optionValue:'name'))
     }
 
     def save() {
