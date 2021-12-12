@@ -156,12 +156,34 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     public List<NeighborhoodB> getAllByCity(Integer city){
-        final NeighborhoodResult neighborhoodResult = new NeighborhoodResult();
-        final List<NeighborhoodDTO> dtosList = null == neighborhoodResult.getNeighborhoods() ? new ArrayList<>() : neighborhoodResult.getNeighborhoods();
-        final List<NeighborhoodB> beansList = new ArrayList<>();
+        NeighborhoodResult neighborhoodResult = neighborhoodResource.getAll();
+        List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
+
+        if(neighborhoodResult.getNeighborhoods()!=null) dtosList = neighborhoodResult.getNeighborhoods();
+
+        final List<NeighborhoodB> beansList = new ArrayList<NeighborhoodB>();
 
         dtosList.forEach(neighborhoodDTO -> beansList.add(convertToBean(neighborhoodDTO)));
-        final List<NeighborhoodB> beans = beansList.stream().filter(bean -> bean.getCity_id().getId() == city).collect(Collectors.toList());
+
+        final List<NeighborhoodB> beans = beansList.stream().filter(bean -> bean.getCity_id().getId().equals(city)).collect(Collectors.toList());
+
+        return beans;
+    }
+
+    public List<NeighborhoodB> getAllByCity(){
+        NeighborhoodResult neighborhoodResult = neighborhoodResource.getAll();
+        List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
+
+        if(neighborhoodResult.getNeighborhoods()!=null) dtosList = neighborhoodResult.getNeighborhoods();
+
+        final List<NeighborhoodB> beansList = new ArrayList<NeighborhoodB>();
+
+        dtosList.forEach(neighborhoodDTO -> beansList.add(convertToBean(neighborhoodDTO)));
+
+        Integer city = cityService.getFirst().getId();
+
+        final List<NeighborhoodB> beans = beansList.stream().filter(bean -> bean.getCity_id().getId().equals(city)).collect(Collectors.toList());
+
         return beans;
     }
 }
