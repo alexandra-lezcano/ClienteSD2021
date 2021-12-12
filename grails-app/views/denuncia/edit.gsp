@@ -28,7 +28,7 @@
 
             <g:form bean="${denunciaInstance}" method="PUT">
                 <g:hiddenField name="id" value="${denunciaInstance?.id}" />
-                <g:hiddenField name="codigo" value="${denunciaInstance?.codigo}"
+                <g:hiddenField name="codigo" value="${denunciaInstance?.codigo}"/>
                 <fieldset class="form">
                     <div class="fieldcontain ${hasErrors(bean: denunciaInstance, field: 'descripcion','error')}">
                         <label for="descripcion"> Desscripcion:
