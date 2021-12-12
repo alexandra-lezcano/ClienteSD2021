@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ICityService extends IBaseService<CityB, CityDTO> {
     public List<CityB> getAllNotPaged();
+    public CityB getFirst();
 }

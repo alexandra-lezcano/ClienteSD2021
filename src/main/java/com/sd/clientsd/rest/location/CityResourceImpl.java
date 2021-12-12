@@ -20,6 +20,16 @@ public class CityResourceImpl extends BaseResourceImpl<CityDTO> implements ICity
     }
 
     @Override
+    public CityDTO getFirst(){
+        CityResult result = getWebResource().get(CityResult.class);
+        if (result.getTotal() != 0) {
+            return result.getCities().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public CityResult getByPage(Integer pageNum) {
         CityResult cResult = new CityResult();
 

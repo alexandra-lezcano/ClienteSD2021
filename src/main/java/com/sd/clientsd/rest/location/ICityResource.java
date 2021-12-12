@@ -11,5 +11,7 @@ public interface ICityResource extends IBaseResource<CityDTO> {
     public CityResult getByPage(Integer pageNum, Integer size);
     public CityResult getByPage();
 
+    public CityDTO getFirst();
+
     NeighborhoodResult getNeighborhoodByCityId(Integer id);
 }
