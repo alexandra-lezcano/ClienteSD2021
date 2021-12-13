@@ -16,11 +16,14 @@ public class CityResourceImpl extends BaseResourceImpl<CityDTO> implements ICity
 
     @Override
     public CityResult getAll() {
+System.out.println("123");
+        setWebResourceBasicAuthFilter();
         return getWebResource().get(CityResult.class);
     }
 
     @Override
     public CityResult getByPage(Integer pageNum) {
+        setWebResourceBasicAuthFilter();
         CityResult cResult = new CityResult();
 
         if(getWebResource()!=null){
@@ -33,6 +36,7 @@ public class CityResourceImpl extends BaseResourceImpl<CityDTO> implements ICity
 
     @Override
     public CityResult getByPage(Integer pageNum, Integer size) {
+        setWebResourceBasicAuthFilter();
         CityResult cResult = new CityResult();
 
         if(getWebResource()!=null){
@@ -45,6 +49,7 @@ public class CityResourceImpl extends BaseResourceImpl<CityDTO> implements ICity
 
     @Override
     public CityResult getByPage() {
+        setWebResourceBasicAuthFilter();
         CityResult cResult = new CityResult();
 
         if(getWebResource()!=null){
@@ -57,6 +62,7 @@ public class CityResourceImpl extends BaseResourceImpl<CityDTO> implements ICity
 
     @Override
     public NeighborhoodResult getNeighborhoodByCityId(Integer id) {
+
         return getWebResource().path("/"+id+"/neighborhoods").get(NeighborhoodResult.class);
     }
 }

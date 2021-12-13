@@ -16,11 +16,14 @@ public class DenunciaResourceImpl extends BaseResourceImpl<DenunciaDTO> implemen
 
     @Override
     public DenunciaResult getAll() {
+
+        setWebResourceBasicAuthFilter();
         return getWebResource().get(DenunciaResult.class);
     }
 
     @Override
     public DenunciaResult getByPage(Integer pageNum) {
+        setWebResourceBasicAuthFilter();
         DenunciaResult dResult = new DenunciaResult();
         if(getWebResource()!=null){
             Class<DenunciaResult> dResultClass = DenunciaResult.class;
@@ -32,6 +35,7 @@ public class DenunciaResourceImpl extends BaseResourceImpl<DenunciaDTO> implemen
 
     @Override
     public DenunciaResult getByPage(Integer pageNum, Integer size) {
+        setWebResourceBasicAuthFilter();
         DenunciaResult dResult = new DenunciaResult();
         if(getWebResource()!=null){
             Class<DenunciaResult> dResultClass = DenunciaResult.class;
@@ -43,6 +47,7 @@ public class DenunciaResourceImpl extends BaseResourceImpl<DenunciaDTO> implemen
 
     @Override
     public DenunciaResult getByPage(){
+        setWebResourceBasicAuthFilter();
         DenunciaResult dResult = new DenunciaResult();
         if(getWebResource()!=null){
             Class<DenunciaResult> dResultClass = DenunciaResult.class;

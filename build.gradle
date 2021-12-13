@@ -59,6 +59,7 @@ dependencies {
     compile "org.grails.plugins:events"
     compile "org.grails.plugins:hibernate5"
     compile "org.hibernate:hibernate-core:5.4.18.Final"
+    
     compile "org.grails.plugins:gsp"
     //sprinsecurity
     compile 'org.grails.plugins:spring-security-core:4.0.0.RC2'
@@ -81,7 +82,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:3.14.0"
     testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:3.14.0"
 
-    compile group: 'com.owlike', name: 'genson', version: '1.1'
+    //compile group: 'com.owlike', name: 'genson', version: '1.1'
 //Thanks for using https://jar-download.com
 
 
@@ -96,7 +97,7 @@ dependencies {
     implementation group: 'com.sun.jersey', name: 'jersey-bundle', version: '1.19.4'
 
     // https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl
-    implementation group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.2'
+    implementation group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.13'
 
     // CACHE
     // https://mvnrepository.com/artifact/com.google.code.simple-spring-memcached/xmemcached-provider

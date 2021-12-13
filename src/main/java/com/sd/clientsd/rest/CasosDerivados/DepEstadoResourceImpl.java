@@ -14,11 +14,14 @@ public class DepEstadoResourceImpl extends BaseResourceImpl<DepEstadoDTO> implem
 
     @Override
     public DepEstadoResult getAll() {
+
+        setWebResourceBasicAuthFilter();
         return getWebResource().path("/").get(DepEstadoResult.class);
     }
 
     @Override
     public DepEstadoResult getByPage(Integer pageNum) {
+        setWebResourceBasicAuthFilter();
         DepEstadoResult depEstadoResult = new DepEstadoResult();
 
         if(getWebResource()!=null){
@@ -31,6 +34,7 @@ public class DepEstadoResourceImpl extends BaseResourceImpl<DepEstadoDTO> implem
 
     @Override
     public DepEstadoResult getByPage(Integer page, Integer size) {
+        setWebResourceBasicAuthFilter();
         DepEstadoResult depEstadoResult = new DepEstadoResult();
 
         if(getWebResource()!=null){
@@ -43,6 +47,7 @@ public class DepEstadoResourceImpl extends BaseResourceImpl<DepEstadoDTO> implem
 
     @Override
     public DepEstadoResult getByPage() {
+        setWebResourceBasicAuthFilter();
         DepEstadoResult depEstadoResult = new DepEstadoResult();
 
         if(getWebResource()!=null){

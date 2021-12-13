@@ -14,11 +14,14 @@ public class CasosDerivadosResourceImpl  extends BaseResourceImpl<CasosDerivados
 
     @Override
     public CasosDerivadosResult getAll() {
+        System.out.println("k");
+        setWebResourceBasicAuthFilter();
         return getWebResource().get(CasosDerivadosResult.class);
     }
 
     @Override
     public CasosDerivadosResult getByPage(Integer pageNum) {
+        setWebResourceBasicAuthFilter();
         CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
         if(getWebResource()!=null){
             Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;
@@ -30,6 +33,7 @@ public class CasosDerivadosResourceImpl  extends BaseResourceImpl<CasosDerivados
 
     @Override
     public CasosDerivadosResult getByPage(Integer page, Integer size) {
+        setWebResourceBasicAuthFilter();
         CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
         if(getWebResource()!=null){
             Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;
@@ -41,6 +45,7 @@ public class CasosDerivadosResourceImpl  extends BaseResourceImpl<CasosDerivados
 
     @Override
     public CasosDerivadosResult getByPage() {
+        setWebResourceBasicAuthFilter();
         CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
         if(getWebResource()!=null){
             Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;

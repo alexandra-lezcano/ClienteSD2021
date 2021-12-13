@@ -53,4 +53,13 @@ public class UserResourceImpl extends BaseResourceImpl<UserDTO> implements IUser
 
         return userResult;
     }
+
+
+
+    public UserDTO getByUsername (String username) {
+        System.out.println( getWebResource().path("/username/"+username+"acaaaaa"));
+        Class<UserDTO> userResultClass = UserDTO.class;
+
+        return getWebResource().path("/username/"+username).get(userResultClass);
+    }
 }

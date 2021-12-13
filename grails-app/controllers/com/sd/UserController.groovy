@@ -42,7 +42,7 @@ class UserController {
 
     def create() {
         def cities = cityService.getAllNotPaged();
-        [userInstance: new User(), cityInstanceList: cities]
+        [userInstance: new Users(), cityInstanceList: cities]
     }
 
     // todo tolerancia a fallos

@@ -6,6 +6,7 @@ import com.protectionapp.sd2021.dto.user.UserDTO;
 import com.protectionapp.sd2021.dto.user.UserResult;
 import com.sd.clientsd.beans.location.CityB;
 import com.sd.clientsd.beans.location.NeighborhoodB;
+import com.sd.clientsd.beans.user.RoleB;
 import com.sd.clientsd.beans.user.UserB;
 import com.sd.clientsd.rest.location.ICityResource;
 import com.sd.clientsd.rest.user.IUserResource;
@@ -15,13 +16,16 @@ import com.sd.clientsd.service.location.INeighborhoodService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements IUserService {
    @Autowired
+   @Qualifier("userResource")
    private IUserResource userResource;
 
    @Autowired
@@ -29,6 +33,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 
    @Autowired
    private INeighborhoodService neighborhoodService;
+
+   @Autowired
+   private IRoleService roleService;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -46,11 +53,18 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         dto.setAddress(bean.getAddress());
         dto.setEmail(bean.getEmail());
         dto.setPhone(bean.getPhone());
+        dto.setPassword(bean.getPassword());
         if(bean.getCity()!=null) dto.setCityId(bean.getCity().getId());
         if(bean.getNeighborhoods()!=null){
             final Set<Integer> neighborhoodIds = new HashSet<>();
             bean.getNeighborhoods().forEach(neighborhoodB -> neighborhoodIds.add(neighborhoodB.getId()));
             dto.setNeighborhoodIds(neighborhoodIds);
+        }
+
+        if(bean.getRoles()!=null){
+            final Set<Integer> rolesIds = new HashSet<>();
+            bean.getRoles().forEach(roleB -> rolesIds.add(roleB.getId()));
+            dto.setRoleId(rolesIds);
         }
 
         return dto;
@@ -67,6 +81,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         params.put("address", dto.getAddress());
         params.put("email", dto.getEmail());
         params.put("phone", String.valueOf(dto.getPhone()));
+        params.put("password",dto.getPassword());
 
         final UserB bean = new UserB(params);
 
@@ -77,6 +92,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
             bean.setNeighborhoods(neighborhoodBList);
         }
 
+        if(dto.getRoleId()!=null){
+            final List<RoleB> roleBList = new ArrayList<>();
+            dto.getRoleId().forEach(role -> roleBList.add(roleService.getById(role)));
+            bean.setRoles(roleBList);
+        }
         return bean;
     }
 
@@ -118,7 +138,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         final UserResult userResult = userResource.getByPage();
         List<UserDTO> userDTOS = new ArrayList<>();
         if(userResult.getUsers()!=null) userDTOS = userResult.getUsers();
-
         final List<UserB> beansList = new ArrayList<>();
         userDTOS.forEach(userDTO -> beansList.add(convertToBean(userDTO)));
 
@@ -128,6 +147,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
     @Override
     public UserB getById(Integer id) {
         logger.info("Obtener usuario "+id);
+        System.out.println(userResource.getById(id));
         final UserDTO dto = userResource.getById(id);
         return convertToBean(dto);
     }
@@ -147,5 +167,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         return convertToBean(deleted);
     }
 
+    public UserB getUserByName(String username) {
+        return convertToBean(userResource.getByUsername(username));
+    }
 
 }

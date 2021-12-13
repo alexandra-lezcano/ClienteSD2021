@@ -18,11 +18,13 @@ public class TipoSujetoResourceImpl extends BaseResourceImpl<TipoSujetoDTO> impl
 
     @Override
     public TipoSujetoResult getAll() {
+        setWebResourceBasicAuthFilter();
         return getWebResource().get(TipoSujetoResult.class);
     }
 
     @Override
     public TipoSujetoResult getByPage(Integer pageNum) {
+        setWebResourceBasicAuthFilter();
         TipoSujetoResult tResult = new TipoSujetoResult();
 
         if(getWebResource()!=null){
@@ -35,6 +37,7 @@ public class TipoSujetoResourceImpl extends BaseResourceImpl<TipoSujetoDTO> impl
 
     @Override
     public TipoSujetoResult getByPage(Integer page, Integer size) {
+        setWebResourceBasicAuthFilter();
         TipoSujetoResult tResult = new TipoSujetoResult();
 
         if(getWebResource()!=null){
@@ -47,6 +50,7 @@ public class TipoSujetoResourceImpl extends BaseResourceImpl<TipoSujetoDTO> impl
 
     @Override
     public TipoSujetoResult getByPage() {
+        setWebResourceBasicAuthFilter();
         TipoSujetoResult tResult = new TipoSujetoResult();
 
         if(getWebResource()!=null){

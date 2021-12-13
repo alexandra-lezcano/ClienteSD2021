@@ -1,6 +1,6 @@
 package com.sd
 
-class User {
+class Users {
     private String name;
     private String surname;
     private String username;
@@ -9,6 +9,7 @@ class User {
     private String email;
     private Integer phone;
     private City city;
+    public String password;
 
     static hasMany = [neighborhoods : Neighborhood]
 

@@ -24,6 +24,7 @@ public class UserB extends BaseBean  {
     //private Integer roleId;
     private List<NeighborhoodB> neighborhoods;
    // private Set<Integer> denunciasIds;
+    private List<RoleB> roles;
 
     public UserB(Map<String, String> params) {
         super(params);
@@ -129,5 +130,12 @@ public class UserB extends BaseBean  {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<RoleB> getRoles() {
+        return roles;
+    }
+    public void setRoles(List<RoleB> roles) {
+        this.roles = roles;
     }
 }

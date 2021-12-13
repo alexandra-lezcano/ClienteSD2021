@@ -13,10 +13,13 @@ public class DenunciaEstadoResourceImpl extends BaseResourceImpl<DenunciaEstadoD
     public DenunciaEstadoResourceImpl(){super(DenunciaEstadoDTO.class, RESOURCE_PATH);}
 
     @Override
-    public DenunciaEstadoResult getAll(){return getWebResource().get(DenunciaEstadoResult.class);}
+    public DenunciaEstadoResult getAll(){
+        setWebResourceBasicAuthFilter();
+        return getWebResource().get(DenunciaEstadoResult.class);}
 
     @Override
     public DenunciaEstadoResult getByPage(Integer page){
+        setWebResourceBasicAuthFilter();
         DenunciaEstadoResult dResult = new DenunciaEstadoResult();
 
         if(getWebResource()!=null){
@@ -29,6 +32,7 @@ public class DenunciaEstadoResourceImpl extends BaseResourceImpl<DenunciaEstadoD
 
     @Override
     public DenunciaEstadoResult getByPage(Integer page, Integer size) {
+        setWebResourceBasicAuthFilter();
         DenunciaEstadoResult dResult = new DenunciaEstadoResult();
 
         if(getWebResource()!=null){
@@ -41,6 +45,7 @@ public class DenunciaEstadoResourceImpl extends BaseResourceImpl<DenunciaEstadoD
 
     @Override
     public DenunciaEstadoResult getByPage() {
+        setWebResourceBasicAuthFilter();
         DenunciaEstadoResult dResult = new DenunciaEstadoResult();
 
         if(getWebResource()!=null){

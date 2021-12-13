@@ -6,7 +6,7 @@ class SecureController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def index() {
-        if(SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')) {
+        if(SpringSecurityUtils.ifAllGranted('ROLE_USER')) {
             render(view:'/index')
         }
 

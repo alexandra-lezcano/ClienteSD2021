@@ -116,14 +116,14 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     }
 
     @Override
-    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_city_'+#id")
+   // @Cacheable(value= Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB getById(Integer id) {
         final CityDTO dto= cityResource.getById(id);
         return convertToBean(dto);
     }
 
     @Override
-    @CachePut(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
+   // @CachePut(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB update(CityB bean, Integer id) {
         final CityDTO dto= convertToDTO(bean);
         final CityDTO nuevo= cityResource.update(dto,id);
@@ -132,7 +132,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
 
     @Override
-    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
+  //  @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB delete(Integer id) {
         System.out.println("ID: "+id);
         final CityDTO c= cityResource.delete(id);
