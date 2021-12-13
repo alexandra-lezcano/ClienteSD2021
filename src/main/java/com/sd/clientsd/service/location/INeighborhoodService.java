@@ -11,4 +11,6 @@ public interface INeighborhoodService extends IBaseService<NeighborhoodB, Neighb
     List<NeighborhoodB> getAllNotPaged();
     List<NeighborhoodB> getAllByCity(Integer city);
     List<NeighborhoodB> getAllByCity();
+    List<NeighborhoodB> getAllByCityPaged(Integer city, Integer page);
+    public List<NeighborhoodB> find(String text, Integer page);
 }

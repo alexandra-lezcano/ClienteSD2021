@@ -143,3 +143,8 @@ assets {
     minifyJs = true
     minifyCss = true
 }
+
+
+springBoot {
+    mainClassName = 'clientesd2021.Application'
+}

@@ -1238,3 +1238,7 @@ html, body, .st-container, .st-pusher, .st-content {
     padding: 10px;
     font-size: 2.5em;
 }
+
+.add-margin{
+    margin-right: 2%;
+}

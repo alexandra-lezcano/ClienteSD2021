@@ -10,5 +10,5 @@ import java.util.List;
 public interface IDepEstadoService extends IBaseService<DepEstadoB, DepEstadoDTO> {
 
     public List<DepEstadoB> getAllNotPaged();
-
+    public List<DepEstadoB> getAllByName(String string, Integer page);
 }
