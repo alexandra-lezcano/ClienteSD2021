@@ -20,7 +20,7 @@ public class Configurations {
     static {
         try {
             Properties properties = new Properties();
-            FileInputStream inputStream = new FileInputStream("config.properties");
+            FileInputStream inputStream = new FileInputStream("./grails-app/conf/config.properties");
             properties.load(inputStream);
 
             BASE_URL = properties.getProperty("base.url");
