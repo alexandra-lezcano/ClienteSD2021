@@ -79,10 +79,6 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:3.14.0"
     testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:3.14.0"
 
-    compile group: 'com.owlike', name: 'genson', version: '1.1'
-//Thanks for using https://jar-download.com
-
-
     // Dependencias externas:
     compile fileTree(dir: 'lib', include: '*.jar')
 

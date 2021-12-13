@@ -147,10 +147,12 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
     public List<NeighborhoodB> convertDtoListToBList(@NotNull List<NeighborhoodDTO> dtos){
         final List<NeighborhoodB> beans = new ArrayList<>();
-        dtos.forEach(neighborhoodDTO -> {
-            neighborhoodDTO.setCity_id(0);
-            beans.add(convertToBean(neighborhoodDTO));
-        });
+        if(dtos!=null){
+            dtos.forEach(neighborhoodDTO -> {
+                neighborhoodDTO.setCity_id(0);
+                beans.add(convertToBean(neighborhoodDTO));
+            });
+        }
         return beans;
     }
 
