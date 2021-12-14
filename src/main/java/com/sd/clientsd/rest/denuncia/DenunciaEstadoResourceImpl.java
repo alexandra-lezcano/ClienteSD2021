@@ -12,6 +12,13 @@ public class DenunciaEstadoResourceImpl extends BaseResourceImpl<DenunciaEstadoD
     private static final String RESOURCE_PATH = Configurations.gerDenunciaEstadoResource();
     public DenunciaEstadoResourceImpl(){super(DenunciaEstadoDTO.class, RESOURCE_PATH);}
 
+
+    @Override
+    public DenunciaEstadoDTO getById(Integer id) {
+        setWebResourceBasicAuthFilter();
+        // por ahora asumo que voy a crear un Resource con el path ya incluyendo un id
+        return getWebResource().path("/"+id).get(DenunciaEstadoDTO.class);
+    }
     @Override
     public DenunciaEstadoResult getAll(){
         setWebResourceBasicAuthFilter();

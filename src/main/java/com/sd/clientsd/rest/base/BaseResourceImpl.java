@@ -50,6 +50,7 @@ public abstract class BaseResourceImpl <DTO extends BaseDTO> implements IBaseRes
 
     @Override
     public DTO getById(Integer id) {
+
         // por ahora asumo que voy a crear un Resource con el path ya incluyendo un id
         return getWebResource().path("/"+id).get(this.dtoClass);
     }
