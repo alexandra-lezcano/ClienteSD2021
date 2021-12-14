@@ -23,7 +23,9 @@ class SujetoController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
+
         def page=null ==params['page'] ? 1 : Integer.valueOf(params['page'])
+
         def sujetos = sujetoService.getAll(page)
         [sujetoInstanceList: sujetos, sujetosTotal: sujetos.size()]
     }

@@ -17,46 +17,25 @@
         <g:link class="" action="list" params="[page:0]"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Lista de Barrios</button></g:link>
     </div>
 </div>
-<div id="list-neighborhood" class="content scaffold-list" role="main">
-
-    <table class="table table-striped table-bordered tabla-options">
-        <thead>
-        <tr>
-            <g:sortableColumn property="name"
-                              title="${message(code: 'neighborhood.label', default: 'Nombre')}" />
-
-            <th>Descripcion</th>
-            <th>Ciudad</th>
-            <th>Accion</th>
-        </tr>
-        </thead>
-        <tbody>
-        <g:each in="${neighborhoodInstanceList}" status="i" var="neighborhoodInstance">
-
-            <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                <td>
-                    <g:link class="edit" action="edit" id="${neighborhoodInstance?.id}">
-                        ${fieldValue(bean: neighborhoodInstance, field: "name")}</g:link>
-                </td>
-                <td>
-                    ${fieldValue(bean: neighborhoodInstance, field: "description")}
-                </td>
-                <td>
-                    ${fieldValue(bean: neighborhoodInstance, field: "city_id.name")}
-                </td>
-                <td>
-                    <g:link class="delete"
-                            action="delete"
-                            value="delete"
-                            id="${neighborhoodInstance?.id}"
-                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');">
-                        Borrar
-                    </g:link>
-                </td>
-            </tr>
-        </g:each>
-        </tbody>
-    </table>
-    <g:render template="/layouts/pagination"/>
+<div class="col-form-label text-right add-margin">
+    <label class="col-md-4 col-sm-12" for="city">
+        Buscar Barrios por ciudad:
+    </label>
+    <g:select    class="col-md-8 col-sm-12" id="city" name="city" from="${cityInstanceList}"
+                 optionKey="id" optionValue="name" noSelection="${['null':'Ver todo']}"
+                 onchange="cityChanged(this.value);" value="${find}"/>
 </div>
+<div id="list-neighborhood" class="content scaffold-list" role="main">
+    <g:render template="table"  model="['neighborhoodInstanceList': neighborhoodInstanceList, 'sig':sig,
+    'prev':prev, 'find': find]"/>
+</div>
+
+    <script>
+        function cityChanged(value){
+            jQuery.ajax(
+                {type:'POST',data:'find='+value, url:'/neighborhood/updateTable',success:function(data,textStatus){
+                    jQuery('#list-neighborhood').html(data);},error:function(XMLHttpRequest,textStatus,errorThrown){}});
+        };
+
+    </script>
 </body>

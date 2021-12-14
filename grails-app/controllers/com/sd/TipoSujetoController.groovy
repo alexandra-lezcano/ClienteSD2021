@@ -20,7 +20,9 @@ class TipoSujetoController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
+
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
+
         def tipoSujetos = tipoSujetoService.getAll(page)
         def prev = page -1;
         def sig = page+1;

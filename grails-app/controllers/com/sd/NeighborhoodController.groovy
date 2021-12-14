@@ -24,13 +24,26 @@ class NeighborhoodController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
-        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
-        def neighborhoods = neighborhoodService.getAll(page)
+        def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
+        def city = 0;
+        try {
+            city = null == params['find'] ? -1 : Integer.valueOf(params['find'])
+        } catch (NumberFormatException e){
+            city = 0;
+        }
+        def neighborhoods = null;
+        if(city > 0) {
+            neighborhoods = neighborhoodService.getAllByCityPaged(city, page)
+        }
+        else {
+            neighborhoods = neighborhoodService.getAll(page)
+        }
         def prev = page - 1
         def sig = page + 1
         if(neighborhoods.size() < ELEMS_PAGINATION) {sig = -1}
-
-        [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size(), prev: prev, sig: sig]
+        def cities = cityService.getAllNotPaged()
+        [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size(),
+         prev: prev, sig: sig, cityInstanceList: cities, find: city]
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
@@ -39,6 +52,25 @@ class NeighborhoodController {
         [cityInstanceList: cities, citiesTotal: cities.size()]
     }
 
+    //Cuando llama a update table desde la vista con el boton de busqueda
+    def updateTable (Integer find){
+        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
+        def neighborhoodInstanceList = null;
+        def city = find
+        if(city > 0){
+            neighborhoodInstanceList = neighborhoodService.getAllByCityPaged(city, page)
+        } else {
+            neighborhoodInstanceList = neighborhoodService.getAll(page)
+        }
+        def prev = page - 1
+        def sig = page + 1
+        if (neighborhoodInstanceList.size() < ELEMS_PAGINATION) {sig = -1}
+        render(template: 'table', model:[neighborhoodInstanceList: neighborhoodInstanceList, sig: sig, prev:prev, find: city])
+    }
+
+    def updatePagination(Integer isBusqueda, Integer prev, Integer sig){
+        render(template: '/layouts/pagination', model:[isBusqueda: isBusqueda, prev: prev, sig: sig])
+    }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def show(Long id) {

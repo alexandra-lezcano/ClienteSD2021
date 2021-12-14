@@ -22,6 +22,16 @@ System.out.println("123");
     }
 
     @Override
+    public CityDTO getFirst(){
+        CityResult result = getWebResource().get(CityResult.class);
+        if (result.getTotal() != 0) {
+            return result.getCities().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public CityResult getByPage(Integer pageNum) {
         setWebResourceBasicAuthFilter();
         CityResult cResult = new CityResult();

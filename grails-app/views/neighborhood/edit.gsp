@@ -39,15 +39,10 @@
                     </div>
                     <div class="fieldcontain ${hasErrors(bean: neighborhoodInstance, field: 'city_id','error')}">
                         <label for="description"> Ciudad:
-                        <g:select id="city" name="city_id" from="${cities}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id?.id}" class="many-to-one"/>
+                        <g:select id="city" name="city_id" from="${cityInstanceList}" optionKey="id" optionValue="name" required="" value="${neighborhoodInstance?.city_id?.id}" class="many-to-one"/>
                         </label>
                     </div>
-                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="update" />
-                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 delete btn-secondary"
-                                    value="delete"
-                                    id="${neighborhoodInstance?.id}"
-                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
-                    />
+                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" action ="update" value="Actualizar" />
                 </fieldset>
             </g:form>
         </div>
