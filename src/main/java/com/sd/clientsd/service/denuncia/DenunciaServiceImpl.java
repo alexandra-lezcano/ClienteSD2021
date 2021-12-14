@@ -2,8 +2,10 @@ package com.sd.clientsd.service.denuncia;
 
 import com.protectionapp.sd2021.dto.denuncia.DenunciaDTO;
 import com.protectionapp.sd2021.dto.denuncia.DenunciaResult;
+import com.protectionapp.sd2021.dto.denuncia.SujetoDto;
 import com.sd.clientsd.beans.denuncia.DenunciaB;
 import com.sd.clientsd.beans.denuncia.DenunciaEstadoB;
+import com.sd.clientsd.beans.denuncia.SujetoB;
 import com.sd.clientsd.beans.location.CityB;
 import com.sd.clientsd.beans.location.NeighborhoodB;
 import com.sd.clientsd.beans.user.UserB;
@@ -28,15 +30,12 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
     @Autowired
     private ICityService cityService;
     @Autowired
-    private ICasosDerivadosService casosDerivadosService;
-    @Autowired
     private IDenunciaEstadoService denunciaEstadoService;
     @Autowired
     private INeighborhoodService neighborhoodService;
     @Autowired
-    private IUserService userService;
-    @Autowired
-    private ISujetoresource sujetoresource;
+    private ITipoSujetoService tipoSujetoService;
+
 
     @Override
     protected DenunciaDTO convertToDTO(DenunciaB bean) {
@@ -46,9 +45,16 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
         dto.setCodigo(bean.getCodigo());
         dto.setFecha(bean.getFecha());
         dto.setCity_id(bean.getCity().getId());
-        dto.setEstado_id(bean.getEstado().getId());
         dto.setNeighborhood_id(bean.getNeighborhood().getId());
-        dto.setUser_id(bean.getId());
+
+        // guarda un estado por defecto
+        // tira unauthorized
+        /*if(denunciaEstadoService.getById(1)!=null){
+            dto.setEstado_id(1);
+        }*/
+
+       // dto.setUser_id(bean.getId());
+
         return dto;
     }
 
@@ -63,13 +69,13 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
 
         final CityB city = cityService.getById(dto.getCity_id());
         final NeighborhoodB neighborhood = neighborhoodService.getById(dto.getNeighborhood_id());
-        final DenunciaEstadoB estado = denunciaEstadoService.getById(dto.getEstado_id());
-        final UserB user = userService.getById(dto.getUser_id());
+        //final DenunciaEstadoB estado = denunciaEstadoService.getById(dto.getEstado_id());
+        //final UserB user = userService.getById(dto.getUser_id());
 
         bean.setCity(city);
         bean.setNeighborhood(neighborhood);
-        bean.setEstado(estado);
-        bean.setUser(user);
+       // bean.setEstado(estado);
+       // bean.setUser(user);
 
         /*todo hacer lista de sujetos y tipos de denuncia*/
 
@@ -79,14 +85,8 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
     @Override
     public DenunciaB save(DenunciaB bean) {
         final DenunciaDTO dto= convertToDTO(bean);
-        Date fecha = new Date(System.currentTimeMillis());
-        dto.setFecha(fecha);
-        String codigo = RandomStringUtils.random(8, "012345678ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        dto.setCodigo(codigo);
-        if(denunciaEstadoService.getById(1)!=null){
-            dto.setEstado_id(1);
-        }
         final DenunciaDTO denuncia= denunciaResource.save(dto);
+
         final DenunciaB denunciaB=convertToBean(denuncia);
         return denunciaB;
     }
@@ -148,4 +148,30 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
         return convertToBean(c);
     }
 
+    protected SujetoDto convertSujetoToDTO(SujetoB bean) {
+        final SujetoDto dto = new SujetoDto();
+        if(bean.getId()!=0){
+            dto.setId(bean.getId());
+        }
+        dto.setNombre(bean.getNombre());
+        dto.setTipo_id(bean.getTipo().getId());
+        dto.setDireccion(bean.getDireccion());
+        dto.setCi(bean.getCi());
+        dto.setTelefono(bean.getTelefono());
+        dto.setCorreo(bean.getCorreo());
+        return dto;
+    }
+
+    protected SujetoB convertSujetoToBean(SujetoDto dto) {
+        final Map<String, String> params = new HashMap<>();
+        params.put("id",String.valueOf(dto.getId()));
+        params.put("nombre", dto.getNombre());
+        params.put("ci", dto.getCi());
+        params.put("direccion", dto.getDireccion());
+        params.put("telefono",dto.getTelefono());
+        params.put("correo", dto.getTelefono());
+        final SujetoB bean = new SujetoB(params);
+        bean.setTipo(tipoSujetoService.getById(dto.getTipo_id()));
+        return bean;
+    }
 }
