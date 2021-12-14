@@ -52,4 +52,16 @@ public class DepEstadoResourceImpl extends BaseResourceImpl<DepEstadoDTO> implem
         }
         return depEstadoResult;
     }
+
+    @Override
+    public DepEstadoResult getAllByName(String name, Integer page) {
+        DepEstadoResult depEstadoResult = new DepEstadoResult();
+
+        if(getWebResource()!=null){
+            Class<DepEstadoResult> depEstadoResultClass = DepEstadoResult.class;
+            String path = "/find/"+page+"/"+name;
+            depEstadoResult = getWebResource().path(path).get(depEstadoResultClass);
+        }
+        return depEstadoResult;
+    }
 }

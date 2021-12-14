@@ -27,7 +27,7 @@ public class DenunciaB extends BaseBean{
 
     @Override
     protected void create(Map<String, String> params) {
-        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         if (params.containsKey("id")&& params.get("id")!=null){
             setId(Integer.valueOf(params.get("id")));
         } else {

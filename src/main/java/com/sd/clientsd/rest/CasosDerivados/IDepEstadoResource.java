@@ -9,4 +9,5 @@ public interface IDepEstadoResource extends IBaseResource<DepEstadoDTO> {
     public DepEstadoResult getByPage(Integer pageNum);
     public DepEstadoResult getByPage(Integer page, Integer size);
     public DepEstadoResult getByPage();
+    public DepEstadoResult getAllByName(String name, Integer page);
 }

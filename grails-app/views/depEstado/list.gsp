@@ -11,6 +11,7 @@
 <body>
 <a href="#list-depEstado" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 
+
 <div class="nav" role="navigation">
     <div class="row sin-margin">
         <g:link class="" action="create"><button class="rellenar col-sm-6 col-xs-12 btn btn-primary">Crear Dependencia del Estado</button></g:link>
@@ -18,44 +19,27 @@
     </div>
 </div>
 
-<div id="list-depEstado" class="content scaffold-list" role="main">
 
 
-    <table class="table table-striped table-bordered tabla-options">
-        <thead>
-        <tr>
-
-            <g:sortableColumn property="name"
-                              title="${message(code: 'depEstado.label', default: 'Nombre')}" />
-
-            <th>Descripcion</th>
-            <th>Accion</th>
-        </tr>
-        </thead>
-        <tbody>
-        <g:each in="${depEstadoInstanceList}" status="i" var="depEstadoInstance">
-
-            <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                <td>
-                    <g:link class="edit" action="edit" id="${depEstadoInstance?.id}">
-                        ${fieldValue(bean: depEstadoInstance, field: "nombre")}</g:link>
-                </td>
-                <td>
-                    ${fieldValue(bean: depEstadoInstance, field: "descripcion")}
-                </td>
-                <td>
-                    <g:link class="delete"
-                            action="delete"
-                            value="delete"
-                            id="${depEstadoInstance?.id}"
-                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');">
-                        Borrar
-                    </g:link>
-                </td>
-            </tr>
-        </g:each>
-        </tbody>
-    </table>
-    <g:render template="/layouts/pagination"/>
+<div class="col-form-label text-right add-margin">
+    <label for="search-value"> Buscar Dependencias:
+        <input type='text' name="text" id="search-value" class="col-md-8 col-sm-12"
+               value="${find}"/>
+    </label>
+    <button class="btn btn-info" name="search" value="Buscar" onclick="searchChanged(document.getElementById('search-value').value)">Buscar</button>
 </div>
+
+<div id="list-depEstado" class="content scaffold-list" role="main">
+    <g:render template="table" model="['depEstadoInstanceList': depEstadoInstanceList, 'sig':sig, 'prev':prev, 'find': find ]"/>
+</div>
+
+<script>
+    function searchChanged(value){
+        jQuery.ajax(
+            {type:'POST',data:'find='+value, url:'/depEstado/updateTable',success:function(data,textStatus){
+                    jQuery('#list-depEstado').html(data);},error:function(XMLHttpRequest,textStatus,errorThrown){}});
+    };
+
+</script>
+
 </body>

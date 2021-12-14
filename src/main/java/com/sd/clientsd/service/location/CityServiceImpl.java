@@ -150,6 +150,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
     }
 
+
     @Override
     public List<CityB> getAllNotPaged() {
         final CityResult result = cityResource.getAll();
@@ -158,6 +159,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
         final List<CityB> beansList = new ArrayList<CityB>();
 
         dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
+
         return beansList;
     }
 

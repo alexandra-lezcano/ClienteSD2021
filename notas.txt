@@ -6,3 +6,22 @@ cambiar denuncias y caso der tiene que ser uno a muchos
 falta borrar boton de guardar cambios
 
 0975182847
+
+RENI:
+-LA busqueda pagina la pagina siguiente pero no la anterior - RESUELTO
+
+
+COMO FUNCIONA LA PAGINACION
+-Primero utiliza el list del controlador que trae todos los elementos paginados,
+    ya que el parametro find es null al principio
+-cuando cambia el parametro de busqueda, hay una funcion ajax con jquery que
+    escucha el evento y hace un onchange que actualiza la tabla con la pagina
+    de la busqueda
+-el parametro find es necesario para poder paginar la busqueda si find existe,
+    (no es null) entonces el controlador busca la paginas de la busqueda, si no,
+    busca la pagina de todos los elementos sin filtrar
+-La paginacion llama al metodo list, por eso el parametro find indica si queremos
+    la lista de todos los elementos o la de la busqueda
+-como la paginacion es un template que usan todas las tablas, el parametro se
+    llama find, cada tabla pasa un string o un int dependiendo de lo que
+    necesita para hacer la busqueda
