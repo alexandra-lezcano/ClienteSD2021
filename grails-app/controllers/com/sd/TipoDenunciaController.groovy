@@ -34,7 +34,7 @@ class TipoDenunciaController {
         def tipoDenunicas = tipoDenunciaService.getAll(page)
         def prev = page-1;
         def sig = page+1;
-        if(tipoDenunicas.size() < ELEMS_PAGINATION){sig = -1}
+        if(tipoDenunicas.size() <= ELEMS_PAGINATION){sig = -1}
 
         [tipoDenunciaInstanceList: tipoDenunicas, tipoDenunciasTotal: tipoDenunicas.size(), prev: prev, sig: sig]
     }

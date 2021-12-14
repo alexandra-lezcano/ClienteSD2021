@@ -11,4 +11,5 @@ public interface INeighborhoodResource extends IBaseResource<NeighborhoodDTO> {
     public NeighborhoodResult getBypage();
     public NeighborhoodResult findByPage(String text, Integer page);
     public NeighborhoodResult getallByCityPaged(Integer city, Integer page);
+    public NeighborhoodResult getAllByName(String search, Integer page);
 }

@@ -5,9 +5,12 @@ import com.sd.clientsd.service.denuncia.ISujetoService
 import com.sd.clientsd.service.denuncia.ITipoDenunciaService
 import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.service.location.INeighborhoodService
+import com.sd.clientsd.utils.config.Configurations
+
 import static org.springframework.http.HttpStatus.*
 
 class DenunciaController {
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
 
     IDenunciaService denunciaService
     ICityService cityService
@@ -26,6 +29,7 @@ class DenunciaController {
         def denuncias = denunciaService.getAll(page)
         def prev = page - 1;
         def sig = page -1;
+        if(sig <= ELEMS_PAGINATION){sig = -1}
         [denunciaInstanceList: denuncias, denunciasTotal: denuncias.size(), sig: sig, prev: prev]
     }
 

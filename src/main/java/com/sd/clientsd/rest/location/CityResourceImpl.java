@@ -65,6 +65,20 @@ public class CityResourceImpl extends BaseResourceImpl<CityDTO> implements ICity
         return cResult;
     }
 
+
+    @Override
+    public CityResult getByName(String search, Integer pageNum) {
+        CityResult cResult = new CityResult();
+
+        if(getWebResource()!=null){
+            Class<CityResult> cResultClass = CityResult.class;
+            String path = "/find/"+pageNum+"/"+search;
+            System.out.println(getWebResource().path(path));
+            cResult = getWebResource().path(path).get(cResultClass);
+        }
+        return cResult;
+    }
+
     @Override
     public NeighborhoodResult getNeighborhoodByCityId(Integer id) {
         return getWebResource().path("/"+id+"/neighborhoods").get(NeighborhoodResult.class);

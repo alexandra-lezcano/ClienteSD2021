@@ -24,7 +24,7 @@ class DenunciaEstadoController {
         def estados = denunciaEstadoService.getAll(page)
         def prev = page - 1;
         def sig = page +1;
-        if (estados.size() < ELEMS_PAGINATION){sig = -1}
+        if (estados.size() <= ELEMS_PAGINATION){sig = -1}
         [denunciaEstadoInstanceList: estados, denunciaEsdatoTotal: estados.size(), sig: sig, prev: prev]
     }
 
