@@ -26,19 +26,26 @@
                               title="${message(code: 'denuncia.label', default: 'Codigo')}" />
 
             <th>Descripcion</th>
+            <th>Fecha</th>
+            <th>Estado</th>
             <th>Accion</th>
         </tr>
         </thead>
         <tbody>
         <g:each in="${denunciaInstanceList}" status="i" var="denunciaInstance">
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
                 <td>
                     <g:link class="edit" action="edit" id="${denunciaInstance?.id}">
                         ${fieldValue(bean: denunciaInstance, field: "codigo")}</g:link>
                 </td>
                 <td>
                     ${fieldValue(bean: denunciaInstance, field: "descripcion")}
+                </td>
+                <td>
+                    ${fieldValue(bean: denunciaInstance, field: "fecha")}
+                </td>
+                <td>
+                    ${fieldValue(bean: denunciaInstance, field: "estado")}
                 </td>
                 <td>
                     <g:link class="delete"

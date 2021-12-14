@@ -22,6 +22,16 @@ System.out.println("123");
     }
 
     @Override
+    public CityDTO getFirst(){
+        CityResult result = getWebResource().get(CityResult.class);
+        if (result.getTotal() != 0) {
+            return result.getCities().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public CityResult getByPage(Integer pageNum) {
         setWebResourceBasicAuthFilter();
         CityResult cResult = new CityResult();
@@ -55,6 +65,20 @@ System.out.println("123");
         if(getWebResource()!=null){
             Class<CityResult> cResultClass = CityResult.class;
             String path = "/page/";
+            cResult = getWebResource().path(path).get(cResultClass);
+        }
+        return cResult;
+    }
+
+
+    @Override
+    public CityResult getByName(String search, Integer pageNum) {
+        CityResult cResult = new CityResult();
+
+        if(getWebResource()!=null){
+            Class<CityResult> cResultClass = CityResult.class;
+            String path = "/find/"+pageNum+"/"+search;
+            System.out.println(getWebResource().path(path));
             cResult = getWebResource().path(path).get(cResultClass);
         }
         return cResult;

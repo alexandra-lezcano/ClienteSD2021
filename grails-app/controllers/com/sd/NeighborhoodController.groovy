@@ -24,13 +24,20 @@ class NeighborhoodController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
-        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
-        def neighborhoods = neighborhoodService.getAll(page)
+        def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
+        def find = params['find']
+        def neighborhoods = null
+        if(find== null || find.equals("")) {
+            neighborhoods = neighborhoodService.getAll()
+        }
+        else {
+            neighborhoods = neighborhoodService.getAllByName(find, page)
+        }
         def prev = page - 1
         def sig = page + 1
         if(neighborhoods.size() < ELEMS_PAGINATION) {sig = -1}
-
-        [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size(), prev: prev, sig: sig]
+        [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size(),
+         prev: prev, sig: sig, find: find]
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
@@ -39,6 +46,21 @@ class NeighborhoodController {
         [cityInstanceList: cities, citiesTotal: cities.size()]
     }
 
+    //Cuando llama a update table desde la vista con el boton de busqueda
+    def updateTableSearch(String find){
+        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
+        def neighborhoodInstanceList = null;
+        def search = find
+        if(search != null || !search.equals("")){
+            neighborhoodInstanceList = neighborhoodService.getAllByName(search, page)
+        } else {
+            neighborhoodInstanceList = neighborhoodService.getAll(page)
+        }
+        def prev = page - 1
+        def sig = page + 1
+        if (neighborhoodInstanceList.size() <= ELEMS_PAGINATION) {sig = -1}
+        render(template: 'table', model:[neighborhoodInstanceList: neighborhoodInstanceList, sig: sig, prev:prev, find: find])
+    }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def show(Long id) {

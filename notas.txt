@@ -6,3 +6,92 @@ cambiar denuncias y caso der tiene que ser uno a muchos
 falta borrar boton de guardar cambios
 
 0975182847
+
+RENI:
+-LA busqueda pagina la pagina siguiente pero no la anterior - RESUELTO
+
+
+COMO FUNCIONA LA PAGINACION
+-Primero utiliza el list del controlador que trae todos los elementos paginados,
+    ya que el parametro find es null al principio
+-cuando cambia el parametro de busqueda, hay una funcion ajax con jquery que
+    escucha el evento y hace un onchange que actualiza la tabla con la pagina
+    de la busqueda
+-el parametro find es necesario para poder paginar la busqueda si find existe,
+    (no es null) entonces el controlador busca la paginas de la busqueda, si no,
+    busca la pagina de todos los elementos sin filtrar
+-La paginacion llama al metodo list, por eso el parametro find indica si queremos
+    la lista de todos los elementos o la de la busqueda
+-como la paginacion es un template que usan todas las tablas, el parametro se
+    llama find, cada tabla pasa un string o un int dependiendo de lo que
+    necesita para hacer la busqueda
+-Porque cual es la diferencia entre list y update en el controlador?
+    List llama a la vista list, pero nosotros le pedimos que renderice dentro de la lista
+    entonces necesitamos update para que renderice solo la tabla y no toda la vista List,
+    que tiene otros elementos arriba como la busqueda
+
+
+
+
+
+
+FILTRO
+--VISTA
+<div class="col-form-label text-right add-margin">
+    <label class="col-md-4 col-sm-12" for="city">
+        Barrios por ciudad:
+    </label>
+    <g:select    class="col-md-8 col-sm-12" id="city" name="city" from="${cityInstanceList}"
+                 optionKey="id" optionValue="name" noSelection="${['null':'Todas']}"
+                 onchange="cityChanged(this.value);" value="${find}"/>
+
+    <g:render template="/layouts/search" model="[find:find]"/>
+</div>
+
+---JS
+        function cityChanged(value){
+            jQuery.ajax(
+                {type:'POST',data:'find='+value, url:'/neighborhood/updateTable',success:function(data,textStatus){
+                    jQuery('#list-neighborhood').html(data);},error:function(XMLHttpRequest,textStatus,errorThrown){}});
+        };
+
+
+---CONTROLADOR
+def list(Integer max) {
+        def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
+        def find = 0;
+        try {
+            find = null == params['find'] ? -1 : Integer.valueOf(params['find'])
+        } catch (NumberFormatException e){
+            find = 0;
+        }
+
+        def neighborhoods = null;
+        if(find > 0) {
+            neighborhoods = neighborhoodService.getAllByCityPaged(find, page)
+        }
+        else {
+            neighborhoods = neighborhoodService.getAll(page)
+        }
+        def prev = page - 1
+        def sig = page + 1
+        if(neighborhoods.size() < ELEMS_PAGINATION) {sig = -1}
+        def cities = cityService.getAllNotPaged()
+        [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size(),
+         prev: prev, sig: sig, cityInstanceList: cities, find: find]
+    }
+
+def updateTable (Integer find){
+        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
+        def neighborhoodInstanceList = null;
+        def city = find
+        if(city > 0){
+            neighborhoodInstanceList = neighborhoodService.getAllByCityPaged(city, page)
+        } else {
+            neighborhoodInstanceList = neighborhoodService.getAll(page)
+        }
+        def prev = page - 1
+        def sig = page + 1
+        if (neighborhoodInstanceList.size() < ELEMS_PAGINATION) {sig = -1}
+        render(template: 'table', model:[neighborhoodInstanceList: neighborhoodInstanceList, sig: sig, prev:prev, find: city])
+    }

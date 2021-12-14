@@ -91,4 +91,5 @@ public class DenunciaEstadoServiceImpl extends BaseServiceImpl<DenunciaEstadoB, 
         final DenunciaEstadoDTO deleted = denunciaEstadoResource.delete(id);
         return convertToBean(deleted);
     }
+
 }

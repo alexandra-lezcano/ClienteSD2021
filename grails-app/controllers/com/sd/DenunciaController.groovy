@@ -5,11 +5,14 @@ import com.sd.clientsd.service.denuncia.ISujetoService
 import com.sd.clientsd.service.denuncia.ITipoDenunciaService
 import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.service.location.INeighborhoodService
+import com.sd.clientsd.utils.config.Configurations
+
 import grails.plugin.springsecurity.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 
 class DenunciaController {
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
 
     IDenunciaService denunciaService
     ICityService cityService
@@ -30,21 +33,25 @@ class DenunciaController {
         def denuncias = denunciaService.getAll(page)
         def prev = page - 1;
         def sig = page -1;
+        if(sig <= ELEMS_PAGINATION){sig = -1}
         [denunciaInstanceList: denuncias, denunciasTotal: denuncias.size(), sig: sig, prev: prev]
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def create() {
         def cities = cityService.getAllNotPaged()
-        def city_id = 11;
-        def barrios = neighborhoodService.getAllByCity(city_id)
+        def barrios = neighborhoodService.getAllByCity()
         def sujetos = sujetoService.newList();
         def tipos = tipoDenunciaService.getAllNotPaged();
         def denunciaInstance = new Denuncia(params);
         [denunciaInstance        : denunciaInstance, cityInstanceList: cities,
          sujetoInstance          : new Sujeto(params), sujetoInstanceList: sujetos,
-         neighborhoodInstanceList: barrios, city_id: city_id,
-         tipoDenunciaInstanceList: tipos]
+         neighborhoodInstanceList: barrios, tipoDenunciaInstanceList: tipos]
+    }
+
+    def updateNeighborhood(Integer city){
+        def barrios = neighborhoodService.getAllByCity(city)
+        render (g.select(id:"neighborhoods", name:"neighborhood", from:barrios, optionKey: 'id', optionValue:'name'))
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])

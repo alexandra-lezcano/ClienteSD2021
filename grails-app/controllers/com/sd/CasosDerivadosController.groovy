@@ -25,10 +25,11 @@ class CasosDerivadosController {
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
         def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
+
         def casosDerivados =  casoDerivadoService.getAll(page)
         def prev = page - 1;
         def sig = page + 1;
-        if(casosDerivados.size() < ELEMS_PAGINATION){sig = -1}
+        if(casosDerivados.size() <= ELEMS_PAGINATION){sig = -1}
         def depEstado =  depEstadoService.getAll(page)
 
         [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size()

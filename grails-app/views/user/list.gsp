@@ -56,11 +56,7 @@
     </tbody>
 
 </table>
-    <div class="pagination">
-        <g:paginate next="Siguiente" prev="Anterior"
-                    maxsteps="0" controller="user"
-                    action="list" total="${usersTotal}" />
-    </div>
+    <g:render template="/layouts/pagination"/>
 </div>
 </body>
 </html>

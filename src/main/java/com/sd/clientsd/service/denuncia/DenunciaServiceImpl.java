@@ -59,6 +59,7 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
         params.put("descripcion", String.valueOf(dto.getDescripcion()));
         params.put("codigo",String.valueOf(dto.getCodigo()));
         params.put("fecha", String.valueOf(dto.getFecha()));
+
         final DenunciaB bean = new DenunciaB(params);
 
         final CityB city = cityService.getById(dto.getCity_id());

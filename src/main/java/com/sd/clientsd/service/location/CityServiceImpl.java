@@ -15,6 +15,7 @@ import com.sun.istack.NotNull;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -30,6 +31,9 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
     @Autowired
     private INeighborhoodService neighborhoodService;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     protected CityDTO convertToDTO(CityB bean) {
@@ -74,7 +78,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
         final CityDTO dto= convertToDTO(bean);
         final CityDTO city= cityResource.save(dto);
         final CityB cityB=convertToBean(city);
-
+        cacheManager.getCache(Configurations.CACHE_NAME).put("web_city_"+cityB.getId(), cityB);
         return cityB;
     }
 
@@ -94,6 +98,18 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     @Override
     public List<CityB> getAll(Integer page, Integer size) {
         CityResult cityResult = cityResource.getByPage(page, size);
+        List<CityDTO> dtosList = new ArrayList<CityDTO>();
+
+        if(cityResult.getCities()!=null) dtosList = cityResult.getCities();
+        final List<CityB> beansList = new ArrayList<CityB>();
+
+        dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
+        return beansList;
+    }
+
+    @Override
+    public List<CityB> findAllByName(String search, Integer page){
+        CityResult cityResult = cityResource.getByName(search, page);
         List<CityDTO> dtosList = new ArrayList<CityDTO>();
 
         if(cityResult.getCities()!=null) dtosList = cityResult.getCities();
@@ -135,11 +151,19 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
   //  @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB delete(Integer id) {
         System.out.println("ID: "+id);
+
         final CityDTO c= cityResource.delete(id);
+        if(c.getNeighborhoods()!=null){
+            c.getNeighborhoods().forEach( nId -> cacheManager.getCache(Configurations.CACHE_NAME).evict("web_neighborhood_"+nId));
+        }
+        cacheManager.getCache(Configurations.CACHE_NAME).evict("web_city_"+id);
+
         return convertToBean(c);
 
     }
 
+
+    @Override
     public List<CityB> getAllNotPaged() {
         System.out.println("Inside city get all not paged");
         final CityResult result = cityResource.getAll();
@@ -148,6 +172,14 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
         final List<CityB> beansList = new ArrayList<CityB>();
 
         dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
+
         return beansList;
     }
+
+    @Override
+    public CityB getFirst(){
+        final CityDTO dto = cityResource.getFirst();
+        return convertToBean(dto);
+    }
+
 }

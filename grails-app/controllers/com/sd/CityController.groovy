@@ -27,12 +27,34 @@ class CityController {
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
-        def cities = cityService.getAll(page)
+        def find = params['find']
+        def cities = null
+        if(find == null || find.equals("")){
+            cities = cityService.getAll(page)
+        } else {
+            cities = cityService.findAllByName(find, page)
+        }
         def prev = page - 1;
         def sig = page + 1;
         if(cities.size() < ELEMS_PAGINATION){sig = -1}
 
-        [cityInstanceList: cities, citiesTotal: cities.size(), sig: sig, prev: prev]
+        [cityInstanceList: cities, citiesTotal: cities.size(), sig: sig, prev: prev, find: find]
+    }
+
+    def updateTable(String find){
+        def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
+        def search = find
+        System.out.println(search)
+        def cities = null
+        if(search == null || find.equals("")){
+            cities = cityService.getAll(page)
+        } else {
+            cities = cityService.findAllByName(search, page)
+        }
+        def prev = page - 1;
+        def sig = page + 1;
+        if(cities.size() <= ELEMS_PAGINATION){sig = -1}
+        render(template: 'table', model:[cityInstanceList: cities, citiesTotal: cities.size(), sig: sig, prev: prev, find: search])
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])

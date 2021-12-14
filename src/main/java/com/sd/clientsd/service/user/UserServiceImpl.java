@@ -13,10 +13,15 @@ import com.sd.clientsd.rest.user.IUserResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import com.sd.clientsd.service.location.ICityService;
 import com.sd.clientsd.service.location.INeighborhoodService;
+import com.sd.clientsd.utils.config.Configurations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -36,6 +41,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 
    @Autowired
    private IRoleService roleService;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -105,7 +113,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         final UserDTO dto = convertToDTO(bean);
         final UserDTO userDTO = userResource.save(dto);
         final UserB userB = convertToBean(userDTO);
-
+        cacheManager.getCache(Configurations.CACHE_NAME).put("web_user_"+userB.getId(), userB);
         return userB;
     }
 
@@ -138,6 +146,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
         final UserResult userResult = userResource.getByPage();
         List<UserDTO> userDTOS = new ArrayList<>();
         if(userResult.getUsers()!=null) userDTOS = userResult.getUsers();
+
         final List<UserB> beansList = new ArrayList<>();
         userDTOS.forEach(userDTO -> beansList.add(convertToBean(userDTO)));
 
@@ -145,6 +154,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
     }
 
     @Override
+    @Cacheable(value=Configurations.CACHE_NAME, key = "'web_user_'+#id")
     public UserB getById(Integer id) {
         logger.info("Obtener usuario "+id);
         System.out.println(userResource.getById(id));
@@ -153,6 +163,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
     }
 
     @Override
+    @CachePut(value=Configurations.CACHE_NAME, key = "'web_user_'+#id")
     public UserB update(UserB bean, Integer id) {
         logger.info("Actualizar usuario "+id);
         final UserDTO dto = convertToDTO(bean);
@@ -161,6 +172,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
     }
 
     @Override
+    @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_user_'+#id")
     public UserB delete(Integer id) {
         logger.info("Eliminar usuario "+id);
         final UserDTO deleted = userResource.delete(id);

@@ -24,11 +24,33 @@ class DepEstadoController {
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
         def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
-        def depEstado =  depEstadoService.getAll(page)
+        def searchString = null
+        searchString = null == params['find'] ? null : params['find']
+        def depEstado = null;
+        if(!searchString.equals("") || null == searchString) {
+            depEstado = depEstadoService.getAll(page)
+        } else {
+            depEstado = depEstadoService.getAllByName(searchString, page)
+        }
         def prev = page -1
         def sig = page +1
-        if(sig < ELEMS_PAGINATION){sig = -1}
-        [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size(), sig: sig, prev: prev]
+        if(sig <= ELEMS_PAGINATION){sig = -1}
+        [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size(), sig: sig, prev: prev, find: searchString]
+    }
+
+    def updateTable(String find){
+        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
+        def searchString = find
+        def depEstado = null;
+        if(searchString.equals("")) {
+            depEstado = depEstadoService.getAll(page)
+        } else {
+            depEstado = depEstadoService.getAllByName(searchString, page)
+        }
+        def prev = page -1
+        def sig = page +1
+        if(sig <= ELEMS_PAGINATION){sig = -1}
+        render(template: 'table', model:[depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size(), sig: sig, prev: prev, find: searchString])
     }
 
 
