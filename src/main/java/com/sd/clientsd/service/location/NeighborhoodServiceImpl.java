@@ -205,6 +205,20 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     @Override
+    public List<NeighborhoodB> getAllByName(String search, Integer page){
+        NeighborhoodResult neighborhoodResult = neighborhoodResource.getAllByName(search, page);
+        List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
+
+        if(neighborhoodResult.getNeighborhoods()!=null) dtosList = neighborhoodResult.getNeighborhoods();
+
+        final List<NeighborhoodB> beansList = new ArrayList<NeighborhoodB>();
+
+        dtosList.forEach(neighborhoodDTO -> beansList.add(convertToBean(neighborhoodDTO)));
+
+        return beansList;
+    }
+
+    @Override
     public List<NeighborhoodB> find(String text, Integer page) {
         NeighborhoodResult neighborhoodResult = neighborhoodResource.findByPage(text, page);
         List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
@@ -217,4 +231,6 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
         dtosList.forEach(neighborhoodDTO -> beansList.add(convertToBean(neighborhoodDTO)));
         return beansList;
     }
+
+
 }

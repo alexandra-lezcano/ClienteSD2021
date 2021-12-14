@@ -37,7 +37,7 @@ class SujetoController {
         def tipoSujetos = tipoSujetoService.getAll(page)
         def prev = page -1;
         def sig = page +1;
-        if(tipoSujetos.size() < ELEMS_PAGINATION){sig = -1}
+        if(tipoSujetos.size() <= ELEMS_PAGINATION){sig = -1}
 
         [tipoSujetoInstanceList: tipoSujetos, tipoSujetosTotal: tipoSujetos.size(), tipoSujetoInstance: new TipoSujeto(params), sujetoInstance: new Sujeto(params),
         sig: sig, prev: prev]

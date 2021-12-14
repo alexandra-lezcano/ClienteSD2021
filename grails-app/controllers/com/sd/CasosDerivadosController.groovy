@@ -25,7 +25,7 @@ class CasosDerivadosController {
         def casosDerivados =  casoDerivadoService.getAll(page)
         def prev = page - 1;
         def sig = page + 1;
-        if(casosDerivados.size() < ELEMS_PAGINATION){sig = -1}
+        if(casosDerivados.size() <= ELEMS_PAGINATION){sig = -1}
         def depEstado =  depEstadoService.getAll(page)
 
         [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size()

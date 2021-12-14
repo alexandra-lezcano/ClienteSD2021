@@ -92,4 +92,15 @@ public class NeighborhoodResourceImpl extends BaseResourceImpl<NeighborhoodDTO> 
         }
         return nResult;
     }
+
+    @Override
+    public NeighborhoodResult getAllByName(String search, Integer page){
+        NeighborhoodResult nResult = new NeighborhoodResult();
+        if(getWebResource()!=null){
+            Class<NeighborhoodResult> neighborhoodResultClass = NeighborhoodResult.class;
+            String path = "res/"+page+"/"+search;
+            nResult = getWebResource().path(path).get(neighborhoodResultClass);
+        }
+        return nResult;
+    }
 }

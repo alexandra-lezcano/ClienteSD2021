@@ -10,6 +10,7 @@ public interface ICityResource extends IBaseResource<CityDTO> {
     public CityResult getByPage(Integer pageNum);
     public CityResult getByPage(Integer pageNum, Integer size);
     public CityResult getByPage();
+    public CityResult getByName(String search, Integer pageNum);
 
     public CityDTO getFirst();
 

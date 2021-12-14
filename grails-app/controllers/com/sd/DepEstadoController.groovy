@@ -30,7 +30,7 @@ class DepEstadoController {
         }
         def prev = page -1
         def sig = page +1
-        if(sig < ELEMS_PAGINATION){sig = -1}
+        if(sig <= ELEMS_PAGINATION){sig = -1}
         [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size(), sig: sig, prev: prev, find: searchString]
     }
 
@@ -45,7 +45,7 @@ class DepEstadoController {
         }
         def prev = page -1
         def sig = page +1
-        if(sig < ELEMS_PAGINATION){sig = -1}
+        if(sig <= ELEMS_PAGINATION){sig = -1}
         render(template: 'table', model:[depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size(), sig: sig, prev: prev, find: searchString])
     }
 

@@ -17,25 +17,21 @@
         <g:link class="" action="list" params="[page:0]"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Lista de Barrios</button></g:link>
     </div>
 </div>
+
 <div class="col-form-label text-right add-margin">
-    <label class="col-md-4 col-sm-12" for="city">
-        Buscar Barrios por ciudad:
-    </label>
-    <g:select    class="col-md-8 col-sm-12" id="city" name="city" from="${cityInstanceList}"
-                 optionKey="id" optionValue="name" noSelection="${['null':'Ver todo']}"
-                 onchange="cityChanged(this.value);" value="${find}"/>
+    <g:render template="/layouts/search" model="['find': find]"/>
 </div>
+
 <div id="list-neighborhood" class="content scaffold-list" role="main">
     <g:render template="table"  model="['neighborhoodInstanceList': neighborhoodInstanceList, 'sig':sig,
     'prev':prev, 'find': find]"/>
 </div>
 
     <script>
-        function cityChanged(value){
+        function searchChanged(value){
             jQuery.ajax(
-                {type:'POST',data:'find='+value, url:'/neighborhood/updateTable',success:function(data,textStatus){
-                    jQuery('#list-neighborhood').html(data);},error:function(XMLHttpRequest,textStatus,errorThrown){}});
+                {type:'POST',data:'find='+value, url:'/neighborhood/updateTableSearch',success:function(data,textStatus){
+                        jQuery('#list-neighborhood').html(data);},error:function(XMLHttpRequest,textStatus,errorThrown){}});
         };
-
     </script>
 </body>

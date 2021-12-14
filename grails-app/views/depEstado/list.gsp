@@ -20,13 +20,8 @@
 </div>
 
 
-
 <div class="col-form-label text-right add-margin">
-    <label for="search-value"> Buscar Dependencias:
-        <input type='text' name="text" id="search-value" class="col-md-8 col-sm-12"
-               value="${find}"/>
-    </label>
-    <button class="btn btn-info" name="search" value="Buscar" onclick="searchChanged(document.getElementById('search-value').value)">Buscar</button>
+    <g:render template="/layouts/search" model="['find': find]"/>
 </div>
 
 <div id="list-depEstado" class="content scaffold-list" role="main">

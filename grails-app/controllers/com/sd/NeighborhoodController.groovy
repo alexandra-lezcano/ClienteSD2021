@@ -22,25 +22,19 @@ class NeighborhoodController {
 
     def list(Integer max) {
         def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
-        def city = 0;
-        try {
-            city = null == params['find'] ? -1 : Integer.valueOf(params['find'])
-        } catch (NumberFormatException e){
-            city = 0;
-        }
-        def neighborhoods = null;
-        if(city > 0) {
-            neighborhoods = neighborhoodService.getAllByCityPaged(city, page)
+        def find = params['find']
+        def neighborhoods = null
+        if(find== null || find.equals("")) {
+            neighborhoods = neighborhoodService.getAll()
         }
         else {
-            neighborhoods = neighborhoodService.getAll(page)
+            neighborhoods = neighborhoodService.getAllByName(find, page)
         }
         def prev = page - 1
         def sig = page + 1
         if(neighborhoods.size() < ELEMS_PAGINATION) {sig = -1}
-        def cities = cityService.getAllNotPaged()
         [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size(),
-         prev: prev, sig: sig, cityInstanceList: cities, find: city]
+         prev: prev, sig: sig, find: find]
     }
 
     def listCities() {
@@ -49,23 +43,19 @@ class NeighborhoodController {
     }
 
     //Cuando llama a update table desde la vista con el boton de busqueda
-    def updateTable (Integer find){
+    def updateTableSearch(String find){
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def neighborhoodInstanceList = null;
-        def city = find
-        if(city > 0){
-            neighborhoodInstanceList = neighborhoodService.getAllByCityPaged(city, page)
+        def search = find
+        if(search != null || !search.equals("")){
+            neighborhoodInstanceList = neighborhoodService.getAllByName(search, page)
         } else {
             neighborhoodInstanceList = neighborhoodService.getAll(page)
         }
         def prev = page - 1
         def sig = page + 1
-        if (neighborhoodInstanceList.size() < ELEMS_PAGINATION) {sig = -1}
-        render(template: 'table', model:[neighborhoodInstanceList: neighborhoodInstanceList, sig: sig, prev:prev, find: city])
-    }
-
-    def updatePagination(Integer isBusqueda, Integer prev, Integer sig){
-        render(template: '/layouts/pagination', model:[isBusqueda: isBusqueda, prev: prev, sig: sig])
+        if (neighborhoodInstanceList.size() <= ELEMS_PAGINATION) {sig = -1}
+        render(template: 'table', model:[neighborhoodInstanceList: neighborhoodInstanceList, sig: sig, prev:prev, find: find])
     }
 
     def show(Long id) {

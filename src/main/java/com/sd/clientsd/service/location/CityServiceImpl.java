@@ -108,6 +108,18 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     }
 
     @Override
+    public List<CityB> findAllByName(String search, Integer page){
+        CityResult cityResult = cityResource.getByName(search, page);
+        List<CityDTO> dtosList = new ArrayList<CityDTO>();
+
+        if(cityResult.getCities()!=null) dtosList = cityResult.getCities();
+        final List<CityB> beansList = new ArrayList<CityB>();
+
+        dtosList.forEach(cityDTO -> beansList.add(convertToBean(cityDTO)));
+        return beansList;
+    }
+
+    @Override
     public List<CityB> getAll() {
         CityResult cityResult = cityResource.getByPage();
         List<CityDTO> dtosList = new ArrayList<CityDTO>();
