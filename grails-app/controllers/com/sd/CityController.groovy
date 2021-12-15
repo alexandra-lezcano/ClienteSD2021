@@ -36,7 +36,7 @@ class CityController {
         }
         def prev = page - 1;
         def sig = page + 1;
-        if(cities.size() < ELEMS_PAGINATION){sig = -1}
+        if(cities.size() <= ELEMS_PAGINATION){sig = -1}
 
         [cityInstanceList: cities, citiesTotal: cities.size(), sig: sig, prev: prev, find: find]
     }

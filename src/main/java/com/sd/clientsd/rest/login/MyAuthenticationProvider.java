@@ -31,7 +31,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        System.out.println("auth");
+
         UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) authentication;
         String username = String.valueOf(auth.getPrincipal());
         String password = String.valueOf(auth.getCredentials());
