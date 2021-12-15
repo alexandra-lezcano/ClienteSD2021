@@ -22,7 +22,7 @@
                 </ul>
             </li>
         </ul>
-        <g:link resource="Denuncia" action="list">
+        <g:link resource="CasosDerivados" action="list">
             <button class="boton btn btn-warning text-right">Iniciar Sesion</button>
         </g:link>
         <g:link resource="user" action="register">

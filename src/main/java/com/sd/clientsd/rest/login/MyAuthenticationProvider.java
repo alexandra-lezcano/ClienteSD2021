@@ -82,7 +82,7 @@ return auth;
 
     }
 
-    private UserB getUser(String username) {
+    public UserB getUser(String username) {
 
         UserB userB= userService.getUserByName(username);
         return userB;

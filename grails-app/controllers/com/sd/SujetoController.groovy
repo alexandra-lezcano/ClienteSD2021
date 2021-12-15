@@ -21,7 +21,7 @@ class SujetoController {
         redirect(action: 'list', params:params)
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+    @Secured('ROLE_USER')
     def list(Integer max) {
 
         def page=null ==params['page'] ? 1 : Integer.valueOf(params['page'])

@@ -42,6 +42,18 @@ public class CasosDerivadosResourceImpl  extends BaseResourceImpl<CasosDerivados
         return casosDerivadosResult;
     }
 
+   @Override
+    public CasosDerivadosResult getByPageUser(Integer page, Integer id) {
+        setWebResourceBasicAuthFilter();
+        CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
+        if(getWebResource()!=null){
+            Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;
+            String path = "/user/"+page+"/"+id;
+            casosDerivadosResult = getWebResource().path(path).get(casosDerivadosResultClass);
+        }
+        return casosDerivadosResult;
+    }
+
     @Override
     public CasosDerivadosResult getByPage() {
         setWebResourceBasicAuthFilter();

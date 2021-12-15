@@ -2,5 +2,7 @@ package com.mycompany.myapp
 
 class SecureController {
 
-    def index() { }
+    def index() {
+        render(view:'/casosDerivados/list')
+    }
 }
