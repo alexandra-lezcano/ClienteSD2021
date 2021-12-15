@@ -22,11 +22,28 @@
                 </ul>
             </li>
         </ul>
+<g:if test="${auth}">
         <g:link resource="CasosDerivados" action="list">
             <button class="boton btn btn-warning text-right">Iniciar Sesion</button>
         </g:link>
-        <g:link resource="user" action="register">
+        <g:link resource="user" action="create">
             <button class="btn text-right btn-primary">Registrarse</button>
         </g:link>
+    </g:if>
+        <g:if test="${!auth}">
+            <g:link resource="Denuncia" action="list">
+                <button class="boton btn btn-warning text-right">Denuncias</button>
+            </g:link>
+            <g:link resource="CasosDerivados" action="list">
+                <button class="btn text-right btn-primary">Casos Derivados</button>
+            </g:link>
+        </g:if>
+        <g:if test="${!admin}">
+            <g:link resource="City" action="list">
+                <button class="boton btn btn-warning text-right">Administrar</button>
+            </g:link>
+
+        </g:if>
+
     </div>
 </nav>

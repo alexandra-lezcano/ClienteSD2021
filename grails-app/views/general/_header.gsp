@@ -1,0 +1,1 @@
+<g:render template="/layouts/header" model="['auth':auth,'admin':admin]"/>
