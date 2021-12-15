@@ -80,6 +80,7 @@ class TipoSujetoController {
             redirect(action: "create")
             return
         }
+        //comentario
         def tipoSujetoBUpdated = tipoSujetoService.update(tipoSujetoB, tipoSujetoB.getId())
         redirect(action: 'list')
     }
