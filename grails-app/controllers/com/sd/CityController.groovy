@@ -2,6 +2,7 @@ package com.sd
 import com.sd.clientsd.beans.location.CityB
 import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.utils.config.Configurations
+import grails.plugin.springsecurity.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 
@@ -12,6 +13,7 @@ class CityController {
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def index(Integer max) {
         redirect(action: 'list', params:params)
     }
@@ -22,6 +24,7 @@ class CityController {
         [cityInstance: cityB, neighborhoodInstanceList: neighborhoods]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def find = params['find']
@@ -33,7 +36,7 @@ class CityController {
         }
         def prev = page - 1;
         def sig = page + 1;
-        if(cities.size() < ELEMS_PAGINATION){sig = -1}
+        if(cities.size() <= ELEMS_PAGINATION){sig = -1}
 
         [cityInstanceList: cities, citiesTotal: cities.size(), sig: sig, prev: prev, find: find]
     }
@@ -54,10 +57,12 @@ class CityController {
         render(template: 'table', model:[cityInstanceList: cities, citiesTotal: cities.size(), sig: sig, prev: prev, find: search])
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def create() {
         [cityInstance: new City(params)]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def save() {
         def city = new CityB(params)
         def cityInstance = cityService.save(city)
@@ -75,7 +80,7 @@ class CityController {
         }
         redirect(action: "list")
     }
-
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def edit(Long id) {
         def cityInstance = cityService.getById(id.toInteger())
 
@@ -87,6 +92,7 @@ class CityController {
         [cityInstance: cityInstance]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def update(City city) {
         def cityB = new CityB(params)
 
@@ -100,6 +106,7 @@ class CityController {
         redirect(action: 'list')
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def delete(Long id) {
         def cityInstance = cityService.delete(id.toInteger())
 

@@ -17,11 +17,14 @@ public class SujetoResourceImpl extends BaseResourceImpl<SujetoDto> implements I
 
     @Override
     public SujetoResult getAll() {
+
+        setWebResourceBasicAuthFilter();
         return getWebResource().get(SujetoResult.class);
     }
 
     @Override
     public SujetoResult getByPage(Integer page) {
+        setWebResourceBasicAuthFilter();
         SujetoResult sResult = new SujetoResult();
 
         if(getWebResource()!=null){
@@ -34,6 +37,7 @@ public class SujetoResourceImpl extends BaseResourceImpl<SujetoDto> implements I
 
     @Override
     public SujetoResult getByPage(Integer page, Integer size) {
+        setWebResourceBasicAuthFilter();
         SujetoResult sResult = new SujetoResult();
 
         if(getWebResource()!=null){
@@ -46,6 +50,7 @@ public class SujetoResourceImpl extends BaseResourceImpl<SujetoDto> implements I
 
     @Override
     public SujetoResult getByPage() {
+        setWebResourceBasicAuthFilter();
         SujetoResult sResult = new SujetoResult();
 
         if(getWebResource()!=null){

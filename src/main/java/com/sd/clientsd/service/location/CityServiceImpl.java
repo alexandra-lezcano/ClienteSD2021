@@ -132,14 +132,14 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     }
 
     @Override
-    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_city_'+#id")
+   // @Cacheable(value= Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB getById(Integer id) {
         final CityDTO dto= cityResource.getById(id);
         return convertToBean(dto);
     }
 
     @Override
-    @CachePut(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
+   // @CachePut(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB update(CityB bean, Integer id) {
         final CityDTO dto= convertToDTO(bean);
         final CityDTO nuevo= cityResource.update(dto,id);
@@ -148,7 +148,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
 
     @Override
-    //@CacheEvict(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
+  //  @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB delete(Integer id) {
         System.out.println("ID: "+id);
 
@@ -165,6 +165,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
 
     @Override
     public List<CityB> getAllNotPaged() {
+        System.out.println("Inside city get all not paged");
         final CityResult result = cityResource.getAll();
 
         final List<CityDTO> dtosList = null == result.getCities() ? new ArrayList<CityDTO>() : result.getCities();

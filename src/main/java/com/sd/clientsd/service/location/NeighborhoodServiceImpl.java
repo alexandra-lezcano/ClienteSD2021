@@ -35,7 +35,10 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
     @Override
     protected NeighborhoodDTO convertToDTO(NeighborhoodB bean) {
+
         final NeighborhoodDTO dto = new NeighborhoodDTO();
+
+
         if(bean.getId()!=0){
             dto.setId(bean.getId());
         }
@@ -49,6 +52,7 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     @Override
+
     protected NeighborhoodB convertToBean(NeighborhoodDTO dto) {
         final Map<String, String> params = new HashMap<>();
         params.put("id",String.valueOf(dto.getId()));
@@ -66,8 +70,11 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
     @Override
     public NeighborhoodB save(NeighborhoodB bean) {
+        //  System.out.println("id ciudad"+bean.getCity_id().getId());
         final NeighborhoodDTO dto = convertToDTO(bean);
+
         final NeighborhoodDTO neighborhoodDTO  = neighborhoodResource.save(dto);
+
         final NeighborhoodB neighborhoodB = convertToBean(neighborhoodDTO);
         cacheManager.getCache(Configurations.CACHE_NAME).put("web_neighborhood_"+neighborhoodB.getId(), neighborhoodB);
         return neighborhoodB;
@@ -147,12 +154,11 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
     public List<NeighborhoodB> convertDtoListToBList(@NotNull List<NeighborhoodDTO> dtos){
         final List<NeighborhoodB> beans = new ArrayList<>();
-        if(dtos!=null){
-            dtos.forEach(neighborhoodDTO -> {
-                neighborhoodDTO.setCity_id(0);
-                beans.add(convertToBean(neighborhoodDTO));
-            });
-        }
+      if(dtos!=null){
+        dtos.forEach(neighborhoodDTO -> {
+            neighborhoodDTO.setCity_id(0);
+            beans.add(convertToBean(neighborhoodDTO));
+        });}
         return beans;
     }
 

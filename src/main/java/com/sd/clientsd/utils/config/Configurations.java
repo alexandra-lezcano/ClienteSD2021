@@ -16,6 +16,7 @@ public class Configurations {
     private static String USER_RESOURCE;
     private static String SUJETO_RESOURCE;
     private static Integer ELEMS_PAGINATION;
+    private static String DEPESTADO_RESOURCE;
 
     static {
         try {
@@ -32,6 +33,7 @@ public class Configurations {
             SUJETO_RESOURCE = properties.getProperty("resource.sujeto");
             DENUNCIA_ESTADO_RESOURCE = properties.getProperty("resource.estadoDenuncia");
             DENUNCIA_RESOURCE = properties.getProperty("resource.denuncia");
+            DEPESTADO_RESOURCE=properties.getProperty("resource.depEstado");
 
             ELEMS_PAGINATION = Integer.parseInt(properties.getProperty("global.pagination"));
 
@@ -69,4 +71,6 @@ public class Configurations {
     public static String getDenunciaResource() { return DENUNCIA_RESOURCE;}
 
     public static Integer getElemsPagination(){ return ELEMS_PAGINATION;}
+
+    public static String getDepestadoResource(){return DEPESTADO_RESOURCE;}
 }

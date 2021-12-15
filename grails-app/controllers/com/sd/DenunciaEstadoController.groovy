@@ -4,6 +4,7 @@ import com.sd.clientsd.beans.denuncia.DenunciaEstadoB
 import com.sd.clientsd.beans.location.CityB
 import com.sd.clientsd.service.denuncia.IDenunciaEstadoService
 import com.sd.clientsd.utils.config.Configurations
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
@@ -14,10 +15,12 @@ class DenunciaEstadoController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def index(Integer max) {
         redirect(action: 'list', params:params)
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
 
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
@@ -28,10 +31,12 @@ class DenunciaEstadoController {
         [denunciaEstadoInstanceList: estados, denunciaEsdatoTotal: estados.size(), sig: sig, prev: prev]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def create() {
         [denunciaEsdatoInstance: new DenunciaEstado(params)]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def save() {
         def denunciaEstado = new DenunciaEstadoB(params)
         def denunciaEstadoInstance = denunciaEstadoService.save(denunciaEstado)
@@ -50,6 +55,7 @@ class DenunciaEstadoController {
         redirect(action: "list")
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def edit(Long id) {
         def denunciaEstadoInstance = denunciaEstadoService.getById(id.toInteger())
 
@@ -61,6 +67,7 @@ class DenunciaEstadoController {
         [denunciaEsdadoInstance: denunciaEstadoInstance]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def update(DenunciaEstado denunciaEstado) {
         def denunciaEstadoB = new DenunciaEstadoB(params)
 
@@ -74,6 +81,7 @@ class DenunciaEstadoController {
         redirect(action: 'list')
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def delete(Long id) {
         def denunciaEstadoInstance = denunciaEstadoService.delete(id.toInteger())
         if(denunciaEstadoInstance == null){

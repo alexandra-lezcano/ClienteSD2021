@@ -3,6 +3,7 @@ package com.sd
 import com.sd.clientsd.beans.denuncia.TipoSujetoB
 import com.sd.clientsd.service.denuncia.ITipoSujetoService
 import com.sd.clientsd.utils.config.Configurations
+import grails.plugin.springsecurity.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 
@@ -12,10 +13,12 @@ class TipoSujetoController {
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def index(Integer max) {
         redirect(action: 'list', params:params)
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
 
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
@@ -28,15 +31,18 @@ class TipoSujetoController {
 
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def show(Long id) {
         TipoSujetoB tipoSujetoB = tipoSujetoService.getById(id)
         [tipoSujetoInstance: tipoSujetoB]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def create() {
         [tipoSujetoInstance: new TipoSujeto(params)]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def save() {
         def tipoSujeto = new TipoSujetoB(params)
         def tipoSujetoInstance = tipoSujetoService.save(tipoSujeto)
@@ -54,6 +60,7 @@ class TipoSujetoController {
         redirect(action: "list", id: tipoSujetoInstance.getId())
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def edit(Long id) {
         def tipoSujetoInstance = tipoSujetoService.getById(id.toInteger())
 
@@ -65,6 +72,7 @@ class TipoSujetoController {
         [tipoSujetoInstance: tipoSujetoInstance]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def update() {
         def tipoSujetoB = new TipoSujetoB(params)
         if(tipoSujetoB == null){
@@ -72,10 +80,12 @@ class TipoSujetoController {
             redirect(action: "create")
             return
         }
+        //comentario
         def tipoSujetoBUpdated = tipoSujetoService.update(tipoSujetoB, tipoSujetoB.getId())
         redirect(action: 'list')
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def delete(Long id) {
         def tipoSujetoInstance = tipoSujetoService.delete(id.toInteger())
         System.out.println("Se borro "+tipoSujetoInstance.id+" "+tipoSujetoInstance.titulo)

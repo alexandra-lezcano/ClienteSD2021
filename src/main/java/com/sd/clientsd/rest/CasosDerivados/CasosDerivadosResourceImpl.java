@@ -14,11 +14,13 @@ public class CasosDerivadosResourceImpl  extends BaseResourceImpl<CasosDerivados
 
     @Override
     public CasosDerivadosResult getAll() {
+        setWebResourceBasicAuthFilter();
         return getWebResource().get(CasosDerivadosResult.class);
     }
 
     @Override
     public CasosDerivadosResult getByPage(Integer pageNum) {
+        setWebResourceBasicAuthFilter();
         CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
         if(getWebResource()!=null){
             Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;
@@ -30,6 +32,7 @@ public class CasosDerivadosResourceImpl  extends BaseResourceImpl<CasosDerivados
 
     @Override
     public CasosDerivadosResult getByPage(Integer page, Integer size) {
+        setWebResourceBasicAuthFilter();
         CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
         if(getWebResource()!=null){
             Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;
@@ -39,8 +42,21 @@ public class CasosDerivadosResourceImpl  extends BaseResourceImpl<CasosDerivados
         return casosDerivadosResult;
     }
 
+   @Override
+    public CasosDerivadosResult getByPageUser(Integer page, Integer id) {
+        setWebResourceBasicAuthFilter();
+        CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
+        if(getWebResource()!=null){
+            Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;
+            String path = "/user/"+page+"/"+id;
+            casosDerivadosResult = getWebResource().path(path).get(casosDerivadosResultClass);
+        }
+        return casosDerivadosResult;
+    }
+
     @Override
     public CasosDerivadosResult getByPage() {
+        setWebResourceBasicAuthFilter();
         CasosDerivadosResult casosDerivadosResult = new CasosDerivadosResult();
         if(getWebResource()!=null){
             Class<CasosDerivadosResult> casosDerivadosResultClass = CasosDerivadosResult.class;

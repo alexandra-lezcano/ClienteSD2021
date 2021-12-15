@@ -16,11 +16,13 @@ public class TipoDenunciaResourceImpl extends BaseResourceImpl<TipoDenunciaDTO> 
 
     @Override
     public TipoDenunciaResult getAll() {
+        setWebResourceBasicAuthFilter();
         return getWebResource().get(TipoDenunciaResult.class);
     }
 
     @Override
     public TipoDenunciaResult getByPage(Integer pageNum) {
+        setWebResourceBasicAuthFilter();
        TipoDenunciaResult tResult = new TipoDenunciaResult();
 
         if(getWebResource()!=null){
@@ -33,6 +35,7 @@ public class TipoDenunciaResourceImpl extends BaseResourceImpl<TipoDenunciaDTO> 
 
     @Override
     public TipoDenunciaResult getByPage(Integer page, Integer size) {
+        setWebResourceBasicAuthFilter();
         TipoDenunciaResult tResult = new TipoDenunciaResult();
 
         if(getWebResource()!=null){
@@ -45,6 +48,7 @@ public class TipoDenunciaResourceImpl extends BaseResourceImpl<TipoDenunciaDTO> 
 
     @Override
     public TipoDenunciaResult getByPage() {
+        setWebResourceBasicAuthFilter();
         TipoDenunciaResult tResult = new TipoDenunciaResult();
 
         if(getWebResource()!=null){
