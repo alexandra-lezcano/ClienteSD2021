@@ -14,7 +14,6 @@ public class CasosDerivadosResourceImpl  extends BaseResourceImpl<CasosDerivados
 
     @Override
     public CasosDerivadosResult getAll() {
-        System.out.println("k");
         setWebResourceBasicAuthFilter();
         return getWebResource().get(CasosDerivadosResult.class);
     }
