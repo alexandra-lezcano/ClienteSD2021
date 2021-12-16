@@ -81,12 +81,6 @@ public class CasosDerivadosResourceImpl  extends BaseResourceImpl<CasosDerivados
         setWebResourceBasicAuthFilter();
         //return getWebResource().entity(dto).post(getDtoClass()); // tira error, pide que haga cast a DTO
 
-        UserB user= myAuthenticationProvider.getUser(authService.getUsername());
-
-        CasosDerivadosDTO nuevo =   getWebResource().entity(dto).post(CasosDerivadosDTO.class);
-
-        nuevo.setUser(user.getId());
-        update(nuevo,getWebResource().entity(dto).post(CasosDerivadosDTO.class).getId());
         return getWebResource().entity(dto).post(CasosDerivadosDTO.class);
 
     }
