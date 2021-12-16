@@ -81,7 +81,10 @@ public abstract class BaseResourceImpl <DTO extends BaseDTO> implements IBaseRes
         String u = authService.getUsername();
 
         String p = authService.getPassword();
-        this.webResource.addFilter(new HTTPBasicAuthFilter(u,p));
+if(u!=null) {
+    this.webResource.addFilter(new HTTPBasicAuthFilter(u, p));
+}
+
     }
 
 

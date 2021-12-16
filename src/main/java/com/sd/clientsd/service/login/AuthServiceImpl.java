@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl  implements IAuthService {
     @Override
     public String getUsername() {
-
+        if(SecurityContextHolder.getContext().getAuthentication()!= null) {
         GrailsUser grailsUser = (GrailsUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        return grailsUser.getUsername();
+    return grailsUser.getUsername();
+}return null;
     }
 
     @Override
     public String getPassword() {
+        if(SecurityContextHolder.getContext().getAuthentication()!= null) {
         GrailsUser grailsUser = (GrailsUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(grailsUser.getPassword()+"constraseña");
         return grailsUser.getPassword();
-    }
-}
+    }return null;
+}}
