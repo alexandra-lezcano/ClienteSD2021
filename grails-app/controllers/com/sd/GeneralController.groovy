@@ -24,10 +24,10 @@ Boolean admin = false;
                 { r ->
                     if (r.description == 'ROLE_ADMIN') {
 admin = true;
-                        System.out.print("soy admin")
+                        //System.out.print("soy admin")
                     } else {
                         redirect(action: 'headerTS')
-                        System.out.print("no soy admin")
+                        //System.out.print("no soy admin")
                     }
                 }
         );

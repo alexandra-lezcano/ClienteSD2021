@@ -44,7 +44,7 @@ public class DenunciaB extends BaseBean{
         SujetoB sujeto = new SujetoB(data);
         sujeto.setTipo(tipoSujetoB);
 
-        System.out.println(sujeto);
+       // System.out.println(sujeto);
         this.sujetos.add(sujeto);
     }
     public String getCodigo() {

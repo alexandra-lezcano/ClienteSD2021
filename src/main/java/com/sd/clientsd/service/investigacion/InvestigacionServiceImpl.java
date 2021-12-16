@@ -2,17 +2,14 @@ package com.sd.clientsd.service.investigacion;
 
 import com.protectionapp.sd2021.dto.investigacion.InvestigacionDTO;
 import com.protectionapp.sd2021.dto.investigacion.InvestigacionResult;
-import com.sd.clientsd.beans.denuncia.DenunciaB;
 import com.sd.clientsd.beans.investigacion.InvestigacionB;
 import com.sd.clientsd.rest.investigacion.IInvestigacionResource;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import com.sd.clientsd.service.denuncia.IDenunciaService;
-import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +21,6 @@ public class InvestigacionServiceImpl extends BaseServiceImpl<InvestigacionB, In
     private CacheManager cacheManager;
     @Autowired
     private IDenunciaService denunciaService;
-    @Autowired
-    private Configurations configurations;
     @Autowired
     private IInvestigacionResource investigacionResource;
 
@@ -61,7 +56,6 @@ public class InvestigacionServiceImpl extends BaseServiceImpl<InvestigacionB, In
         final InvestigacionDTO dto = convertToDTO(bean);
         final InvestigacionDTO investigacionDTO = investigacionResource.save(dto);
         final InvestigacionB investigacionB = convertToBean(investigacionDTO);
-        cacheManager.getCache(Configurations.CACHE_NAME).put("web_investigacion"+investigacionB.getId(),investigacionB);
         return investigacionB;
     }
 

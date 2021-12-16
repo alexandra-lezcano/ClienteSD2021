@@ -100,7 +100,7 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
     }
 
     @Override
-    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_sujeto_'+#id")
+    //@Cacheable(value= Configurations.CACHE_NAME, key = "'web_sujeto_'+#id")
     public SujetoB getById(Integer id) {
         final SujetoDto sujetoDto = sujetoResource.getById(id);
         return convertToBean(sujetoDto);

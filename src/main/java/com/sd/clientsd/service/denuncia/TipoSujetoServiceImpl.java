@@ -105,7 +105,7 @@ public class TipoSujetoServiceImpl extends BaseServiceImpl<TipoSujetoB, TipoSuje
     }
 
     @Override
-    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_tipo_sujeto_'+#id")
+    //@Cacheable(value= Configurations.CACHE_NAME, key = "'web_tipo_sujeto_'+#id")
     public TipoSujetoB getById(Integer id) {
         final TipoSujetoDTO tipoSujetoDTO = tipoSujetoResource.getById(id);
         return convertToBean(tipoSujetoDTO);

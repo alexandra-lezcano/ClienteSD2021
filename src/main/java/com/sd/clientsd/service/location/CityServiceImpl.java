@@ -150,7 +150,7 @@ public class CityServiceImpl extends BaseServiceImpl<CityB, CityDTO>implements I
     @Override
   //  @CacheEvict(value=Configurations.CACHE_NAME, key = "'web_city_'+#id")
     public CityB delete(Integer id) {
-        System.out.println("ID: "+id);
+       // System.out.println("ID: "+id);
 
         final CityDTO c= cityResource.delete(id);
         if(c.getNeighborhoods()!=null){

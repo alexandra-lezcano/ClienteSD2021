@@ -16,13 +16,13 @@ class CasosDerivadosController {
     IDepEstadoService depEstadoService
     static allowedMethods = [save: "POST", update: "PUT"]
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+    @Secured(['ROLE_ADMIN', 'ROLE_TSOCIAL'])
     def index(Integer max) {
 
         redirect(action: 'list', params:params)
 
     }
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+    @Secured(['ROLE_ADMIN', 'ROLE_TSOCIAL'])
     def list(Integer max) {
         def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
 
@@ -37,13 +37,13 @@ class CasosDerivadosController {
         sig: sig, prev: prev]
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+    @Secured(['ROLE_ADMIN', 'ROLE_TSOCIAL'])
     def show(Long id) {
         CasoDerivadoB casosDerivadosB = casoDerivadoService.getById(id);
         [casosDerivadosInstance: casosDerivadosB]
         //respond depEstadoService.get(id)
     }
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+    @Secured(['ROLE_ADMIN', 'ROLE_TSOCIAL'])
     def create() {
 
         def depEstados= depEstadoService.getAllNotPaged()
@@ -52,7 +52,7 @@ class CasosDerivadosController {
         //  respond new DepEstado(params)
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+    @Secured(['ROLE_ADMIN', 'ROLE_TSOCIAL'])
     def save() {
 
 
@@ -118,7 +118,7 @@ class CasosDerivadosController {
     }
 
     def delete(Long id) {
-        System.out.print(id)
+        //System.out.print(id)
         def casosDerivadosInstance = casoDerivadoService.delete(id.toInteger())
 
 

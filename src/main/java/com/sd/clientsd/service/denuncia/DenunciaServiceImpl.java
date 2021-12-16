@@ -73,7 +73,10 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
 
         final DenunciaB bean = new DenunciaB(params);
         final CityB city = cityService.getById(dto.getCity_id());
-        final NeighborhoodB neighborhood = neighborhoodService.getById(dto.getNeighborhood_id());
+        NeighborhoodB neighborhood = null;
+        if(neighborhoodService.getById(dto.getNeighborhood_id())==null) {
+            neighborhood = neighborhoodService.getById(dto.getNeighborhood_id());
+        }
         //final DenunciaEstadoB estado = denunciaEstadoService.getById(dto.getEstado_id());
 
         bean.setCity(city);
@@ -84,9 +87,9 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
 
         System.out.println("[TEST] DENTRO DE CONVERT TO DTO ");
         List<SujetoB> sujetos = new ArrayList<>();
-        if(dto.getSujeto_ids()!=null){
+        /*if(dto.getSujeto_ids()!=null){
             dto.getSujeto_ids().forEach(sujetoId -> sujetos.add(sujetoService.getById(sujetoId)));
-        }
+        }*/
         bean.setSujetos(sujetos);
 
         return bean;
@@ -110,6 +113,7 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
         final List<DenunciaB> beansList = new ArrayList<DenunciaB>();
 
         dtosList.forEach(denunciaDTO -> beansList.add(convertToBean(denunciaDTO)));
+
         return beansList;
 
     }

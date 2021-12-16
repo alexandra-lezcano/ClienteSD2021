@@ -18,7 +18,7 @@ class UserRole implements Serializable {
 	@Override
 	boolean equals(other) {
 		if (other instanceof UserRole) {
-			System.out.print("DDD")
+			//System.out.print("DDD")
 			other.userId == user?.id && other.roleId == role?.id
 		}
 	}

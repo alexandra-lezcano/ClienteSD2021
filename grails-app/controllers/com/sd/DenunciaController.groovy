@@ -40,7 +40,7 @@ class DenunciaController {
         def denuncias = denunciaService.getAll(page)
         def prev = page - 1;
         def sig = page -1;
-        if(sig <= ELEMS_PAGINATION){sig = -1}
+        if(denuncias.size() <= ELEMS_PAGINATION){sig = -1}
         [denunciaInstanceList: denuncias, denunciasTotal: denuncias.size(), sig: sig, prev: prev]
     }
 

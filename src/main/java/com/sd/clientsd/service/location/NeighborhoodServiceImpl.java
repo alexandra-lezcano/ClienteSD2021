@@ -131,7 +131,7 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
     }
 
     @Override
-    @Cacheable(value= Configurations.CACHE_NAME, key = "'web_neighborhood_'+#id")
+    //@Cacheable(value= Configurations.CACHE_NAME, key = "'web_neighborhood_'+#id")
     public NeighborhoodB getById(Integer id) {
         final NeighborhoodDTO neighborhoodDTO = neighborhoodResource.getById(id);
         return convertToBean(neighborhoodDTO);

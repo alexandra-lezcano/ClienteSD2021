@@ -45,7 +45,7 @@ class CityController {
     def updateTable(String find){
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def search = find
-        System.out.println(search)
+        //System.out.println(search)
         def cities = null
         if(search == null || find.equals("")){
             cities = cityService.getAll(page)

@@ -38,10 +38,10 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         UserB user = getUser(username);
 
         if(user != null){
-            System.out.println(password);
-            System.out.println(user);
+           // System.out.println(password);
+           // System.out.println(user);
         if(passwordEncoder.matches(password,user.getPassword())){
-            System.out.println(password);
+           // System.out.println(password);
 
      List<GrantedAuthority> authorities = getUserRoles(user);
      if(authorities !=null){

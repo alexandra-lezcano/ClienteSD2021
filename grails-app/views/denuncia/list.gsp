@@ -7,6 +7,7 @@
     <g:set var="entityName" value="${message(code: 'denuncia.label', default: 'Denuncia')}" />
     <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
+
 <body>
 <a href="#list-denuncia" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 
@@ -18,49 +19,7 @@
 </div>
 
 <div id="list-denuncia" class="content scaffold-list" role="main">
-
-    <table class="table table-striped table-bordered tabla-options">
-        <thead>
-        <tr>
-            <g:sortableColumn property="codigo"
-                              title="${message(code: 'denuncia.label', default: 'Codigo')}" />
-
-            <th>Descripcion</th>
-            <th>Fecha</th>
-            <th>Estado</th>
-            <th>Accion</th>
-        </tr>
-        </thead>
-        <tbody>
-        <g:each in="${denunciaInstanceList}" status="i" var="denunciaInstance">
-            <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                <td>
-                    <g:link class="edit" action="edit" id="${denunciaInstance?.id}">
-                        ${fieldValue(bean: denunciaInstance, field: "codigo")}</g:link>
-                </td>
-                <td>
-                    ${fieldValue(bean: denunciaInstance, field: "descripcion")}
-                </td>
-                <td>
-                    ${fieldValue(bean: denunciaInstance, field: "fecha")}
-                </td>
-                <td>
-                    ${fieldValue(bean: denunciaInstance, field: "estado")}
-                </td>
-                <td>
-                    <g:link class="delete"
-                            action="delete"
-                            value="delete"
-                            id="${denunciaInstance?.id}"
-                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');">
-                        Borrar
-                    </g:link>
-                    </td>
-            </tr>
-        </g:each>
-        </tbody>
-    </table>
-    <g:render template="/layouts/pagination"/>
+    <g:render template="table"  model="['denunciaInstanceList': denunciaInstanceList, 'sig':sig, 'prev':prev]"/>
 </div>
 </body>
 
