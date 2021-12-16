@@ -42,5 +42,5 @@
     </tbody>
 </table>
 <div id="pagination">
-    <g:render template="/layouts/pagination" model="[prev: prev, sig:sig]"/>
+    <g:render template="/layouts/pagination" model="[prev: prev, sig:sig, find: find]"/>
 </div>

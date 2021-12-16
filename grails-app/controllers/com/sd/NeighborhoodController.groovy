@@ -26,14 +26,18 @@ class NeighborhoodController {
         def find = params['find']
         def neighborhoods = null
         if(find== null || find.equals("")) {
-            neighborhoods = neighborhoodService.getAll()
+            if(page != null){
+                neighborhoods = neighborhoodService.getAll(page)
+            } else {
+                neighborhoods = neighborhoodService.getAll()
+            }
         }
         else {
             neighborhoods = neighborhoodService.getAllByName(find, page)
         }
         def prev = page - 1
         def sig = page + 1
-        if(neighborhoods.size() < ELEMS_PAGINATION) {sig = -1}
+        if(neighborhoods.size() <= ELEMS_PAGINATION) {sig = -1}
         [neighborhoodInstanceList: neighborhoods, neighborhoodsTotal: neighborhoods.size(),
          prev: prev, sig: sig, find: find]
     }

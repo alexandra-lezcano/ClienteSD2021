@@ -38,7 +38,7 @@ class UserController {
         def users = userService.getAll(page)
         def prev = page -1;
         def sig = page +1;
-        if(users.size() < ELEMS_PAGINATION){sig = -1}
+        if(users.size() <= ELEMS_PAGINATION){sig = -1}
         [userInstanceList: users, usersTotal: users.size(), prev: prev, sig: sig]
     }
 

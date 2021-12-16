@@ -38,9 +38,10 @@ class DenunciaController {
     def list(Integer max){
         def page = null == params['page'] ? 0 : Integer.valueOf(params['page'])
         def denuncias = denunciaService.getAll(page)
-        def prev = page - 1;
-        def sig = page -1;
-        if(denuncias.size() <= ELEMS_PAGINATION){sig = -1}
+        def prev = page - 1
+        def sig = page + 1
+        if(denuncias.size() < ELEMS_PAGINATION){sig = -1}
+        System.out.println(prev + " " + sig)
         [denunciaInstanceList: denuncias, denunciasTotal: denuncias.size(), sig: sig, prev: prev]
     }
 
