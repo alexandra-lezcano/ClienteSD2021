@@ -33,7 +33,7 @@ public class DepEstadoResourceImpl extends BaseResourceImpl<DepEstadoDTO> implem
     public DepEstadoResult getAll() {
 
         setWebResourceBasicAuthFilter();
-        return getWebResource().path("/").get(DepEstadoResult.class);
+        return getWebResource().path("/page").get(DepEstadoResult.class);
     }
 
     @Override

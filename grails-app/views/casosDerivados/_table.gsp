@@ -34,7 +34,6 @@
                     Borrar
                 </g:link>
                 <g:link class="show" action="show" id="${casosDerivadosInstance?.id}">Ver detalles</g:link>
-
             </td>
         </tr>
     </g:each>

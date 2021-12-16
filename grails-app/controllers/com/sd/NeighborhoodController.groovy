@@ -17,12 +17,10 @@ class NeighborhoodController {
     ICityService cityService
     static allowedMethods = [save: "POST", update: "PUT"]
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def index(Integer max) {
         redirect(action: 'list', params:params)
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
         def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
         def find = params['find']
@@ -40,14 +38,12 @@ class NeighborhoodController {
          prev: prev, sig: sig, find: find]
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def listCities() {
         def cities = cityService.getAllNotPaged()
         [cityInstanceList: cities, citiesTotal: cities.size()]
     }
 
     //Cuando llama a update table desde la vista con el boton de busqueda
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def updateTableSearch(String find){
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def neighborhoodInstanceList = null;
@@ -63,13 +59,11 @@ class NeighborhoodController {
         render(template: 'table', model:[neighborhoodInstanceList: neighborhoodInstanceList, sig: sig, prev:prev, find: find])
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def show(Long id) {
         NeighborhoodB neighborhoodB = neighborhoodService.getById(id)
         [neighborhoodInstance: neighborhoodB]
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def create() {
         //def page=null ==params['id'] ? 1 : Integer.valueOf(params['id'])
 
@@ -80,7 +74,6 @@ class NeighborhoodController {
 
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def save() {
         def neighborhood = new NeighborhoodB(params)
 
@@ -102,7 +95,6 @@ class NeighborhoodController {
         redirect(action: "list")
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def edit(Long id) {
         def neighborhoodInstance = neighborhoodService.getById(id.toInteger())
 
@@ -116,7 +108,6 @@ class NeighborhoodController {
         [neighborhoodInstance: neighborhoodInstance, cityInstanceList: cities]
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def update(Neighborhood neighborhood) {
         def neighborhoodB = new NeighborhoodB(params)
 
@@ -131,7 +122,6 @@ class NeighborhoodController {
         redirect(action: 'list')
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def delete(Long id) {
         def neighborhoodInstance = neighborhoodService.delete(id.toInteger())
 

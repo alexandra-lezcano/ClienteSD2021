@@ -2,8 +2,11 @@ package com.sd
 
 import com.sd.clientsd.beans.CasosDerivados.CasoDerivadoB
 import com.sd.clientsd.beans.CasosDerivados.DepEstadoB
+import com.sd.clientsd.beans.user.UserB
+import com.sd.clientsd.rest.login.MyAuthenticationProvider
 import com.sd.clientsd.service.casosDerivados.ICasosDerivadosService
 import com.sd.clientsd.service.casosDerivados.IDepEstadoService
+import com.sd.clientsd.service.login.IAuthService
 import com.sd.clientsd.utils.config.Configurations
 import grails.plugin.springsecurity.annotation.Secured
 
@@ -14,6 +17,8 @@ class CasosDerivadosController {
 
     ICasosDerivadosService casoDerivadoService
     IDepEstadoService depEstadoService
+    MyAuthenticationProvider myAuthenticationProvider
+    IAuthService authService
     static allowedMethods = [save: "POST", update: "PUT"]
 
     @Secured(['ROLE_ADMIN', 'ROLE_TSOCIAL'])
@@ -62,9 +67,10 @@ class CasosDerivadosController {
            dependencias.add(depEstadoService.getById(Integer.parseInt(d)))
 
        }
+        UserB user= myAuthenticationProvider.getUser(authService.getUsername())
 
+        casosDerivados.setUserB(user)
         casosDerivados.setDepEstadoBSet(dependencias)
-
 
         def casosDerivadosInstance= casoDerivadoService.save(casosDerivados)
 

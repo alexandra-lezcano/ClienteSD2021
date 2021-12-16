@@ -1,6 +1,7 @@
 package com.sd.clientsd.rest.base;
 
 import com.protectionapp.sd2021.dto.base.BaseDTO;
+import com.protectionapp.sd2021.dto.casosDerivados.CasosDerivadosDTO;
 import com.sd.clientsd.service.login.IAuthService;
 import com.sd.clientsd.utils.config.Configurations;
 import com.sun.jersey.api.client.Client;
@@ -45,6 +46,7 @@ public abstract class BaseResourceImpl <DTO extends BaseDTO> implements IBaseRes
     public DTO save(DTO dto){
         setWebResourceBasicAuthFilter();
         //return getWebResource().entity(dto).post(getDtoClass()); // tira error, pide que haga cast a DTO
+
         return getWebResource().entity(dto).post(this.dtoClass);
     }
 

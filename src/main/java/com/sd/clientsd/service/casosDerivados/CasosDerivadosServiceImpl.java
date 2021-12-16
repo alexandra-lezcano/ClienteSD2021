@@ -4,10 +4,12 @@ import com.protectionapp.sd2021.dto.casosDerivados.CasosDerivadosDTO;
 import com.protectionapp.sd2021.dto.casosDerivados.CasosDerivadosResult;
 import com.sd.clientsd.beans.CasosDerivados.CasoDerivadoB;
 import com.sd.clientsd.beans.CasosDerivados.DepEstadoB;
+import com.sd.clientsd.beans.user.UserB;
 import com.sd.clientsd.rest.CasosDerivados.ICasosDerivadosResource;
 import com.sd.clientsd.rest.login.MyAuthenticationProvider;
 import com.sd.clientsd.service.base.BaseServiceImpl;
 import com.sd.clientsd.service.login.IAuthService;
+import com.sd.clientsd.service.user.IUserService;
 import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +33,9 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
     private  IDepEstadoService depEstadoService;
 
     @Autowired
+    private IUserService userService;
+
+    @Autowired
     private CacheManager cacheManager;
 
     @Autowired
@@ -47,7 +52,11 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
         }
        // dto.setDate(bean.getDate());
         dto.setDescription(bean.getDescription());
-        dto.setUser(bean.getTrabajador_social_id());
+        System.out.println("convert"+bean.getUserB());
+
+        UserB user= myAuthenticationProvider.getUser(authService.getUsername());
+
+        dto.setUser(user.getId());
 
         if(bean.getDepEstadoBSet()!=null) {
             Set<DepEstadoB> dependencias = bean.getDepEstadoBSet();
@@ -83,13 +92,24 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
 
         }
 
+        if(dto.getUser_id()!=null) {
+            bean.setUserB(userService.getById(dto.getUser_id()));
+        }else{
+            UserB user= myAuthenticationProvider.getUser(authService.getUsername());
+
+            bean.setUserB(user);
+
+        }
         return bean;
     }
 
     @Override
     public CasoDerivadoB save(CasoDerivadoB bean) {
+
         final CasosDerivadosDTO dto= convertToDTO(bean);
+
         final CasosDerivadosDTO casoDerivado= casosDerivadoResource.save(dto);
+
         final CasoDerivadoB casoDerivadoB=convertToBean(casoDerivado);
         cacheManager.getCache(Configurations.CACHE_NAME).put("web_casos_derivados_"+casoDerivadoB.getId(), casoDerivadoB);
         return casoDerivadoB;

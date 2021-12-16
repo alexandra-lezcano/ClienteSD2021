@@ -2,6 +2,7 @@ package com.sd.clientsd.beans.CasosDerivados;
 
 
 import com.sd.clientsd.beans.base.BaseBean;
+import com.sd.clientsd.beans.user.UserB;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +15,7 @@ public class CasoDerivadoB extends BaseBean {
 
     Date date;
     String description;
-    Integer trabajador_social_id;
+    UserB userB;
     Set<DepEstadoB> depEstadoBSet;
     public CasoDerivadoB(Map<String, String> params) {
         super(params);
@@ -52,12 +53,12 @@ public class CasoDerivadoB extends BaseBean {
         this.description = description;
     }
 
-    public Integer getTrabajador_social_id() {
-        return trabajador_social_id;
+    public UserB getUserB() {
+        return userB;
     }
 
-    public void setTrabajador_social_id(Integer trabajador_social_id) {
-        this.trabajador_social_id = trabajador_social_id;
+    public void setUserB(UserB userB) {
+        this.userB = userB;
     }
 
     @Override
