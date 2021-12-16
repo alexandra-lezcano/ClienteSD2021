@@ -13,12 +13,18 @@
 
 <div class="nav" role="navigation">
     <div class="row sin-margin">
-        <g:link class="" action="create"><button class="rellenar col-sm-6 col-xs-12 btn btn-primary">Crear Tipo de denuncia</button></g:link>
-        <g:link class="" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Lista de Tipos de denuncia</button></g:link>
+        <g:link class="" resource="City" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Ciudades</button></g:link>
+        <g:link class="" resource="Neighborhood" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Barrios</button></g:link>
+        <g:link class="" resource="DepEstado" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Dependencias de estado</button></g:link>
+        <g:link class="" resource="TipoDenuncia" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Tipo de denuncia</button></g:link>
+        <g:link class="" resource="User" action="list"><button class="rellenar col-sm-6 col-xs-12 float-right btn btn-primary">Usuarios</button></g:link>
+
+
+
     </div>
 </div>
-
 <div id="list-tipoDenuncia" class="content scaffold-list" role="main">
+    <g:link class="" action="create"><button class="rellenar col-sm-6 col-xs-12 btn btn-primary">Crear Tipo de denuncia</button></g:link>
 
     <table class="table table-striped table-bordered tabla-options">
         <thead>

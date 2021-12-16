@@ -18,7 +18,7 @@
 <div class="container contenedor">
     <div class="wrap">
         <div class="main">
-            <g:render template="/layouts/header"/>
+            <g:render template="/general/header"/>
             <div class="contenido"><g:layoutBody/></div>
         </div>
     </div>

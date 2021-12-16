@@ -22,14 +22,14 @@ class UserController {
     // tiene que estar vacio el metodo
 
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+
     def index() {
        //params.max = Math.min(max ?: 10, 100)
         //respond userService.list(params), model:[userCount: userService.count()]
         redirect(action: 'list', params:params)
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+
     def list(Integer id){
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def users = userService.getAll(page)
@@ -39,14 +39,13 @@ class UserController {
         [userInstanceList: users, usersTotal: users.size(), prev: prev, sig: sig]
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def show(Long id) {
         def userB = userService.getById(id.toInteger())
         def neighborhoods = userB.getNeighborhoods()
         [userInstance: userB, neighborhoodInstanceList: neighborhoods]
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+
     def create() {
         def cities = cityService.getAllNotPaged();
         [userInstance: new Users(), cityInstanceList: cities]
@@ -54,7 +53,7 @@ class UserController {
 
     // todo tolerancia a fallos
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+
     def save() {
         def userB = new UserB(params);
         userB.setUsername(userB.getEmail())
@@ -84,7 +83,6 @@ class UserController {
     /*IMPORTANTE - el g:form debe ser BEAN no RESOURCE porque sino te redirecciona mal
     * <g:form bean="${userInstance}" method="PUT"> */
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def edit(Long id) {
         def userInstance = userService.getById(id.toInteger())
 
@@ -106,7 +104,7 @@ class UserController {
     Note to self: la accion debe dirigirme a este metodo, value uso solo para
     mostrar el boton en es */
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+
     def update() {
         def userInstance = new UserB(params);
         System.out.println(params)
@@ -125,7 +123,7 @@ class UserController {
         redirect(action: 'list')
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+
     def delete(Long id) {
         if (id == null) {
             notFound()
