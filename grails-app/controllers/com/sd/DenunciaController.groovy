@@ -48,11 +48,12 @@ class DenunciaController {
     def create() {
         /* Importante: los tipo sujeto deben existir
         *  todo crear metodos del tipoSujetoService que traiga especificamente los beans que necesito */
-        def tipoSujetoList = tipoSujetoService.getAll();
 
-        def tipoDenunciante = tipoSujetoList.get(0);
-        def tipoVictima = tipoSujetoList.get(1);
-        def tipoVictimario = tipoSujetoList.get(2);
+        def tipoSujetoList = tipoSujetoService.getAll();
+        def tipoDenunciante = tipoSujetoList.get(Configurations.getTipoDenuncianteId());
+        def tipoVictima = tipoSujetoList.get(Configurations.getTipoVictimaId());
+        def tipoVictimario = tipoSujetoList.get(Configurations.getTipoVictimarioId());
+
         def sujetos = sujetoService.newList();
         sujetos.add(new SujetoB(tipoDenunciante));
         sujetos.add(new SujetoB(tipoVictima));
@@ -77,21 +78,26 @@ class DenunciaController {
         render (g.select(id:"neighborhoods", name:"neighborhood", from:barrios, optionKey: 'id', optionValue:'name'))
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+    @Secured(['ROLE_ADMIN', 'ROLE_USER']) //cualquiera puede realizar una denuncia
     def save() {
         System.out.println("Get At --> "+params.getAt("sujetos[0]"))
-
         def denuncia = new DenunciaB(params)
-        denuncia.saveSujeto(params.getAt("sujetos[0]"))
-        denuncia.saveSujeto(params.getAt("sujetos[1]"))
-        denuncia.saveSujeto(params.getAt("sujetos[2]"))
+
+        def tipoSujetoList = tipoSujetoService.getAll();
+        def tipoDenunciante = tipoSujetoList.get(Configurations.getTipoDenuncianteId());
+        def tipoVictima = tipoSujetoList.get(Configurations.getTipoVictimaId());
+        def tipoVictimario = tipoSujetoList.get(Configurations.getTipoVictimarioId());
+
+        denuncia.saveSujeto(params.getAt("sujetos[0]"), tipoDenunciante)
+        denuncia.saveSujeto(params.getAt("sujetos[1]"), tipoVictima)
+        denuncia.saveSujeto(params.getAt("sujetos[2]"), tipoVictimario)
 
         CityB city = cityService.getById(Integer.valueOf(params.get("city")))
         NeighborhoodB n = neighborhoodService.getById(Integer.valueOf(params.get("neighborhood")))
         denuncia.setCity(city)
         denuncia.setNeighborhood(n)
 
-      def denunciaInstance = denunciaService.save(denuncia)
+      def denunciaInstance = denunciaService.saveCabeceraDetalle(denuncia)
         if(!denunciaInstance.getId()){
             render(view: "create", model:[denunciaInstance: denunciaInstance])
             return
@@ -100,8 +106,8 @@ class DenunciaController {
             html{
                 flash.message = message(code: 'default.created.message', args: [message(code: 'denuncia.label', default:'Denuncia'),denunciaInstance.getId()])
             }
-            redirect(action: 'show')
         }
+        redirect(action: 'show')
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
