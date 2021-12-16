@@ -12,4 +12,5 @@ public interface IBaseResource <DTO extends BaseDTO>{
     public DTO getById(Integer id);
     public DTO update(DTO dto, Integer id);
     public DTO delete(Integer id);
+    public void setWebResourceBasicAuthFilter();
 }

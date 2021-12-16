@@ -20,9 +20,11 @@ public class UserB extends BaseBean  {
     private String email;
     private Integer phone;
     private CityB city;
+    private String password;
     //private Integer roleId;
     private List<NeighborhoodB> neighborhoods;
    // private Set<Integer> denunciasIds;
+    private List<RoleB> roles;
 
     public UserB(Map<String, String> params) {
         super(params);
@@ -43,6 +45,7 @@ public class UserB extends BaseBean  {
         setAddress(params.get("address"));
         setEmail(params.get("email"));
         setPhone(Integer.valueOf(params.get("phone")));
+        setPassword(params.get("password"));
 
         this.neighborhoods = new ArrayList<>();
     }
@@ -119,5 +122,20 @@ public class UserB extends BaseBean  {
 
     public void setNeighborhoods(List<NeighborhoodB> neighborhoods) {
         this.neighborhoods = neighborhoods;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<RoleB> getRoles() {
+        return roles;
+    }
+    public void setRoles(List<RoleB> roles) {
+        this.roles = roles;
     }
 }

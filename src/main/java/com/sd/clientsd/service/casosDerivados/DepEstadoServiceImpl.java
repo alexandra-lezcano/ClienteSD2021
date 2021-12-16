@@ -127,8 +127,20 @@ public class DepEstadoServiceImpl extends BaseServiceImpl<DepEstadoB, DepEstadoD
 
     }
 
+    @Override
     public List<DepEstadoB> getAllNotPaged() {
         final DepEstadoResult result = depEstadoResource.getAll();
+
+        final List<DepEstadoDTO> dtosList = null == result.getDepEstados() ? new ArrayList<DepEstadoDTO>() : result.getDepEstados();
+        final List<DepEstadoB> beansList = new ArrayList<DepEstadoB>();
+
+        dtosList.forEach(depEstadoDTO -> beansList.add(convertToBean(depEstadoDTO)));
+        return beansList;
+    }
+
+    @Override
+    public List<DepEstadoB> getAllByName(String string, Integer page){
+        final DepEstadoResult result = depEstadoResource.getAllByName(string, page);
 
         final List<DepEstadoDTO> dtosList = null == result.getDepEstados() ? new ArrayList<DepEstadoDTO>() : result.getDepEstados();
         final List<DepEstadoB> beansList = new ArrayList<DepEstadoB>();

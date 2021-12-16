@@ -35,7 +35,10 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
     @Override
     protected NeighborhoodDTO convertToDTO(NeighborhoodB bean) {
+
         final NeighborhoodDTO dto = new NeighborhoodDTO();
+
+
         if(bean.getId()!=0){
             dto.setId(bean.getId());
         }
@@ -67,8 +70,11 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
     @Override
     public NeighborhoodB save(NeighborhoodB bean) {
+        //  System.out.println("id ciudad"+bean.getCity_id().getId());
         final NeighborhoodDTO dto = convertToDTO(bean);
+
         final NeighborhoodDTO neighborhoodDTO  = neighborhoodResource.save(dto);
+
         final NeighborhoodB neighborhoodB = convertToBean(neighborhoodDTO);
         cacheManager.getCache(Configurations.CACHE_NAME).put("web_neighborhood_"+neighborhoodB.getId(), neighborhoodB);
         return neighborhoodB;
@@ -148,13 +154,15 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
     public List<NeighborhoodB> convertDtoListToBList(@NotNull List<NeighborhoodDTO> dtos){
         final List<NeighborhoodB> beans = new ArrayList<>();
+      if(dtos!=null){
         dtos.forEach(neighborhoodDTO -> {
             neighborhoodDTO.setCity_id(0);
             beans.add(convertToBean(neighborhoodDTO));
-        });
+        });}
         return beans;
     }
 
+    @Override
     public List<NeighborhoodB> getAllByCity(Integer city){
         NeighborhoodResult neighborhoodResult = neighborhoodResource.getAll();
         List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
@@ -170,6 +178,7 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
         return beans;
     }
 
+    @Override
     public List<NeighborhoodB> getAllByCity(){
         NeighborhoodResult neighborhoodResult = neighborhoodResource.getAll();
         List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
@@ -186,4 +195,48 @@ public class NeighborhoodServiceImpl extends BaseServiceImpl<NeighborhoodB, Neig
 
         return beans;
     }
+
+    @Override
+    public List<NeighborhoodB> getAllByCityPaged(Integer city, Integer page){
+        NeighborhoodResult neighborhoodResult = neighborhoodResource.getallByCityPaged(city, page);
+        List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
+
+        if(neighborhoodResult.getNeighborhoods()!=null) dtosList = neighborhoodResult.getNeighborhoods();
+
+        final List<NeighborhoodB> beansList = new ArrayList<NeighborhoodB>();
+
+        dtosList.forEach(neighborhoodDTO -> beansList.add(convertToBean(neighborhoodDTO)));
+
+        return beansList;
+    }
+
+    @Override
+    public List<NeighborhoodB> getAllByName(String search, Integer page){
+        NeighborhoodResult neighborhoodResult = neighborhoodResource.getAllByName(search, page);
+        List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
+
+        if(neighborhoodResult.getNeighborhoods()!=null) dtosList = neighborhoodResult.getNeighborhoods();
+
+        final List<NeighborhoodB> beansList = new ArrayList<NeighborhoodB>();
+
+        dtosList.forEach(neighborhoodDTO -> beansList.add(convertToBean(neighborhoodDTO)));
+
+        return beansList;
+    }
+
+    @Override
+    public List<NeighborhoodB> find(String text, Integer page) {
+        NeighborhoodResult neighborhoodResult = neighborhoodResource.findByPage(text, page);
+        List<NeighborhoodDTO> dtosList = new ArrayList<NeighborhoodDTO>();
+
+        if(neighborhoodResult.getNeighborhoods()!=null) dtosList = neighborhoodResult.getNeighborhoods();
+
+
+        final List<NeighborhoodB> beansList = new ArrayList<NeighborhoodB>();
+
+        dtosList.forEach(neighborhoodDTO -> beansList.add(convertToBean(neighborhoodDTO)));
+        return beansList;
+    }
+
+
 }

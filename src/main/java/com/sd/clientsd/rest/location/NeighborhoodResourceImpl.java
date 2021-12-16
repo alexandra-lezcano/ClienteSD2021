@@ -69,4 +69,38 @@ public class NeighborhoodResourceImpl extends BaseResourceImpl<NeighborhoodDTO> 
         }
         return nResult;
     }
+
+    @Override
+    public NeighborhoodResult findByPage(String text, Integer page) {
+        NeighborhoodResult nResult = new NeighborhoodResult();
+
+        if(getWebResource()!=null){
+            Class<NeighborhoodResult> nResultClass = NeighborhoodResult.class;
+            String path = "/find/"+page+'/'+text;
+            nResult = getWebResource().path(path).get(nResultClass);
+        }
+        return nResult;
+    }
+
+    @Override
+    public NeighborhoodResult getallByCityPaged(Integer city, Integer page) {
+        NeighborhoodResult nResult = new NeighborhoodResult();
+        if(getWebResource()!=null){
+            Class<NeighborhoodResult> neighborhoodResultClass = NeighborhoodResult.class;
+            String path = "/find/"+page+"/"+city;
+            nResult = getWebResource().path(path).get(neighborhoodResultClass);
+        }
+        return nResult;
+    }
+
+    @Override
+    public NeighborhoodResult getAllByName(String search, Integer page){
+        NeighborhoodResult nResult = new NeighborhoodResult();
+        if(getWebResource()!=null){
+            Class<NeighborhoodResult> neighborhoodResultClass = NeighborhoodResult.class;
+            String path = "res/"+page+"/"+search;
+            nResult = getWebResource().path(path).get(neighborhoodResultClass);
+        }
+        return nResult;
+    }
 }

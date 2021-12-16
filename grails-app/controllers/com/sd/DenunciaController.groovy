@@ -10,9 +10,14 @@ import com.sd.clientsd.service.denuncia.ITipoDenunciaService
 import com.sd.clientsd.service.denuncia.ITipoSujetoService
 import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.service.location.INeighborhoodService
+import com.sd.clientsd.utils.config.Configurations
+
+import grails.plugin.springsecurity.annotation.Secured
+
 import static org.springframework.http.HttpStatus.*
 
 class DenunciaController {
+    private static final Integer ELEMS_PAGINATION = Configurations.getElemsPagination();
 
     IDenunciaService denunciaService
     ICityService cityService
@@ -24,18 +29,22 @@ class DenunciaController {
     static responseFormats = ['json']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def index(Integer max) {
         redirect(action: 'list', params:params)
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max){
         def page = null == params['page'] ? 0 : Integer.valueOf(params['page'])
         def denuncias = denunciaService.getAll(page)
         def prev = page - 1;
         def sig = page -1;
+        if(sig <= ELEMS_PAGINATION){sig = -1}
         [denunciaInstanceList: denuncias, denunciasTotal: denuncias.size(), sig: sig, prev: prev]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def create() {
         /* Importante: los tipo sujeto deben existir
         *  todo crear metodos del tipoSujetoService que traiga especificamente los beans que necesito */
@@ -67,6 +76,7 @@ class DenunciaController {
         render (g.select(id:"neighborhoods", name:"neighborhood", from:barrios, optionKey: 'id', optionValue:'name'))
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def save() {
         System.out.println("Get At --> "+params.getAt("sujetos[0]"))
 
@@ -93,6 +103,7 @@ class DenunciaController {
         }
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def edit(Long id) {
         def denunciaInstance = denunciaService.getById(id.toInteger())
 
@@ -104,6 +115,7 @@ class DenunciaController {
         [denunciaInstance: denunciaInstance]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def update(Denuncia denuncia) {
         def denunciaB = new DenunciaB(params)
 
@@ -115,6 +127,8 @@ class DenunciaController {
         def denunciaBUpdated = denunciaService.update(denunciaB, denunciaB.getId())
         redirect(action: 'list')
     }
+
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 
     def delete(Long id) {
         def denunciaInstance = denunciaService.delete(id.toInteger())

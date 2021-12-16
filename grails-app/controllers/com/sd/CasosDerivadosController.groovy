@@ -5,6 +5,7 @@ import com.sd.clientsd.beans.CasosDerivados.DepEstadoB
 import com.sd.clientsd.service.casosDerivados.ICasosDerivadosService
 import com.sd.clientsd.service.casosDerivados.IDepEstadoService
 import com.sd.clientsd.utils.config.Configurations
+import grails.plugin.springsecurity.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 
@@ -14,18 +15,21 @@ class CasosDerivadosController {
     ICasosDerivadosService casoDerivadoService
     IDepEstadoService depEstadoService
     static allowedMethods = [save: "POST", update: "PUT"]
+
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def index(Integer max) {
 
         redirect(action: 'list', params:params)
 
     }
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
         def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
 
         def casosDerivados =  casoDerivadoService.getAll(page)
         def prev = page - 1;
         def sig = page + 1;
-        if(casosDerivados.size() < ELEMS_PAGINATION){sig = -1}
+        if(casosDerivados.size() <= ELEMS_PAGINATION){sig = -1}
         def depEstado =  depEstadoService.getAll(page)
 
         [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size()
@@ -33,21 +37,22 @@ class CasosDerivadosController {
         sig: sig, prev: prev]
     }
 
-
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def show(Long id) {
         CasoDerivadoB casosDerivadosB = casoDerivadoService.getById(id);
         [casosDerivadosInstance: casosDerivadosB]
         //respond depEstadoService.get(id)
     }
-
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def create() {
 
         def depEstados= depEstadoService.getAllNotPaged()
-def depEstadoNuevo = casoDerivadoService.newLista();
+        def depEstadoNuevo = casoDerivadoService.newLista();
         [depEstadoInstanceList: depEstados,depEstadoNewLista:depEstadoNuevo, depEstadoInstance: new DepEstado(params), casosDerivadosInstance: new CasosDerivados(params)]
         //  respond new DepEstado(params)
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def save() {
 
 

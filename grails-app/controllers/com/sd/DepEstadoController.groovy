@@ -3,6 +3,7 @@ package com.sd
 import com.sd.clientsd.beans.CasosDerivados.DepEstadoB
 import com.sd.clientsd.service.casosDerivados.IDepEstadoService
 import com.sd.clientsd.utils.config.Configurations
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
@@ -13,28 +14,54 @@ class DepEstadoController {
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def index(Integer max) {
 
         redirect(action: 'list', params:params)
 
     }
+
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
         def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
-
-        def depEstado =  depEstadoService.getAll(page)
+        def searchString = null
+        searchString = null == params['find'] ? null : params['find']
+        def depEstado = null;
+        if(!searchString.equals("") || null == searchString) {
+            depEstado = depEstadoService.getAll(page)
+        } else {
+            depEstado = depEstadoService.getAllByName(searchString, page)
+        }
         def prev = page -1
         def sig = page +1
-        if(sig < ELEMS_PAGINATION){sig = -1}
-        [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size(), sig: sig, prev: prev]
+        if(sig <= ELEMS_PAGINATION){sig = -1}
+        [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size(), sig: sig, prev: prev, find: searchString]
+    }
+
+    def updateTable(String find){
+        def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
+        def searchString = find
+        def depEstado = null;
+        if(searchString.equals("")) {
+            depEstado = depEstadoService.getAll(page)
+        } else {
+            depEstado = depEstadoService.getAllByName(searchString, page)
+        }
+        def prev = page -1
+        def sig = page +1
+        if(sig <= ELEMS_PAGINATION){sig = -1}
+        render(template: 'table', model:[depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size(), sig: sig, prev: prev, find: searchString])
     }
 
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def show(Long id) {
         DepEstadoB depEstadoB = depEstadoService.getById(id);
         [depEstadoInstance: depEstadoB]
         //respond depEstadoService.get(id)
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def create() {
 
 
@@ -43,6 +70,7 @@ class DepEstadoController {
       //  respond new DepEstado(params)
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def save() {
 
 
@@ -83,6 +111,7 @@ class DepEstadoController {
         }*/
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def edit(Long id) {
         def depEstadoInstance= depEstadoService.getById(id.toInteger())
 
@@ -96,6 +125,7 @@ class DepEstadoController {
         //respond depEstadoService.get(id)
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def update(DepEstado depEstado) {
 
         def depEstadoB = new DepEstadoB(params)
@@ -114,6 +144,7 @@ class DepEstadoController {
 
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def delete(Long id) {
         def depEstadoInstance = depEstadoService.delete(id.toInteger())
 

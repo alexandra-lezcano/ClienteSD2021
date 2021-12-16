@@ -5,12 +5,16 @@ import com.protectionapp.sd2021.dto.casosDerivados.CasosDerivadosResult;
 import com.sd.clientsd.beans.CasosDerivados.CasoDerivadoB;
 import com.sd.clientsd.beans.CasosDerivados.DepEstadoB;
 import com.sd.clientsd.rest.CasosDerivados.ICasosDerivadosResource;
+import com.sd.clientsd.rest.login.MyAuthenticationProvider;
 import com.sd.clientsd.service.base.BaseServiceImpl;
+import com.sd.clientsd.service.login.IAuthService;
 import com.sd.clientsd.utils.config.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.stereotype.Service;
 
 
@@ -19,6 +23,7 @@ import java.util.*;
 @Service("casoDerivadoService")
 public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, CasosDerivadosDTO> implements ICasosDerivadosService {
 
+    @Qualifier("casosDerivadosResource")
     @Autowired
     private ICasosDerivadosResource casosDerivadoResource;
 
@@ -28,6 +33,12 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired
+    private MyAuthenticationProvider myAuthenticationProvider;
+
+    @Autowired
+    private IAuthService authService;
+
     @Override
     protected CasosDerivadosDTO convertToDTO(CasoDerivadoB bean) {
         final CasosDerivadosDTO dto = new CasosDerivadosDTO();
@@ -36,7 +47,7 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
         }
        // dto.setDate(bean.getDate());
         dto.setDescription(bean.getDescription());
-        dto.setUser_id(bean.getTrabajador_social_id());
+        dto.setUser(bean.getTrabajador_social_id());
 
         if(bean.getDepEstadoBSet()!=null) {
             Set<DepEstadoB> dependencias = bean.getDepEstadoBSet();
@@ -87,7 +98,8 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
     @Override
     public List<CasoDerivadoB> getAll(Integer page) {
 
-        CasosDerivadosResult casoDerivadoResult = casosDerivadoResource.getByPage(page);
+        Integer idUser = myAuthenticationProvider.getUser(authService.getUsername()).getId();
+        CasosDerivadosResult casoDerivadoResult = casosDerivadoResource.getByPageUser(page,idUser);
         List<CasosDerivadosDTO> dtosList = new ArrayList<CasosDerivadosDTO>();
 
         if(casoDerivadoResult.getCasosDerivados()!=null) dtosList = casoDerivadoResult.getCasosDerivados();
@@ -161,6 +173,8 @@ public class CasosDerivadosServiceImpl extends BaseServiceImpl<CasoDerivadoB, Ca
          Set<DepEstadoB> nuevo= new HashSet<DepEstadoB>();
          return nuevo;
     }
+
+
 
 
 

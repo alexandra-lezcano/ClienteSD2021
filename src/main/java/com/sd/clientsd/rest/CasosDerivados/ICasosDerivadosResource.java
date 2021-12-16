@@ -9,4 +9,5 @@ public interface ICasosDerivadosResource extends IBaseResource<CasosDerivadosDTO
     public CasosDerivadosResult getByPage(Integer pageNum);
     public CasosDerivadosResult getByPage(Integer page, Integer size);
     public CasosDerivadosResult getByPage();
+    public CasosDerivadosResult getByPageUser(Integer page, Integer id) ;
 }
