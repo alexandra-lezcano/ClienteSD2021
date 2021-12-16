@@ -24,7 +24,7 @@
                 ${fieldValue(bean: denunciaInstance, field: "fecha")}
             </td>
             <td>
-                ${fieldValue(bean: denunciaInstance, field: "estado")}
+                ${fieldValue(bean: denunciaInstance, field: "estado.nombre")}
             </td>
             <td>
                 <g:link class="delete"
