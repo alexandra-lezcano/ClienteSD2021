@@ -48,7 +48,11 @@ class CityController {
         //System.out.println(search)
         def cities = null
         if(search == null || find.equals("")){
-            cities = cityService.getAll(page)
+            if(page != null){
+                cities = cityService.getAll(page)
+            } else {
+                cities = cityService.getAll()
+            }
         } else {
             cities = cityService.findAllByName(search, page)
         }

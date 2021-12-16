@@ -24,11 +24,10 @@ class InvestigacionController {
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def list(Integer max) {
         def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
-
         def investigaciones = investigacionService.getAll(page);
         def prev = page - 1
         def sig = page + 1
-        if(neighborhoods.size() < ELEMS_PAGINATION) {sig = -1}
+        if(investigaciones.size() < ELEMS_PAGINATION) {sig = -1}
         [investigacionesInstanceList: investigaciones, investigacionesTotal: investigaciones.size(),
          prev: prev, sig: sig]
     }

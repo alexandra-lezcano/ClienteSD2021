@@ -26,7 +26,9 @@ class CasosDerivadosController {
     def list(Integer max) {
         def page= null == params['page'] ? 0 : Integer.valueOf(params['page'])
 
-        def casosDerivados =  casoDerivadoService.getAll(page)
+        def casosDerivados = null
+        if (page != null) { casosDerivados = casoDerivadoService.getAll(page)}
+        else { casosDerivados = casoDerivadoService.getAll()}
         def prev = page - 1;
         def sig = page + 1;
         if(casosDerivados.size() <= ELEMS_PAGINATION){sig = -1}
