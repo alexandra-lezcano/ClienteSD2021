@@ -1,8 +1,13 @@
 package com.sd
 import com.sd.clientsd.beans.denuncia.DenunciaB
+import com.sd.clientsd.beans.denuncia.SujetoB
+import com.sd.clientsd.beans.denuncia.TipoSujetoB
+import com.sd.clientsd.beans.location.CityB
+import com.sd.clientsd.beans.location.NeighborhoodB
 import com.sd.clientsd.service.denuncia.IDenunciaService
 import com.sd.clientsd.service.denuncia.ISujetoService
 import com.sd.clientsd.service.denuncia.ITipoDenunciaService
+import com.sd.clientsd.service.denuncia.ITipoSujetoService
 import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.service.location.INeighborhoodService
 import com.sd.clientsd.utils.config.Configurations
@@ -19,7 +24,9 @@ class DenunciaController {
     INeighborhoodService neighborhoodService;
     ISujetoService sujetoService;
     ITipoDenunciaService tipoDenunciaService;
+    ITipoSujetoService tipoSujetoService;
 
+    static responseFormats = ['json']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
@@ -39,14 +46,29 @@ class DenunciaController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def create() {
+        /* Importante: los tipo sujeto deben existir
+        *  todo crear metodos del tipoSujetoService que traiga especificamente los beans que necesito */
+        def tipoSujetoList = tipoSujetoService.getAll();
+
+        def tipoDenunciante = tipoSujetoList.get(0);
+        def tipoVictima = tipoSujetoList.get(1);
+        def tipoVictimario = tipoSujetoList.get(2);
+        def sujetos = sujetoService.newList();
+        sujetos.add(new SujetoB(tipoDenunciante));
+        sujetos.add(new SujetoB(tipoVictima));
+        sujetos.add(new SujetoB(tipoVictimario));
+
         def cities = cityService.getAllNotPaged()
         def barrios = neighborhoodService.getAllByCity()
-        def sujetos = sujetoService.newList();
         def tipos = tipoDenunciaService.getAllNotPaged();
-        def denunciaInstance = new Denuncia(params);
-        [denunciaInstance        : denunciaInstance, cityInstanceList: cities,
-         sujetoInstance          : new Sujeto(params), sujetoInstanceList: sujetos,
-         neighborhoodInstanceList: barrios, tipoDenunciaInstanceList: tipos]
+        def denunciaInstance = new DenunciaB();
+        denunciaInstance.setSujetos(sujetos)
+        //<!--g:render template="sujetoForm" model="${sujetoInstance}"/-->
+        [denunciaInstance: denunciaInstance,
+         cityInstanceList: cities,
+         neighborhoodInstanceList: barrios,
+         tipoDenunciaInstanceList: tipos,
+         sujetoInstanceList: denunciaInstance.getSujetos() ]
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
@@ -57,8 +79,19 @@ class DenunciaController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def save() {
+        System.out.println("Get At --> "+params.getAt("sujetos[0]"))
+
         def denuncia = new DenunciaB(params)
-        def denunciaInstance = denunciaService.save(denuncia)
+        denuncia.saveSujeto(params.getAt("sujetos[0]"))
+        denuncia.saveSujeto(params.getAt("sujetos[1]"))
+        denuncia.saveSujeto(params.getAt("sujetos[2]"))
+
+        CityB city = cityService.getById(Integer.valueOf(params.get("city")))
+        NeighborhoodB n = neighborhoodService.getById(Integer.valueOf(params.get("neighborhood")))
+        denuncia.setCity(city)
+        denuncia.setNeighborhood(n)
+
+      def denunciaInstance = denunciaService.save(denuncia)
         if(!denunciaInstance.getId()){
             render(view: "create", model:[denunciaInstance: denunciaInstance])
             return
@@ -67,7 +100,7 @@ class DenunciaController {
             html{
                 flash.message = message(code: 'default.created.message', args: [message(code: 'denuncia.label', default:'Denuncia'),denunciaInstance.getId()])
             }
-            redirect(action: 'list')
+            redirect(action: 'show')
         }
     }
 
@@ -111,6 +144,9 @@ class DenunciaController {
         redirect(action: 'list')
     }
 
+    def addSujeto(){
+
+    }
     protected void notFound() {
         request.withFormat {
             form multipartForm {

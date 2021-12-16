@@ -9,6 +9,7 @@ public class TipoSujetoB extends BaseBean {
     private String titulo;
 
     public TipoSujetoB(Map<String, String> params ){super(params);}
+    public TipoSujetoB(String titulo) {this.titulo = titulo;}
 
 
     @Override

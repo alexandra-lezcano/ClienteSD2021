@@ -5,12 +5,9 @@ import com.sd.clientsd.beans.base.BaseBean;
 import com.sd.clientsd.beans.location.CityB;
 import com.sd.clientsd.beans.location.NeighborhoodB;
 import com.sd.clientsd.beans.user.UserB;
+import org.apache.commons.lang.RandomStringUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 public class DenunciaB extends BaseBean{
     private static final long serialVersionUID = 1L;
@@ -22,31 +19,39 @@ public class DenunciaB extends BaseBean{
     private CityB city;
     private NeighborhoodB neighborhood;
     private UserB user;
+    private List<SujetoB> sujetos;
 
+    public DenunciaB(){};
     public DenunciaB(Map<String, String> params){super(params);}
 
     @Override
     protected void create(Map<String, String> params) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         if (params.containsKey("id")&& params.get("id")!=null){
             setId(Integer.valueOf(params.get("id")));
         } else {
             setId(0);
         }
-        setCodigo(params.get("codigo"));
         setDescripcion(params.get("descripcion"));
-        try {
-            setFecha(format.parse(params.get("fecha")));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        setFecha(); // guarda la fecha de la denuncia realizada
+        setCodigo();
+        this.sujetos = new ArrayList<>();
     }
 
+    /*To-do: hacer que tipo sujeto y tipo denuncia sean unicamente strings!!!
+    * luego implementar el metodo para guardar denuncia*/
+    public void saveSujeto(Map<String, String> data){
+        SujetoB sujeto = new SujetoB(data);
+        sujeto.setTipo(new TipoSujetoB(data.get("tipo")));
+
+        System.out.println(sujeto);
+        this.sujetos.add(sujeto);
+    }
     public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo() {
+        String codigo = RandomStringUtils.random(8, "012345678ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         this.codigo = codigo;
     }
 
@@ -62,7 +67,9 @@ public class DenunciaB extends BaseBean{
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    // fecha de la denuncia realizada
+    public void setFecha() {
+        Date fecha = new Date(System.currentTimeMillis());
         this.fecha = fecha;
     }
 
@@ -104,5 +111,13 @@ public class DenunciaB extends BaseBean{
 
     public void setUser(UserB user) {
         this.user = user;
+    }
+
+    public List<SujetoB> getSujetos() {
+        return sujetos;
+    }
+
+    public void setSujetos(List<SujetoB> sujetos) {
+        this.sujetos = sujetos;
     }
 }
