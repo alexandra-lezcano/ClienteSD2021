@@ -17,6 +17,7 @@ public class Configurations {
     private static String SUJETO_RESOURCE;
     private static Integer ELEMS_PAGINATION;
     private static String DEPESTADO_RESOURCE;
+    private static String INVESTIGACION_RESOURCE;
     private static Integer TIPO_DENUNCIANTE_ID;
     private static Integer TIPO_VICTIMA_ID;
     private static Integer TIPO_VICTIMARIO_ID;
@@ -37,6 +38,7 @@ public class Configurations {
             DENUNCIA_ESTADO_RESOURCE = properties.getProperty("resource.estadoDenuncia");
             DENUNCIA_RESOURCE = properties.getProperty("resource.denuncia");
             DEPESTADO_RESOURCE=properties.getProperty("resource.depEstado");
+            INVESTIGACION_RESOURCE=properties.getProperty("resource.investigacion");
             TIPO_DENUNCIANTE_ID=Integer.parseInt(properties.getProperty("tipo.denunciante.id"));
             TIPO_VICTIMA_ID=Integer.parseInt(properties.getProperty("tipo.victima.id"));
             TIPO_VICTIMARIO_ID=Integer.parseInt(properties.getProperty("tipo.victimario.id"));
@@ -79,6 +81,14 @@ public class Configurations {
     public static Integer getElemsPagination(){ return ELEMS_PAGINATION;}
 
     public static String getDepestadoResource(){return DEPESTADO_RESOURCE;}
+
+    public static String getDenunciaEstadoResource() {
+        return DENUNCIA_ESTADO_RESOURCE;
+    }
+
+    public static String getInvestigacionResource() {
+        return INVESTIGACION_RESOURCE;
+    }
 
     public static Integer getTipoDenuncianteId(){ return TIPO_DENUNCIANTE_ID; }
 

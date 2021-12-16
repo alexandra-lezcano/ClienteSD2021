@@ -18,7 +18,6 @@ import com.sd.clientsd.service.location.INeighborhoodService;
 import com.sd.clientsd.service.user.IUserService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

@@ -38,6 +38,7 @@ class DepEstadoController {
         [ depEstadoInstanceList: depEstado, depEstadoTotal: depEstado.size(), sig: sig, prev: prev, find: searchString]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def updateTable(String find){
         def page=null ==params['id'] ? 0 : Integer.valueOf(params['id'])
         def searchString = find
