@@ -25,7 +25,7 @@
 
     <div class="footer text-center" role="contentinfo">
         <div>
-            <p> <strong>Ruta: </strong> <%=request.getServletContext().getRealPath("") %></p>
+            <p> Protection App - Sistemas Web y Distribuidos 2021 </p>
         </div>
     </div>
 
@@ -37,7 +37,6 @@
     <div class="alert alert-info fade">
         <a href="#" data-dismiss="alert">&times;</a>
         <strong>Ruta: </strong> <%=request.getServletContext().getRealPath("") %>
-
     </div>
 
     <asset:javascript src="application.js"/>

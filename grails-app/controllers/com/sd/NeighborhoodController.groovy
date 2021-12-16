@@ -47,6 +47,7 @@ class NeighborhoodController {
     }
 
     //Cuando llama a update table desde la vista con el boton de busqueda
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def updateTableSearch(String find){
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def neighborhoodInstanceList = null;

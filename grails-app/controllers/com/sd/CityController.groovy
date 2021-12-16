@@ -41,6 +41,7 @@ class CityController {
         [cityInstanceList: cities, citiesTotal: cities.size(), sig: sig, prev: prev, find: find]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def updateTable(String find){
         def page=null ==params['page'] ? 0 : Integer.valueOf(params['page'])
         def search = find

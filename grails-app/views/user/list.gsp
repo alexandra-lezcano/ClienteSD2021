@@ -25,9 +25,6 @@
     <g:link class="" action="create"><button class="rellenar col-sm-6 col-xs-12 btn btn-primary">Crear Usuario</button></g:link>
 
     <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-
-    <f:table collection="${userList}" />
-
     <table class="table table-striped table-bordered tabla-options">
     <thead>
     <tr>
