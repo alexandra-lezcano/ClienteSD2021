@@ -155,7 +155,7 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
             dto.setId(bean.getId());
         }
         dto.setNombre(bean.getNombre());
-        dto.setTipo_id(bean.getTipo().getId());
+        dto.setTipoId(bean.getTipo().getId());
         dto.setDireccion(bean.getDireccion());
         dto.setCi(bean.getCi());
         dto.setTelefono(bean.getTelefono());
@@ -172,7 +172,7 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
         params.put("telefono",dto.getTelefono());
         params.put("correo", dto.getTelefono());
         final SujetoB bean = new SujetoB(params);
-        bean.setTipo(tipoSujetoService.getById(dto.getTipo_id()));
+        bean.setTipo(tipoSujetoService.getById(dto.getTipoId()));
         return bean;
     }
 }

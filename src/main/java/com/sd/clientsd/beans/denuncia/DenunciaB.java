@@ -13,7 +13,7 @@ public class DenunciaB extends BaseBean{
     private static final long serialVersionUID = 1L;
     private String codigo;
     private String descripcion;
-    private Date fecha;
+    private String fecha;
     private DenunciaEstadoB estado;
     private CasoDerivadoB caso;
     private CityB city;
@@ -63,13 +63,13 @@ public class DenunciaB extends BaseBean{
         this.descripcion = descripcion;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
     // fecha de la denuncia realizada
     public void setFecha() {
-        Date fecha = new Date(System.currentTimeMillis());
+
         this.fecha = fecha;
     }
 

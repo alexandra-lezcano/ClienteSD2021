@@ -1,9 +1,11 @@
 package com.sd
 
 import com.sd.clientsd.beans.location.CityB
+import com.sd.clientsd.beans.user.RoleB
 import com.sd.clientsd.beans.user.UserB
 import com.sd.clientsd.service.location.ICityService
 import com.sd.clientsd.service.location.INeighborhoodService
+import com.sd.clientsd.service.user.IRoleService
 import com.sd.clientsd.service.user.IUserService
 import com.sd.clientsd.utils.config.Configurations
 import grails.plugin.springsecurity.annotation.Secured
@@ -15,6 +17,7 @@ class UserController {
 
     IUserService userService
     ICityService cityService
+    IRoleService roleService
     INeighborhoodService neighborhoodService
 
     static allowedMethods = [save: "POST", update: "PUT"]
@@ -56,12 +59,14 @@ class UserController {
 
     def save() {
         def userB = new UserB(params);
-        userB.setUsername(userB.getEmail())
-
+        userB.setUsername(userB.getUsername())
+        userB.setPassword(userB.getPassword())
         CityB city = cityService.getById(Integer.valueOf(params.get("cityId")));
         userB.setCity(city)
         userB.setNeighborhoods(city.getNeighborhoodBList())
-
+        List<RoleB> roles = new ArrayList<RoleB>()
+        roles.add(roleService.getById(2))
+        userB.setRoles(roles)
         def user = userService.save(userB)
 
         if (!user.getId()) {
@@ -76,7 +81,7 @@ class UserController {
             }
         }
 
-        redirect(action: "list")
+        redirect(resource:Denuncia,action: "list")
     }
 
     // todo tolerancia a fallos
