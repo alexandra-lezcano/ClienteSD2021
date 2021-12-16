@@ -16,22 +16,24 @@
             <button class="boton btn btn-warning text-right">Iniciar Sesion</button>
         </g:link>
         <g:link resource="user" action="create">
-            <button class="btn text-right btn-primary">Registrarse</button>
+            <button class="boton btn text-right btn-secondary">Registrarse</button>
         </g:link>
     </g:if>
         <g:if test="${!auth}">
             <g:link resource="Denuncia" action="list">
-                <button class="boton btn btn-warning text-right">Denuncias</button>
+                <button class="boton btn btn-primary text-right">Denuncias</button>
             </g:link>
             <g:link resource="CasosDerivados" action="list">
-                <button class="btn text-right btn-primary">Casos Derivados</button>
+                <button class="boton btn text-right btn-primary">Casos Derivados</button>
+            </g:link>
+            <g:link resource="Investigaciones" action="list">
+                <button class="boton btn text-right btn-primary">Investigaciones</button>
             </g:link>
         </g:if>
         <g:if test="${!admin}">
             <g:link resource="City" action="list">
-                <button class="boton btn btn-warning text-right">Administrar</button>
+                <button class="boton btn btn-primary text-right">Administrar</button>
             </g:link>
-
         </g:if>
 
     </div>

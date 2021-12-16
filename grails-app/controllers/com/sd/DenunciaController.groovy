@@ -71,6 +71,7 @@ class DenunciaController {
          sujetoInstanceList: denunciaInstance.getSujetos() ]
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def updateNeighborhood(Integer city){
         def barrios = neighborhoodService.getAllByCity(city)
         render (g.select(id:"neighborhoods", name:"neighborhood", from:barrios, optionKey: 'id', optionValue:'name'))
