@@ -25,31 +25,10 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-
-            <g:form bean="${denunciaInstance}" method="PUT">
-                <g:hiddenField name="id" value="${denunciaInstance?.id}" />
-                <g:hiddenField name="codigo" value="${denunciaInstance?.codigo}"/>
-                <fieldset class="form">
-                    <div class="fieldcontain ${hasErrors(bean: denunciaInstance, field: 'descripcion','error')}">
-                        <label for="descripcion"> Desscripcion:
-                        <g:textField name="descripcion" value="${denunciaInstance?.descripcion}"/>
-                        </label>
-                    </div>
-                    <div class="fieldcontain ${hasErrors(bean: denunciaInstance, field: 'fecha','error')}">
-                        <label for="fecha"> Fecha:
-                        <g:datePicker name="fecha" value="${denunciaInstance?.fecha}"/>
-                        </label>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 save btn-primary" value="update" />
-                    <g:actionSubmit class="margen-sm col-md-6 col-sm-12 delete btn-secondary"
-                                    value="delete"
-                                    id="${denunciaInstance?.id}"
-                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Seguro que quiere borrar?')}');"
-                    />
-                </fieldset>
+            <g:form action='update'>
+                <g:render template="form" model="[denunciaInstance: denunciaInstance, neighborhoodInstanceList: neighborhoodInstanceList, text: 'Actualizar']"/>
             </g:form>
+
         </div>
     </body>
 </html>
