@@ -40,6 +40,16 @@
         />
     </label>
 </div>
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'username','error')}">
+    <label for="username">
+       Username: <g:textField name="username" value="${userInstance?.username}"/>
+    </label>
+</div>
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password','error')}">
+    <label for="password">
+        Username: <g:textField name="password" value="${userInstance?.password}"/>
+    </label>
+</div>
 
 <div id="#insertNeighborhood">
 
