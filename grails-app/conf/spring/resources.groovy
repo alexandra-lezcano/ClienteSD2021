@@ -6,6 +6,7 @@ import com.sd.clientsd.rest.denuncia.SujetoResourceImpl
 import com.sd.clientsd.rest.CasosDerivados.DepEstadoResourceImpl
 import com.sd.clientsd.rest.denuncia.TipoDenunciaResourceImpl
 import com.sd.clientsd.rest.denuncia.TipoSujetoResourceImpl
+import com.sd.clientsd.rest.investigacion.InvestigacionResourceImpl
 import com.sd.clientsd.rest.location.NeighborhoodResourceImpl
 import com.sd.clientsd.rest.login.MyAuthenticationProvider
 import com.sd.clientsd.rest.user.RoleResourceImpl
@@ -17,6 +18,7 @@ import com.sd.clientsd.service.denuncia.SujetoServiceImpl
 import com.sd.clientsd.rest.location.CityResourceImpl
 import com.sd.clientsd.service.casosDerivados.DepEstadoServiceImpl
 import com.sd.clientsd.service.denuncia.TipoDenunciaServiceImpl
+import com.sd.clientsd.service.investigacion.InvestigacionServiceImpl
 import com.sd.clientsd.service.location.NeighborhoodServiceImpl
 import com.sd.clientsd.service.login.AuthServiceImpl
 import com.sd.clientsd.service.user.RoleServiceImpl
@@ -41,6 +43,7 @@ beans = {
     denunciaEstadoResource(DenunciaEstadoResourceImpl)
     DenunciaResource(DenunciaResourceImpl)
     roleResource(RoleResourceImpl)
+    investigacionResource(InvestigacionResourceImpl)
 
     //services
     cityService(CityServiceImpl)
@@ -55,6 +58,7 @@ beans = {
     denunciaService(DenunciaServiceImpl)
     myAutenticationProvider(MyAuthenticationProvider)
     authService(AuthServiceImpl)
+    investigacionService(InvestigacionServiceImpl)
 
     roleService(RoleServiceImpl)
 

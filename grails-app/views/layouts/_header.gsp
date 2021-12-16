@@ -26,12 +26,14 @@
             <g:link resource="CasosDerivados" action="list">
                 <button class="boton btn text-right btn-primary">Casos Derivados</button>
             </g:link>
+            <g:link resource="Investigaciones" action="list">
+                <button class="boton btn text-right btn-primary">Investigaciones</button>
+            </g:link>
         </g:if>
         <g:if test="${!admin}">
             <g:link resource="City" action="list">
                 <button class="boton btn btn-primary text-right">Administrar</button>
             </g:link>
-
         </g:if>
 
     </div>
