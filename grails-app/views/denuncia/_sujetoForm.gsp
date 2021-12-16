@@ -1,6 +1,6 @@
+<h1>m ${fieldValue(bean:sujetoInstance?.tipo, field:"titulo")} </h1>
 <div class="col-md-12">
     <div class="row">
-
         <div class="col-md-6">
             <div class="form-group">
                 <div class="fieldcontain ${hasErrors(bean: sujetoInstance, field: 'nombre','error')}">

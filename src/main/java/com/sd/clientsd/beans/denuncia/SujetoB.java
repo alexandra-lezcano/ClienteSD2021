@@ -3,10 +3,11 @@ package com.sd.clientsd.beans.denuncia;
 import com.sd.clientsd.beans.base.BaseBean;
 import com.sd.clientsd.service.denuncia.ITipoSujetoService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SujetoB extends BaseBean {
-
 
     private static final long serialVersionUID = 1L;
     private String nombre;
@@ -16,6 +17,8 @@ public class SujetoB extends BaseBean {
     private String direccion;
     private TipoSujetoB tipo;
 
+    public SujetoB(){}
+    public SujetoB(TipoSujetoB tipo){this.tipo = tipo;}
     public SujetoB(Map<String, String> params){super(params);}
 
     @Override
@@ -24,6 +27,7 @@ public class SujetoB extends BaseBean {
             setId(Integer.valueOf(params.get("id")));
         } else {setId(0);}
         setCi(params.get("ci"));
+        setNombre(params.get("nombre"));
         setCorreo(params.get("correo"));
         setDireccion(params.get("direccion"));
         setTelefono(params.get("telefono"));
@@ -75,5 +79,17 @@ public class SujetoB extends BaseBean {
 
     public void setTipo(TipoSujetoB tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public String toString() {
+        return "SujetoB{" +
+                "nombre='" + nombre + '\'' +
+                ", ci='" + ci + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", correo='" + correo + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", tipo=" + tipo.getTitulo() +
+                '}';
     }
 }
