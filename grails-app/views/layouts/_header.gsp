@@ -9,20 +9,9 @@
 
     <div class="collapse navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
         <ul class="nav navbar-nav ml-auto">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opciones<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-                        <li class="controller">
-                            <g:link controller="${c.logicalPropertyName}">
-                                <g:message code="${c.logicalPropertyName}.label"/>
-                            </g:link>
-                        </li>
-                    </g:each>
-                </ul>
-            </li>
+
         </ul>
-<g:if test="${auth}">
+<g:if test="${!auth}">
         <g:link resource="CasosDerivados" action="list">
             <button class="boton btn btn-warning text-right">Iniciar Sesion</button>
         </g:link>
