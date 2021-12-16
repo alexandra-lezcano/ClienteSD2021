@@ -28,7 +28,8 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
     private ITipoSujetoService tipoSujetoService;
     @Autowired
     private CacheManager cacheManager;
-
+    @Autowired
+    private IDenunciaService denunciaService;
     @Override
     protected SujetoDto convertToDTO(SujetoB bean) {
         final SujetoDto dto = new SujetoDto();
@@ -36,11 +37,13 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
             dto.setId(bean.getId());
         }
         dto.setNombre(bean.getNombre());
-        dto.setTipo_id(bean.getTipo().getId());
+        dto.setTipoId(bean.getTipo().getId());
         dto.setDireccion(bean.getDireccion());
         dto.setCi(bean.getCi());
         dto.setTelefono(bean.getTelefono());
         dto.setCorreo(bean.getCorreo());
+
+        if(bean.getDenuncia()!=null) { dto.setDenunciaId(bean.getDenuncia().getId()); }
         return dto;
     }
 
@@ -53,13 +56,12 @@ public class SujetoServiceImpl extends BaseServiceImpl<SujetoB, SujetoDto> imple
         params.put("direccion", dto.getDireccion());
         params.put("telefono",dto.getTelefono());
         params.put("correo", dto.getTelefono());
-        params.put("tipo", dto.getTipo_id().toString());
+        params.put("tipo", dto.getTipoId().toString());
         final SujetoB bean = new SujetoB(params);
-        bean.setTipo(tipoSujetoService.getById(dto.getTipo_id()));
+        bean.setTipo(tipoSujetoService.getById(dto.getTipoId()));
+        if (dto.getDenunciaId()!=null){ bean.setDenuncia(denunciaService.getById(dto.getDenunciaId())); }
         return bean;
     }
-
-
 
     @Override
     public SujetoB save(SujetoB bean) {

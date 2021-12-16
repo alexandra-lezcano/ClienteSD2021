@@ -16,6 +16,7 @@ public class SujetoB extends BaseBean {
     private String correo;
     private String direccion;
     private TipoSujetoB tipo;
+    private DenunciaB denuncia;
 
     public SujetoB(){}
     public SujetoB(TipoSujetoB tipo){this.tipo = tipo;}
@@ -81,9 +82,18 @@ public class SujetoB extends BaseBean {
         this.tipo = tipo;
     }
 
+    public DenunciaB getDenuncia() {
+        return denuncia;
+    }
+
+    public void setDenuncia(DenunciaB denuncia) {
+        this.denuncia = denuncia;
+    }
+
     @Override
     public String toString() {
         return "SujetoB{" +
+                "id" + getId() +
                 "nombre='" + nombre + '\'' +
                 ", ci='" + ci + '\'' +
                 ", telefono='" + telefono + '\'' +

@@ -7,13 +7,14 @@ import com.sd.clientsd.beans.location.NeighborhoodB;
 import com.sd.clientsd.beans.user.UserB;
 import org.apache.commons.lang.RandomStringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DenunciaB extends BaseBean{
     private static final long serialVersionUID = 1L;
     private String codigo;
     private String descripcion;
-    private Date fecha;
+    private String fecha;
     private DenunciaEstadoB estado;
     private CasoDerivadoB caso;
     private CityB city;
@@ -39,9 +40,9 @@ public class DenunciaB extends BaseBean{
 
     /*To-do: hacer que tipo sujeto y tipo denuncia sean unicamente strings!!!
     * luego implementar el metodo para guardar denuncia*/
-    public void saveSujeto(Map<String, String> data){
+    public void saveSujeto(Map<String, String> data, TipoSujetoB tipoSujetoB){
         SujetoB sujeto = new SujetoB(data);
-        sujeto.setTipo(new TipoSujetoB(data.get("tipo")));
+        sujeto.setTipo(tipoSujetoB);
 
         System.out.println(sujeto);
         this.sujetos.add(sujeto);
@@ -63,14 +64,15 @@ public class DenunciaB extends BaseBean{
         this.descripcion = descripcion;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
     // fecha de la denuncia realizada
     public void setFecha() {
         Date fecha = new Date(System.currentTimeMillis());
-        this.fecha = fecha;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ssZ");
+        this.fecha = simpleDateFormat.format(fecha);
     }
 
     public CasoDerivadoB getCaso() {

@@ -18,6 +18,7 @@ import com.sd.clientsd.service.location.INeighborhoodService;
 import com.sd.clientsd.service.user.IUserService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -35,6 +36,8 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
     private INeighborhoodService neighborhoodService;
     @Autowired
     private ITipoSujetoService tipoSujetoService;
+    @Autowired
+    private ISujetoService sujetoService;
 
 
     @Override
@@ -47,14 +50,17 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
         dto.setCity_id(bean.getCity().getId());
         dto.setNeighborhood_id(bean.getNeighborhood().getId());
 
-        // guarda un estado por defecto
-        // tira unauthorized
-        /*if(denunciaEstadoService.getById(1)!=null){
+        System.out.println("[TEST] Convertir bean a DTO--->");
+
+        Set<Integer> sujetoIds = new HashSet<>();
+        if(bean.getSujetos()!=null){
+            bean.getSujetos().forEach(sujetoB -> sujetoIds.add(sujetoB.getId()));
+        }
+        dto.setSujeto_ids(sujetoIds);
+
+       /* if(denunciaEstadoService.getById(1)!=null){
             dto.setEstado_id(1);
         }*/
-
-       // dto.setUser_id(bean.getId());
-
         return dto;
     }
 
@@ -67,18 +73,22 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
         params.put("fecha", String.valueOf(dto.getFecha()));
 
         final DenunciaB bean = new DenunciaB(params);
-
         final CityB city = cityService.getById(dto.getCity_id());
         final NeighborhoodB neighborhood = neighborhoodService.getById(dto.getNeighborhood_id());
         //final DenunciaEstadoB estado = denunciaEstadoService.getById(dto.getEstado_id());
-        //final UserB user = userService.getById(dto.getUser_id());
 
         bean.setCity(city);
         bean.setNeighborhood(neighborhood);
        // bean.setEstado(estado);
-       // bean.setUser(user);
 
         /*todo hacer lista de sujetos y tipos de denuncia*/
+
+        System.out.println("[TEST] DENTRO DE CONVERT TO DTO ");
+        List<SujetoB> sujetos = new ArrayList<>();
+        if(dto.getSujeto_ids()!=null){
+            dto.getSujeto_ids().forEach(sujetoId -> sujetos.add(sujetoService.getById(sujetoId)));
+        }
+        bean.setSujetos(sujetos);
 
         return bean;
     }
@@ -149,30 +159,23 @@ public class DenunciaServiceImpl extends BaseServiceImpl<DenunciaB, DenunciaDTO>
         return convertToBean(c);
     }
 
-    protected SujetoDto convertSujetoToDTO(SujetoB bean) {
-        final SujetoDto dto = new SujetoDto();
-        if(bean.getId()!=0){
-            dto.setId(bean.getId());
-        }
-        dto.setNombre(bean.getNombre());
-        dto.setTipo_id(bean.getTipo().getId());
-        dto.setDireccion(bean.getDireccion());
-        dto.setCi(bean.getCi());
-        dto.setTelefono(bean.getTelefono());
-        dto.setCorreo(bean.getCorreo());
-        return dto;
-    }
+    @Override
+    public DenunciaB saveCabeceraDetalle(DenunciaB denuncia) {
+        List<SujetoB> sujetoBList = denuncia.getSujetos();
+        denuncia.setSujetos(null);
 
-    protected SujetoB convertSujetoToBean(SujetoDto dto) {
-        final Map<String, String> params = new HashMap<>();
-        params.put("id",String.valueOf(dto.getId()));
-        params.put("nombre", dto.getNombre());
-        params.put("ci", dto.getCi());
-        params.put("direccion", dto.getDireccion());
-        params.put("telefono",dto.getTelefono());
-        params.put("correo", dto.getTelefono());
-        final SujetoB bean = new SujetoB(params);
-        bean.setTipo(tipoSujetoService.getById(dto.getTipo_id()));
-        return bean;
+        //guardar denuncia primero - obtener primary key
+        DenunciaB savedDenuncia = save(denuncia);
+
+        List<SujetoB> savedSujetosB = new ArrayList<>();
+        // guardar los detalles segundo - utilizando la denuncia creada
+        sujetoBList.forEach(sujetoB -> {
+            sujetoB.setDenuncia(savedDenuncia);
+            savedSujetosB.add(sujetoService.save(sujetoB));
+        });
+        System.out.println("[TEST] ID YA EXISTE \n"+savedSujetosB.get(1).toString());
+        savedDenuncia.setSujetos(savedSujetosB);
+
+        return savedDenuncia;
     }
 }
